@@ -8,9 +8,7 @@ body,p,h1,h2 {
 }
 body {
   max-width:900px;
-}
-div.content {
-    padding: 7% 9%;
+  padding: 7% 9%;
 }
 /**
   * Headers
@@ -59,6 +57,13 @@ a:hover {
   }
   p {
     font-size: 18px;
+  }
+}
+
+@media all and (min-width:1150px) {
+  body {
+    padding-top: 80px;
+    padding-bottom: 80px;
   }
 }
 /**
