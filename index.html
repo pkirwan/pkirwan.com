@@ -2,48 +2,178 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="Content-Security-Policy"
-		content="default-src 'self'; script-src 'self'; style-src 'self'; upgrade-insecure-requests">
-	<title>Peter Kirwan</title>
-	<link rel="stylesheet" type="text/css" href="./css/normalize.css">
-	<link rel="stylesheet" type="text/css" href="./css/style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self'; upgrade-insecure-requests">
+  <title>Peter Kirwan</title>
+  <link rel="stylesheet" type="text/css" href="./css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="./css/style.css">
 </head>
 
 <body>
-	<div class="content">
-		<h1>Peter Kirwan</h1>
-		<p>I&rsquo;m a Research Associate at the <a href="https://www.mrc-bsu.cam.ac.uk">MRC Biostatistics Unit</a> in
-			Cambridge. My current research involves the development of multi-state models to estimate HIV incidence and
-			SARS-CoV-2 severity and immunity.</p>
-		<p><a href="https://github.com/pkirwan">GitHub</a> · <a href="https://orcid.org/0000-0001-6904-0500">ORCID</a>
-			· <a rel="me" href="https://fediscience.org/@pkirwan">Mastodon</a></p>
+  <div class="content">
+    <header>
+      <h1>Peter Kirwan</h1>
+      <nav>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#blog">Survival data posts</a></li>
+          <li><a href="#recent-publications">Publications</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
 
-		<h2 id="recent-publications">Recent publications</h2>
-		<p>📃 Protection of vaccine boosters and prior infection against mild/asymptomatic and moderate COVID-19 
-			infection in the UK SIREN healthcare worker cohort: October 2023 to March 2024.<br>
-			<em>Journal of Infection</em> <b>89</b> (5), 106293 (2024).<br>
-			<a href="https://doi.org/10.1016/j.jinf.2024.106293">View article</a>
-		</p>
-		<p>📃 Effect of second booster vaccinations and prior infection against SARS-CoV-2 in the UK SIREN 
-			healthcare worker cohort.<br>
-			<em>The Lancet Regional Health - Europe</em> <b>36</b>, 100809 (2024).<br>
-			<a href="https://doi.org/10.1016/j.lanepe.2023.100809">View article</a>
-		</p>
-		<p>📃 Re-assessing the late HIV diagnosis surveillance definition in the era of increased and frequent
-			testing.<br>
-			<em>HIV Medicine</em> <b>23</b> (11): 1127-1142 (2022).<br>
-			<a href="https://doi.org/10.1111/hiv.13394">View article</a>
-		</p>
-		<p>📃 Trends in COVID-19 hospital outcomes in England before and after vaccine introduction, a cohort study.<br>
-			<em>Nature Communications</em> <b>13</b> (1): 4834 (2022).<br>
-			<a href="https://doi.org/10.1038/s41467-022-32458-y">View article</a>
-		</p>
+    <h2 id="about">About</h2>
+    <div class="about-container">
+      <div class="about-text">
+        <p>I&rsquo;m a Research Associate at the <a href="https://www.mrc-bsu.cam.ac.uk">MRC Biostatistics Unit</a> in
+          Cambridge. My PhD focussed on <a href="https://doi.org/10.17863/CAM.112581">applications of multi-state models
+            to estimate infectious disease burden</a>, specifically HIV and COVID-19. My current research involves
+          the development of multi-state "back-calculation" models to estimate HIV incidence and undiagnosed HIV
+          prevalence.</p>
+        <p>
+          <a href="https://github.com/pkirwan">GitHub</a> ·
+          <a href="https://orcid.org/0000-0001-6904-0500">ORCiD</a> ·
+          <a rel="me" href="https://fediscience.org/@pkirwan">Mastodon</a>
+        </p>
+      </div>
+      <div class="profile-image">
+        <img src="./images/profile-photo.jpg" alt="Peter Kirwan" width="200">
+      </div>
+    </div>
 
-		<p>Full list of publications at <a href="https://scholar.google.co.uk/citations?user=pxDDqncAAAAJ">Google
-				Scholar</a>.</p>
-	</div>
+    <h2 id="blog">Statistical methods for survival data</h2>
+    <p>This series of blog posts provides an introduction to statistical methods for survival data, with applications
+      for infectious disease modelling and epidemiology. Topics include: classical survival methods, competing risks
+      analysis, and causal inference from observational data.</p>
+
+    <div class="blog-posts">
+      <article class="blog-post">
+        <div class="post-content">
+          <h3><a href="./blog/key-concepts-infectious-disease.html">Part I: Key concepts in infectious disease
+              research</a></h3>
+          <p class="post-excerpt">An overview of key concepts, introducing some of the challenges in estimating the
+            burden of infectious disease.</p>
+          <div class="tags">
+            <span class="tag">Incidence</span>
+            <span class="tag">Prevalence</span>
+            <span class="tag">Severity</span>
+            <span class="tag">Epidemiology</span>
+          </div>
+          <p class="post-date">March 20, 2025</p>
+        </div>
+        <div class="post-thumbnail">
+          <a href="./blog/key-concepts-infectious-disease.html"><img src="./images/infectious-disease-banner.webp"
+              alt="Infectious disease" /></a>
+        </div>
+      </article>
+
+      <article class="blog-post">
+        <div class="post-content">
+          <h3><a href="./blog/survival-analysis.html">Part II: Survival analysis</a></h3>
+          <p class="post-excerpt">An introduction to survival analysis, time-to-event data, and how we handle censored
+            observations in epidemiological research.</p>
+          <div class="tags">
+            <span class="tag">Censoring</span>
+            <span class="tag">Truncation</span>
+            <span class="tag">Hazard function</span>
+            <span class="tag">Survival function</span>
+          </div>
+          <p class="post-date">March 27, 2025</p>
+        </div>
+        <div class="post-thumbnail">
+          <a href="./blog/survival-analysis.html"><img src="./images/survival-analysis-banner.png"
+              alt="Survival analysis" /></a>
+        </div>
+      </article>
+
+      <!-- <article class="blog-post">
+        <h3><a href="./classical-survival-methods.html">Part III: Classical Survival Methods</a></h3>
+        <p class="post-excerpt">Exploring two fundamental approaches to analysing survival data: non-parametric
+          Kaplan-Meier estimation and semi-parametric Cox proportional hazards models.</p>
+        <div class="tags">
+          <span class="tag">Survival models</span>
+          <span class="tag">Kaplan-Meier</span>
+          <span class="tag">Cox models</span>
+        </div>
+        <p class="post-date">March 27, 2025</p>
+      </article>
+
+      <article class="blog-post">
+        <h3><a href="./competing-risks-analysis.html">Part IV: Competing Risks in Survival Analysis</a></h3>
+        <p class="post-excerpt">How to handle scenarios where multiple possible events can occur, and the challenges
+          this presents for traditional survival methods.</p>
+        <div class="tags">
+          <span class="tag">Survival models</span>
+          <span class="tag">Kaplan-Meier</span>
+          <span class="tag">Cox models</span>
+        </div>
+        <p class="post-date">April 3, 2025</p>
+      </article>
+
+      <article class="blog-post">
+        <h3><a href="./multi-state-models.html">Part V: Multi-State Models</a></h3>
+        <p class="post-excerpt">An overview of multi-state models and their applications in epidemiology, including
+          estimating transition intensities and predicting future states.</p>
+        <div class="tags">
+          <span class="tag">Survival models</span>
+          <span class="tag">Kaplan-Meier</span>
+          <span class="tag">Cox models</span>
+        </div>
+        <p class="post-date">April 10, 2025</p>
+      </article>
+
+      <article class="blog-post">
+        <h3><a href="./causal-inference.html">Part VI: Causal Inference in Observational Studies</a></h3>
+        <p class="post-excerpt">Challenges and methods for inferring causal relationships from observational data,
+          including propensity score matching and instrumental variables.</p>
+        <div class="tags">
+          <span class="tag">Survival models</span>
+          <span class="tag">Kaplan-Meier</span>
+          <span class="tag">Cox models</span>
+        </div> 
+        <p class="post-date">April 17, 2025</p>
+      </article> -->
+    </div>
+
+    <h2 id="recent-publications">Recent publications</h2>
+    <p>📃 Protection of vaccine boosters and prior infection against mild/asymptomatic and moderate COVID-19
+      infection in the UK SIREN healthcare worker cohort: October 2023 to March 2024. <a
+        href="https://doi.org/10.1016/j.jinf.2024.106293" class="read-more">View article →</a></p>
+
+    <p>📃 Effect of second booster vaccinations and prior infection against SARS-CoV-2 in the UK SIREN
+      healthcare worker cohort. <a href="https://doi.org/10.1016/j.lanepe.2023.100809" class="read-more">View article
+        →</a>
+    </p>
+    <p>📃 Re-assessing the late HIV diagnosis surveillance definition in the era of increased and frequent
+      testing. <a href="https://doi.org/10.1111/hiv.13394" class="read-more">View article →</a>
+    </p>
+    <p>📃 Trends in COVID-19 hospital outcomes in England before and after vaccine introduction, a cohort study. <a
+        href="https://doi.org/10.1038/s41467-022-32458-y" class="read-more">View article →</a>
+    </p>
+
+    <p>For a full list of publications, see my <a href="https://scholar.google.co.uk/citations?user=pxDDqncAAAAJ">Google
+        Scholar</a> or <a href="https://orcid.org/0000-0001-6904-0500">ORCiD</a> page.</p>
+
+    <h2 id="contact">Contact</h2>
+    <div class="contact-container">
+      <div class="contact-info">
+        <p>Feel free to reach out about research collaborations, speaking opportunities, or general enquiries:</p>
+        <ul class="contact-list">
+          <li><span class="contact-icon">📧</span> <a
+              href="mailto:peter.kirwan@mrc-bsu.cam.ac.uk">peter.kirwan@mrc-bsu.cam.ac.uk</a></li>
+          <li><span class="contact-icon">🐘</span> <a rel="me"
+              href="https://fediscience.org/@pkirwan">@pkirwan@fediscience.org</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 Peter Kirwan</p>
+    </footer>
+  </div>
 </body>
 
 </html>

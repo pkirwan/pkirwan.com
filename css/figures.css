@@ -1,0 +1,188 @@
+/* Common styles for all diagrams */
+.diagram-container {
+  position: relative;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  width: 630px;
+  /* Fixed width to preserve diagram layout */
+  height: auto;
+  min-height: 160px;
+  /* Ensure enough vertical space */
+}
+
+/* Axes styling */
+.axis {
+  position: absolute;
+  background-color: rgb(73, 135, 206);
+  height: 2px;
+}
+
+.x-axis {
+  width: 220px;
+}
+
+.y-axis {
+  width: 2px;
+}
+
+/* Arrows */
+.arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.x-arrow {
+  border-left: 7px solid rgb(73, 135, 206);
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+
+.y-arrow {
+  border-bottom: 7px solid rgb(73, 135, 206);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+}
+
+/* Lines */
+.line {
+  position: absolute;
+  height: 2px;
+  background-color: rgb(206, 35, 73);
+}
+
+.vertical-line {
+  position: absolute;
+  width: 2px;
+  background-color: rgb(206, 35, 73);
+}
+
+/* Dashed lines */
+.dashed-line {
+  position: absolute;
+  background-image: linear-gradient(black 50%, transparent 50%);
+  background-size: 10px 10px;
+}
+
+.dashed-vertical {
+  width: 2px;
+}
+
+.dashed-horizontal {
+  height: 2px;
+  background-image: linear-gradient(to right, black 50%, transparent 50%);
+  background-size: 6px 2px;
+}
+
+/* Tick marks */
+.tick {
+  position: absolute;
+  background-color: rgb(73, 135, 206);
+}
+
+.x-tick {
+  width: 2px;
+  height: 5px;
+}
+
+.y-tick {
+  width: 5px;
+  height: 2px;
+}
+
+/* Labels and text */
+.label {
+  position: absolute;
+  font-size: 14px;
+}
+
+/* Dots */
+.dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: black;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Legend items */
+.legend-item {
+  position: absolute;
+  display: flex;
+  align-items: center;
+}
+
+.legend-line {
+  width: 14px;
+  height: 2px;
+  margin-right: 8px;
+}
+
+/* Individual figure heights */
+#censoring-fig {
+  height: 190px;
+}
+
+#truncation-fig {
+  height: 160px;
+}
+
+#counting-process-fig {
+  height: 450px;
+}
+
+#intermittent-missing-fig {
+  height: 150px;
+}
+
+#intermittent-observed-fig {
+  height: 150px;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+
+  .axis,
+  .tick {
+    background-color: rgb(100, 149, 237);
+    /* Lighter blue for dark mode */
+  }
+
+  .x-arrow {
+    border-left-color: rgb(100, 149, 237);
+  }
+
+  .y-arrow {
+    border-bottom-color: rgb(100, 149, 237);
+  }
+
+  .line,
+  .vertical-line {
+    background-color: rgb(255, 99, 132);
+    /* Brighter red for dark mode */
+  }
+
+  .dashed-line {
+    background-image: linear-gradient(white 50%, transparent 50%);
+  }
+
+  .dashed-horizontal {
+    background-image: linear-gradient(to right, white 50%, transparent 50%);
+  }
+
+  .dot {
+    background-color: white;
+  }
+
+  .label {
+    color: #e0e0e0;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .diagram-container {
+    transform: scale(0.8);
+  }
+}
