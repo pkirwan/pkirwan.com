@@ -40,7 +40,7 @@
 
     <article class="blog-post-full">
       <h2>Part III: Classical survival methods</h2>
-      <p class="post-date">April 3, 2025</p>
+      <p class="post-date">April 1, 2025</p>
 
       <div class="banner-image">
         <img src="../images/survival-methods-banner.png" alt="Survival analysis figure" />
@@ -49,19 +49,16 @@
       <div class="toc">
         <h4>Contents</h4>
         <ul>
-          <li><a href="#what-is-survival-analysis">What is survival analysis?</a></li>
-          <li><a href="#incomplete-information">Incomplete information</a></li>
+          <li><a href="#statistical-inference">Statistical inference</a></li>
+          <li><a href="#likelihood-estimation">Likelihood estimation</a></li>
           <ul>
-            <li><a href="#censoring">Censoring</a></li>
-            <li><a href="#truncation">Truncation</a></li>
+            <li><a href="#frequentist-bayesian">Frequentist vs Bayesian</a></li>
+            <li><a href="#censored-truncated">Censored and truncated data</a></li>
           </ul>
-          <li><a href="#key-concepts">When standard statistics aren't enough</a></li>
-          <ul>
-            <li><a href="#cumulative-incidence">The cumulative incidence function</a></li>
-            <li><a href="#survivor-function">The survivor function</a></li>
-            <li><a href="#hazard-function">The hazard function</a></li>
-          </ul>
-          <li><a href="#glossary">Recap of key terms</a></li>
+          <li><a href="#parametric-non-parametric">Parametric and non-parametric models</a></li>
+          <li><a href="#kaplan-meier">The Kaplan-Meier estimator</a></li>
+          <li><a href="#cox-proportional-hazards">The Cox proportional hazards model</a></li>
+          <li><a href="#glossary">List of key terms</a></li>
           <li><a href="#coming-next">Coming next</a></li>
           <li><a href="#references">References</a></li>
         </ul>
@@ -72,266 +69,244 @@
 
         <div class="summary-box">
           <h4>Key takeaways</h4>
-
+          <ul>
+            <li>Statistical inference allows us to estimate survival distributions despite incomplete data from
+              censoring or truncation</li>
+            <li>Likelihood functions connect our statistical models to observed data, with special adaptations for
+              censored and truncated observations</li>
+            <li>Parametric models assume a specific distribution for survival times, while non-parametric approaches
+              make fewer assumptions</li>
+            <li>The Kaplan-Meier estimator is a non-parametric method to estimate the survivor function from censored
+              data</li>
+            <li>The Cox proportional hazards model relates survival times to explanatory variables through a
+              semi-parametric approach</li>
+            <li>The proportional hazards assumption means that the ratio of hazards between different groups remains
+              constant over time</li>
+          </ul>
         </div>
 
-        <h3 id="what-is-survival-analysis">What is survival analysis?</h3>
+        <h3 id="statistical-inference">Statistical inference</h3>
 
-        <p>Survival analysis involves studying "time-to-event" data, also termed "survival data" - a powerful
-          statistical framework that helps us answer questions about <em>when</em> events occur. It applies to any
-          scenario where we're interested in the time from a given origin to the occurrence of an event (the endpoint).
+        <p>Statistical inference is the process of using data to infer the properties of an underlying probability
+          distribution. In the context of survival analysis, we want to estimate the distribution of time-to-event data,
+          which is often incomplete due to censoring or truncation. This is a key challenge in survival analysis, as we
+          need to account for the fact that we may not observe the event of interest for all individuals in our study.
+          For more details about censored and truncated data see the <a href="survival-analysis.html">previous post</a>
+          in this series.</p>
         </p>
 
-        <p>In infectious disease research, survival data are commonly used to describe clinical origins and endpoints,
-          for example:</p>
+        <h3 id="likelihood-estimation">Likelihood estimation</h3>
+        <p>The likelihood function, often termed $L$, is used to connect statistical models to observed data in both the
+          frequentist and Bayesian frameworks. The likelihood is the probability of observing the data, $D$, given the
+          parameters, $\theta$, of the model and formally
+          expressed as:</p>
+
+        <p>$$L(\theta \mid D) = f(D \mid \theta) = \prod_i f(X_i \mid \theta)$$</p>
+
+        <p>where $f$ is the probability density function, and $X_i$ are assumed to be i.i.d observations in
+          the data</p>
+
+        <h4 id="frequentist-bayesian">Frequentist vs Bayesian</h4>
+
+        <p>In the 'frequentist' framework the parameters of a statistical model are considered to have a
+          fixed 'true' unknown value to be estimated, and the data are realisations of random variables.
+          The parameters of the model are estimated by maximising the likelihood to obtain the maximum
+          likelihood estimate (MLE), denoted $\hat{\theta}$.</p>
+
+        <p>Bayesian methods are an alternative to maximum likelihood estimation, used to estimate
+          the probability distribution of the parameters of the model given the data, known as the
+          'posterior distribution'. In the Bayesian framework, all quantities (both observable quantities
+          and parameters) are considered as random variables, with observed data being realisations
+          of these random variables. The posterior distribution, $f(\theta \mid D)$, is related to the likelihood
+          function, $f(D \mid \theta)$, via Bayes formula:</p>
+
+        <p>$$ f(\theta \mid D) = \frac{f(D \mid \theta)f(\theta)}{f(D)}$$</p>
+
+        <h4 id="censored-truncated">Censored and truncated data</h4>
+
+        <p>Constructing likelihoods for censored or truncated data requires careful consideration of the
+          information provided by each observation. The <a href="survival-analysis.html">previous post</a>
+          in this series provided a definition of censoring and truncation, and the right and left censoring and
+          truncation times.</p>
+        <p>The likelihood components provided by censored observations are:</p>
         <ul>
-          <li>Time from study recruitment to infection</li>
-          <li>Duration from hospitalisation to discharge</li>
-          <li>Period from infection until recovery or death</li>
+          <li>for exactly observed data: information on the probability of the event occurring at this time, i.e.
+            $f(X)$;</li>
+          <li>for right-censored observations: information on the survivor function up to a certain time, i.e. $S(C_r)$;
+          </li>
+          <li>for left-censored observations: information on the cumulative incidence up to a certain time, i.e.
+            $F(C_l)$;</li>
+          <li>for interval-censored observations: information on the probability that the event is within this interval,
+            i.e. $S(L) - S(R)$.</li>
         </ul>
 
-        <p>These data may be combined with information on patient characteristics (age, gender, socioeconomic status)
-          and clinical variables (vaccination status, treatments). Survival analysis techniques help us to understand
-          how these factors influence outcomes.</p>
+        <p>As data may be observed with different levels of censoring or truncation, the likelihood
+          function is constructed from the joint product of each component for each observation $i$:</p>
 
-        <h3 id="incomplete-information">Incomplete information</h3>
-        <p>One of the most distinctive aspects of survival analysis is how it handles incomplete information. In
-          real-world studies, we often don't observe the complete "story" for each participant. This incompleteness
-          comes in several forms:</p>
+        <p>$$L \propto \prod_{i} f(X_i) \prod_{i} S(C_{r,i}) \prod_{i} F(C_{l,i}) \prod_i (S(L_i) - S(R_i))$$</p>
 
-        <h4 id="censoring">Censoring</h4>
-        <p>Censoring occurs when information about an individual is only known within certain intervals or "censoring
-          times".
+        <p>The equivalent likelihood components for truncated data provide information on conditional
+          probabilities of events, i.e. $f(X)/F(Y_r)$ for right-truncated observations, where observation
+          is conditional on the event of interest having occurred by truncation time $Y_r$.</p>
 
-        <h5>Right-censoring</h5>
-        <p>The most common type of censoring occurs when our study ends before we observe the event of interest. For
-          example, if we're studying time to COVID-19 infection, and a participant remains uninfected when our study
-          concludes, they're "right-censored" - we know they remained infection-free for at least the duration of the
-          study, but we don't know what happens afterward.
-          More formally, we lack information to the "right" (or future) of the right-censoring time, $C_r$. In this
-          scenario we say an individual is right-censored at time $C_r < X$, where $X$ is the time that the event of
-            interest takes place.</p>
+        <h3 id="parametric-non-parametric">Parametric and non-parametric models</h3>
 
-            <h5>Left-censoring</h5>
-            <p>If, on the other hand, the event of interest occurs at an unknown time, $X$, before we started observing
-              the participant at time $C_l$ this is known as "left-censoring". For instance, if we're
-              studying HIV infection, and a participant tests positive at their first visit, we know they acquired HIV
-              at some point before joining the study, but we don't know exactly when. In this scenario we say the
-              individual is left-censored at time $C_l > X$. </p>
+        <p>The statistical models used for estimating model parameters may be parametric or non-parametric.
+          In general, parametric models rely on assumptions about the distribution of the underlying
+          survival times, so careful selection of this distribution is needed for valid inference.</p>
 
-            <h5>Administrative censoring</h5>
-            <p>Sometimes we impose censoring on our dataset, limiting the time-to-event data for each individual to a
-              pre-specified cut-off, with any events beyond this period not considered, e.g. mortality within 30 days of
-              hospital admission. This is known as administrative censoring.</p>
+        <p>In contrast, non-parametric models require fewer assumptions about the survival distribution,
+          so can be applied when the functional form of the distribution is not known, but may require more
+          data and not allow for extrapolation beyond the time period of the observed data. Comparisons
+          to non-parametric estimates can be made to assess the fit of a parametric model</p>
 
-            <h5>Interval-censoring</h5>
-            <p>Often, we only know that an event happened between two observation points, i.e. within a censoring
-              interval $(L, R],\ L < X < R$. An example is the infection time for an individual which is typically not
-                directly observed, but we can assume it occurs in-between a negative and positive test. Interval
-                censoring is a feature of "intermittently-observed" data, where individuals are tested for the presence
-                of infection at several time-points. Such interval-censored data can still be used to detect changes in
-                an individual's infection status when testing is sufficiently frequent, as shown in Figure 2.</p>
+        <h3 id="kaplan-meier">The Kaplan-Meier estimator</h3>
+        <p>The Kaplan-Meier estimator is a widely-used, non-parametric method to estimate the survivor
+          function, $S(t)$, from censored data, and defined as:</p>
 
-                <h4 id="truncation">Truncation</h4>
-                <p>While censoring gives us partial information, truncation occurs when information about an individual
-                  is completely unobserved, and unavailable at the time of data collection or analysis. This is
-                  different from censoring because censored individuals are at least partially observed, while
-                  truncated individuals never enter our dataset. As with censoring, both left, right, and
-                  interval-truncation are possible.</p>
+        <p>$$\hat{S}(t) = \prod_{t_k \leq t}\left(\frac{n(t_k) - d(t_k)}{n(t_k)}\right)$$</p>
 
-                <ul>
-                  <li><strong>Left-truncation</strong>: occurs when only event-times which take place after the
-                    left-truncation time, $Y_l$, are available. For example, if individuals whose infection occurs prior
-                    to the study, $X < Y_l$, are not included in our dataset.</li>
-                  <li><strong>Right-truncation</strong>: occurs when only event-times which take place before the
-                    right-truncation time, $Y_r$, are available. For example, when we have no knowledge of individuals
-                    who are at risk but whose event of interest takes place after the study endpoint, $X > Y_r$.</li>
-                  <li><strong>Interval-truncation</strong>: occurs when only event-times which take place within a
-                    specific
-                    truncation interval $[Y_l, Y_r]$ are available for observation. The key difference from left- and
-                    right-
-                    truncation is that in interval-truncation, both the left and right boundaries of the observation
-                    window play a role in determining which event-times are observed.
-                </ul>
+        <p>where $d(t_k)$ is the number of events, and $n(t_k)$ is the number of individuals at risk at time $t_k \leq
+          t$.</p>
 
-                <div class="figure">
-                  <figure>
-                    <div class="diagram-container" id="truncation-fig">
-                      <!-- Axes -->
-                      <div class="axis x-axis" style="top: 130px; left: 79px; width: 270px;"></div>
-                      <div class="axis y-axis" style="top: 20px; left: 79px; height: 110px;"></div>
-                      <div class="arrow x-arrow" style="top: 126px; left: 345px;"></div>
+        <p>The Kaplan-Meier estimator is a step function, with jumps at each observed event time, and the size of the
+          jump is the proportion of individuals who experience the event at that time. The Kaplan-Meier estimator is
+          often plotted as a survival curve, with time on the x-axis and the estimated survival probability on the
+          y-axis.</p>
 
-                      <!-- Red horizontal lines -->
-                      <div class="line" style="top: 98px; left: 79px; width: 42px;"></div>
-                      <div class="line" style="top: 67px; left: 265px; width: 30px;"></div>
-                      <div class="line" style="top: 36px; left: 155px; width: 80px;"></div>
+          <div class="figure">
+            <img src="../images/survival-methods-banner.png" alt="Kaplan-Meier survival curve" />
+            <p class="caption">Figure 1: Example of a Kaplan-Meier survival plot where time is on the x-axis and 
+              the estimated survival probability is plotted on the y-axis.</p>
+          </div>
 
-                      <!-- Dashed vertical lines -->
-                      <div class="dashed-line dashed-vertical" style="top: 20px; left: 251px; height: 115px;"></div>
-                      <div class="dashed-line dashed-vertical" style="top: 20px; left: 141px; height: 115px;"></div>
+        <h3 id="cox-proportional-hazards">The Cox proportional hazards model</h3>
 
-                      <!-- Labels -->
-                      <div class="label" style="top: 130px; left: 135px;">$$Y_l$$</div>
-                      <div class="label" style="top: 130px; left: 245px;">$$Y_r$$</div>
+        <p>The Cox proportional hazards model is used to relate survival times to explanatory variables via regression.
+          This model is `semi-parametric', as the baseline hazard is estimated non-parametrically while the effects of
+          covariates are estimated parametrically.</p>
 
-                      <!-- Legend -->
-                      <div class="label" style="top: 25px; left: 320px;">Observed time-to-event, no truncation</div>
-                      <div class="label" style="top: 57px; left: 320px;">Right-truncation</div>
-                      <div class="label" style="top: 88px; left: 320px;">Left-truncation</div>
+        <p>The Cox proportional hazards model assumes that the hazards of death for any two individuals are
+          <em>proportional</em> over time, expressed by writing the hazard function conditional on a given set of $M$
+          constant or time-varying covariates $\boldsymbol{z} = \{z_{1}\ldots, z_{M}\}$ as:
+        </p>
 
-                      <!-- Dots -->
-                      <div class="dot" style="top: 99px; left: 121px;"></div>
-                      <div class="dot" style="top: 68px; left: 295px;"></div>
-                      <div class="dot" style="top: 37px; left: 235px;"></div>
-                    </div>
-                    <figcaption></figcaption>
-                  </figure>
-                  <p class="caption">Figure 3: Examples of left and right-truncation for patients in time-to-event data,
-                    assuming only information within the truncation interval ($Y_l$ ,$Y_r$) is observed. $Y_l$:
-                    left-truncation time, $Y_r$:
-                    right-truncation time, $\bullet$: outcome time.</p>
-                </div>
+        <p>$$h(t \mid \boldsymbol{z}) = h^{(0)}(t)\exp\left(\sum_{m=1}^{M}\beta_{m}z_{m}\right) \equiv
+          h^{(0)}(t)\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z})$$</p>
 
-                <h3 id="key-concepts">When standard statistics aren't enough</h3>
-                <p>Why can't we just use regular statistical methods like t-tests or linear regression for time-to-event
-                  data? The key challenge is that censoring and truncation create a form of missing data that's not
-                  random. If we
-                  removed all censored observations or treated censoring times as event times, we'd introduce severe
-                  bias.
-                <p>Survival analysis methods are specifically designed for valid statistical
-                  estimation of incomplete
-                  data
-                  while avoiding these biases. We'll start off by defining several fundamental functions for survival
-                  analysis:</p>
+        <p>where $h^{(0)}(t)$ is the baseline hazard function, and $\beta_{m}$ are the regression coefficients. Notably,
+          the 'hazard ratio' for the $m$th covariate is a constant</p>
 
-                <h4 id="cumulative-incidence">The cumulative incidence function</h4>
+        <p>$$\frac{h(t \mid z_m = 1)}{h(t \mid z_m = 0)} = \frac{h^{(0)}(t)\exp(\beta_m 1)}{h^{(0)}(t)\exp(\beta_m 0)} =
+          \exp(\beta_{m})$$</p>
 
-                <p>Let $T$ be the independent and identically distributed (i.i.d) random variable representing the
-                  survival time, $T = t > 0$, for an individual, and assume this random variable has a probability
-                  distribution with probability density function $f(t)$.
-                  The distribution function of $T$, also known as the cumulative incidence function, is
-                  the
-                  probability of "failure" before time $t$, defined as:</p>
+        <p>The regression coefficients $\beta_{m}$ are estimated by maximising the partial likelihood
+          $L(\boldsymbol{\beta})$:
+        </p>
+        <p>$$L(\boldsymbol{\beta}) = \prod_{i \in
+          D}\frac{\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_{d_i})}{\sum_{j \in
+          R_i}\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_j)}$$</p>
 
-                <p>$$F(t) = \Pr(T < t)=\int_0^t f(u) du$$</p>
+        <p>where $D = \{T_1, T_2, \ldots, T_n\}$ are the set of distinct failure times, $R_i$ is the set of all
+          individuals who are at risk of failure immediately before time $T_i$, $\boldsymbol{z}_{d_i}$ is the covariate
+          vector
+          for an individual who failed at time $T_i$, and $\boldsymbol{z}_j$ is the covariate vector for the $j$th
+          individual at
+          risk at time $T_i$.</p>
 
-                    <h4 id="survivor-function">The survivor function</h4>
-                    <p>The survivor function $S(t)$ gives the probability of surviving (not experiencing the event)
-                      beyond
-                      time
-                      $t$.
-                      This is the cornerstone of survival analysis and is defined as:</p>
+        <h3 id="glossary">List of key terms</h3>
+        <div class="glossary">
+          <dl>
+            <dt>Statistical inference</dt>
+            <dd>The process of using sample data to infer properties of an underlying probability distribution</dd>
 
-                    <p>$$S(t) = \Pr(T \geq t) = 1 - F(t)$$</p>
+            <dt>Likelihood function</dt>
+            <dd>A mathematical function that measures how well a statistical model explains observed data, expressed as
+              $L(\theta \mid D)$</dd>
 
-                    <p>where $T$ is the random variable representing the time until the event occurs.</p>
+            <dt>Maximum likelihood estimation (MLE)</dt>
+            <dd>A method that finds parameter values that maximize the likelihood function, giving the most probable
+              explanation for observed data</dd>
 
-                    <h4 id="hazard-function">The hazard function</h4>
-                    <p>The hazard function $h(t)$ represents the instantaneous rate of experiencing the event at time
-                      $t$,
-                      given
-                      survival up to that point. Think of it as the "risk" at each moment, conditional on having
-                      survived so
-                      far:
-                    </p>
+            <dt>Bayesian inference</dt>
+            <dd>A statistical approach that updates prior knowledge about parameters with observed data to produce a
+              posterior distribution</dd>
 
-                    <p>$$h(t) = \lim_{\delta t \to 0} \frac{\Pr(t \leq T < t+\delta t | T \geq t)}{\delta t}$$</p>
+            <dt>Posterior distribution</dt>
+            <dd>The probability distribution of parameters given both the observed data and prior knowledge</dd>
 
-                        <p>By conditional probability, $\Pr(A \mid B) = \Pr(AB)/\Pr(B)$, so the hazard function can also
-                          be expressed as:
-                        <p>$$\begin{aligned}
-                          h(t) &= \lim_{\delta t \downarrow 0} \left\{\frac{\Pr(t \leq T < t + \delta t)}{\delta t \Pr(T
-                            \geq t)}\right\} \\ &=\lim_{\delta t \downarrow 0} \left\{\frac{F(t + \delta t) -
-                            F(t)}{\delta t S(t)}\right\} \\ &=\lim_{\delta t \downarrow 0} \left\{\frac{F(t + \delta t)
-                            - F(t)}{\delta t}\right\}\frac{1}{S(t)} \end{aligned}$$</p>
-                            <p>This limit is the definition of the derivative of $F(t)$ with respect to $t$, and
-                              therefore equal to $f(t)$:</p>
-                            <p>$$\lim_{\delta t \downarrow 0} \left\{\frac{F(t + \delta t) - F(t)}{\delta t}\right\} =
-                              \frac{d}{dt}F(t) = f(t)$$</p>
+            <dt>Parametric model</dt>
+            <dd>A statistical model that assumes data comes from a specific probability distribution with a fixed number
+              of parameters</dd>
 
-                            <p>Hence the hazard function is related to the survivor function through the
-                              relationship:</p>
+            <dt>Non-parametric model</dt>
+            <dd>A statistical approach that makes minimal assumptions about the underlying probability distribution</dd>
 
-                            <p>$$h(t) = \frac{f(t)}{S(t)}$$</p>
+            <dt>Kaplan-Meier estimator</dt>
+            <dd>A non-parametric method for estimating the survivor function from censored data</dd>
 
-                            <h3 id="glossary">Recap of key terms</h3>
-                            <div class="glossary">
-                              <dl>
-                                <dt>Survival analysis</dt>
-                                <dd>Statistical methods specialized for analysing time-to-event data, particularly when
-                                  observations
-                                  may be incomplete</dd>
+            <dt>Cox proportional hazards model</dt>
+            <dd>A semi-parametric regression method to investigate the association between survival time and explanatory
+              variables</dd>
 
-                                <dt>Time-to-event data</dt>
-                                <dd>Data measuring the time from a defined starting point until an event of interest
-                                  occurs</dd>
+            <dt>Proportional hazards assumption</dt>
+            <dd>The assumption that the hazard ratio between two groups remains constant over time</dd>
 
-                                <dt>Censoring</dt>
-                                <dd>When we have partial but incomplete information about when an event occurred</dd>
+            <dt>Baseline hazard</dt>
+            <dd>The hazard function when all covariates equal zero in a Cox proportional hazards model</dd>
 
-                                <dt>Right-censoring</dt>
-                                <dd>When we know an event hasn't occurred by a certain time, but don't know if/when it
-                                  occurs
-                                  after
-                                  that point</dd>
+            <dt>Hazard ratio</dt>
+            <dd>The ratio of hazard rates corresponding to different conditions or exposures, calculated as
+              $\exp(\beta)$ in
+              the Cox model</dd>
 
-                                <dt>Left-censoring</dt>
-                                <dd>When we know an event occurred before a certain time, but don't know exactly when
-                                </dd>
+            <dt>Partial likelihood</dt>
+            <dd>A specialized form of likelihood used in the Cox model that allows estimation of regression coefficients
+              without specifying the baseline hazard</dd>
+          </dl>
+        </div>
 
-                                <dt>Interval-censoring</dt>
-                                <dd>When we know an event occurred between two time points, but don't know exactly when
-                                </dd>
+        <h3 id="coming-next">Coming next</h3>
+        <p>In the next post, I'll explain how to handle scenarios where multiple possible events can occur, and the
+          challenges this presents for traditional survival methods. I'll introduce two methods for competing risks
+          data, analogous
+          to the Kaplan-Meier and Cox models described above:</p>
+        </p>
+        <ol>
+          <li>The Aalen-Johansen estimator - a non-parametric method for estimating the cumulative incidence function.
+          </li>
+          <li>The Fine-Gray model - a regression model for estimating the effect of covariates on the subdistribution
+            hazard.</li>
+        </ol>
 
-                                <dt>Truncation</dt>
-                                <dd>When individuals who experience events outside a certain time range are completely
-                                  excluded
-                                  from
-                                  observation</dd>
-
-                                <dt>Survivor function</dt>
-                                <dd>The probability of surviving (not experiencing the event) beyond time $t$</dd>
-
-                                <dt>Hazard function</dt>
-                                <dd>The instantaneous rate of experiencing the event at time $t$, given survival up to
-                                  that
-                                  point
-                                </dd>
-                              </dl>
-                            </div>
-
-                            <h3 id="coming-next">Coming next</h3>
-                            <p>In the next post, I'll introduce the likelihood function and explore two classical
-                              methods for analysing survival data:</p>
-                            <ol>
-                              <li>The Kaplan-Meier estimator - a non-parametric approach to estimate survival
-                                probabilities;
-                              </li>
-                              <li>The Cox proportional hazards model - a semi-parametric regression technique for
-                                examining
-                                covariate effects.</li>
-                            </ol>
-
-                            <h3 id="references">References</h3>
-                            <ul>
-                              <li>Collett, D. <a
-                                  href="https://www.taylorfrancis.com/books/mono/10.1201/9781003282525/modelling-survival-data-medical-research-david-collett">Modelling
-                                  Survival Data in Medical Research</a>. <em>Chapman & Hall/CRC Texts in Statistical
-                                  Science</em>.
-                                2023.</li>
-                              <li>
-                                Klein JP, Moeschberger ML. <a
-                                  href="https://play.google.com/store/books/details?id=KSq0e-6VFJ0C">Survival Analysis:
-                                  Techniques
-                                  for Censored and Truncated Data</a>. <em>Springer Science & Business Media</em>; 2005.
-                              </li>
-                            </ul>
+        <h3 id="references">References</h3>
+        <ul>
+          <li>
+            Austin PC. <a href="http://dx.doi.org/10.1111/insr.12214">A Tutorial on Multilevel Survival Analysis:
+              Methods, Models and Applications</a>. <em>Int Stat Rev</em>. 2017;85(2):185-203.
+          </li>
+          <li>Collett, D. <a
+              href="https://www.taylorfrancis.com/books/mono/10.1201/9781003282525/modelling-survival-data-medical-research-david-collett">Modelling
+              Survival Data in Medical Research</a>. <em>Chapman & Hall/CRC Texts in Statistical
+              Science</em>. 2023.
+          </li>
+          <li>
+            Klein JP, Moeschberger ML. <a href="https://play.google.com/store/books/details?id=KSq0e-6VFJ0C">Survival
+              Analysis:
+              Techniques
+              for Censored and Truncated Data</a>. <em>Springer Science & Business Media</em>; 2005.
+          </li>
+          <li>
+            Wasserman LA. <a
+              href="https://books.google.com/books?hl=en&lr=&id=th3fbFI1DaMC&oi=fnd&pg=PA1&dq=All+Statistics+Concise+Course+Statistical+Inference+Wasserman&ots=eRiUBZMis9&sig=o9uqf2nz1ytzCEOVbRS2oXprG8w">All
+              of statistics</a>. <em>Springer</em>. 2004.
+          </li>
+        </ul>
       </div>
 
       <div class="post-navigation">
         <a href="./survival-analysis.html">← Previous post</a>
-        <!-- <a href="./classical-survival-methods.html">Next post →</a> -->
+        <!-- <a href="./competing-risks-analysis.html">Next post →</a> -->
       </div>
     </article>
 
