@@ -3,7 +3,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy"
     content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self' https://cdn.jsdelivr.net; upgrade-insecure-requests">
-  <title>Part II: Survival analysis</title>
+  <title>Part III: Classical survival methods</title>
   <link rel="stylesheet" type="text/css" href="../css/normalize.css">
   <link rel="stylesheet" type="text/css" href="../css/style.css">
   <link rel="stylesheet" type="text/css" href="../css/figures.css">
@@ -39,11 +39,11 @@
     </header>
 
     <article class="blog-post-full">
-      <h2>Part II: Survival analysis</h2>
-      <p class="post-date">March 27, 2025</p>
+      <h2>Part III: Classical survival methods</h2>
+      <p class="post-date">April 3, 2025</p>
 
       <div class="banner-image">
-        <img src="../images/survival-analysis-banner.jpg" alt="Censored data" />
+        <img src="../images/survival-methods-banner.png" alt="Survival analysis figure" />
       </div>
 
       <div class="toc">
@@ -68,22 +68,11 @@
       </div>
 
       <div class="post-content">
-        <p>This is part two of a series on statistical methods for analysing time-to-event, or "survival" data.</p>
+        <p>This is part three of a series on statistical methods for analysing time-to-event, or "survival" data.</p>
 
         <div class="summary-box">
           <h4>Key takeaways</h4>
-          <ul>
-            <li>Survival analysis deals with "time-to-event" data, helping us understand <em>when</em> events happen,
-              not just <em>if</em> they happen</li>
-            <li>This approach handles incomplete information through concepts like censoring (when we have partial
-              information) and truncation (when some subjects are never observed)</li>
-            <li>Standard statistical methods can't properly handle censored data, which is why specialised survival
-              analysis techniques are essential</li>
-            <li>The survivor function $S(t)$ gives the probability of not experiencing the event beyond time $t$</li>
-            <li>The hazard function $h(t)$ represents the instantaneous risk of the event at time $t$, given survival up
-              to
-              that point</li>
-          </ul>
+
         </div>
 
         <h3 id="what-is-survival-analysis">What is survival analysis?</h3>
@@ -134,6 +123,125 @@
             <p>Sometimes we impose censoring on our dataset, limiting the time-to-event data for each individual to a
               pre-specified cut-off, with any events beyond this period not considered, e.g. mortality within 30 days of
               hospital admission. This is known as administrative censoring.</p>
+
+              <figure>
+                <div class="diagram-container" id="counting-process-fig">
+                  <!-- Panel A -->
+                  <div style="position: relative; height: 220px;">
+                    <!-- Axes -->
+                    <div class="axis x-axis" style="top: 210px; left: 79px; width: 170px;"></div>
+                    <div class="axis y-axis" style="top: 100px; left: 79px; height: 110px;"></div>
+                    <div class="arrow x-arrow" style="top: 207px; left: 245px;"></div>
+
+                    <!-- Axis ticks -->
+                    <div class="tick x-tick" style="left: 112px; top: 210px;"></div>
+                    <div class="tick x-tick" style="left: 181px; top: 210px;"></div>
+                    <div class="tick y-tick" style="left: 74px; top: 179px;"></div>
+                    <div class="tick y-tick" style="left: 74px; top: 148px;"></div>
+
+                    <!-- State trajectory -->
+                    <div class="line" style="top: 179px; left: 80px; width: 32px;"></div>
+                    <div class="vertical-line" style="top: 148px; left: 111px; height: 31px;"></div>
+                    <div class="line" style="top: 148px; left: 112px; width: 29px;"></div>
+                    <div class="vertical-line" style="top: 148px; left: 141px; height: 31px;"></div>
+                    <div class="line" style="top: 179px; left: 141px; width: 40px;"></div>
+                    <div class="vertical-line" style="top: 148px; left: 181px; height: 31px;"></div>
+                    <div class="line" style="top: 148px; left: 181px; width: 30px;"></div>
+                    <div class="vertical-line" style="top: 148px; left: 211px; height: 31px;"></div>
+                    <div class="line" style="top: 179px; left: 211px; width: 31px;"></div>
+
+                    <!-- Labels -->
+                    <div class="label" style="top: 90px; left: 30px; font-weight: bold;">A</div>
+                    <div class="label" style="top: 172px; left: 28px;">State 1</div>
+                    <div class="label" style="top: 141px; left: 28px;">State 2</div>
+                    <div class="label" style="top: 210px; left: 109px;">$$t_1$$</div>
+                    <div class="label" style="top: 210px; left: 178px;">$$t_2$$</div>
+                    <div class="label" style="top: 210px; left: 245px;">$$t$$</div>
+                  </div>
+
+                  <!-- Panel B -->
+                  <div style="position: relative; height: 220px; margin-top: 10px;">
+                    <!-- Axes -->
+                    <div class="axis x-axis" style="top: 210px; left: 79px; width: 170px;"></div>
+                    <div class="axis y-axis" style="top: 100px; left: 79px; height: 110px;"></div>
+                    <div class="arrow x-arrow" style="top: 207px; left: 245px;"></div>
+                    <div class="arrow y-arrow" style="top: 97px; left: 75px;"></div>
+
+                    <!-- Axis ticks -->
+                    <div class="tick x-tick" style="left: 112px; top: 210px;"></div>
+                    <div class="tick x-tick" style="left: 181px; top: 210px;"></div>
+                    <div class="tick y-tick" style="left: 74px; top: 210px;"></div>
+                    <div class="tick y-tick" style="left: 74px; top: 179px;"></div>
+                    <div class="tick y-tick" style="left: 74px; top: 148px;"></div>
+                    <div class="tick y-tick" style="left: 74px; top: 117px;"></div>
+
+                    <!-- Counting process trajectory -->
+                    <div class="line" style="top: 210px; left: 80px; width: 32px;"></div>
+                    <div class="vertical-line" style="top: 179px; left: 112px; height: 31px;"></div>
+                    <div class="line" style="top: 179px; left: 112px; width: 69px;"></div>
+                    <div class="vertical-line" style="top: 148px; left: 181px; height: 31px;"></div>
+                    <div class="line" style="top: 148px; left: 181px; width: 61px;"></div>
+
+                    <!-- Labels -->
+                    <div class="label" style="top: 90px; left: 30px; font-weight: bold;">B</div>
+                    <div class="label" style="top: 203px; left: 60px;">0</div>
+                    <div class="label" style="top: 172px; left: 60px;">1</div>
+                    <div class="label" style="top: 141px; left: 60px;">2</div>
+                    <div class="label" style="top: 110px; left: 60px;">3</div>
+                    <div class="label" style="top: 210px; left: 109px;">$$t_1$$</div>
+                    <div class="label" style="top: 210px; left: 178px;">$$t_2$$</div>
+                    <div class="label" style="top: 83px; left: 90px;">$$N(t)$$</div>
+                    <div class="label" style="top: 210px; left: 245px;">$$t$$</div>
+                  </div>
+                </div>
+                <figcaption>Figure: Different types of censoring in survival data. Black dots represent observed
+                  events,
+                  while
+                  lines represent follow-up time.</figcaption>
+              </figure>
+
+
+              <figure>
+                <div class="diagram-container" id="intermittent-missing-fig">
+                  <!-- Axes -->
+                  <div class="axis x-axis" style="top: 110px; left: 79px; width: 220px;"></div>
+                  <div class="axis y-axis" style="top: 10px; left: 79px; height: 100px;"></div>
+                  <div class="arrow x-arrow" style="top: 107px; left: 295px;"></div>
+
+                  <!-- Axis ticks -->
+                  <div class="tick y-tick" style="left: 74px; top: 79px;"></div>
+                  <div class="tick y-tick" style="left: 74px; top: 48px;"></div>
+
+                  <!-- Dashed vertical lines (observation times) -->
+                  <div class="dashed-line dashed-vertical" style="top: 17px; left: 111px; height: 97px;"></div>
+                  <div class="dashed-line dashed-vertical" style="top: 17px; left: 204px; height: 97px;"></div>
+                  <div class="dashed-line dashed-vertical" style="top: 17px; left: 266px; height: 97px;"></div>
+                  <div class="dashed-line dashed-horizontal" style="top: 67px; left: 330px; width: 14px;"></div>
+
+                  <!-- State trajectory -->
+                  <div class="line" style="top: 79px; left: 80px; width: 42px;"></div>
+                  <div class="vertical-line" style="top: 48px; left: 121px; height: 31px;"></div>
+                  <div class="line" style="top: 48px; left: 121px; width: 60px;"></div>
+                  <div class="vertical-line" style="top: 48px; left: 180px; height: 32px;"></div>
+                  <div class="line" style="top: 79px; left: 181px; width: 100px;"></div>
+                  <div class="line" style="top: 47px; left: 330px; width: 14px;"></div>
+
+                  <!-- Labels -->
+                  <div class="label" style="top: 69px; left: 28px;">State 1</div>
+                  <div class="label" style="top: 38px; left: 28px;">State 2</div>
+                  <div class="label" style="top: 115px; left: 106px;">2</div>
+                  <div class="label" style="top: 115px; left: 199px;">8</div>
+                  <div class="label" style="top: 115px; left: 257px;">12</div>
+                  <div class="label" style="top: 135px; left: 120px;">Follow-up time (weeks)</div>
+                  <div class="label" style="top: 37px; left: 350px;">Underlying process</div>
+                  <div class="label" style="top: 57px; left: 350px;">Observation times</div>
+                </div>
+                <figcaption>Figure: Different types of censoring in survival data. Black dots represent observed
+                  events,
+                  while
+                  lines represent follow-up time.</figcaption>
+              </figure>
+
 
             <div class="figure">
               <figure>
