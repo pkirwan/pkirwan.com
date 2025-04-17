@@ -105,7 +105,7 @@
         <p>$$L(\theta \mid D) = f(D \mid \theta) = \prod_i f(X_i \mid \theta)$$</p>
 
         <p>where $f$ is the probability density function, and $X_i$ are assumed to be i.i.d observations in
-          the data</p>
+          the data.</p>
 
         <h4 id="frequentist-bayesian">Frequentist vs Bayesian</h4>
 
@@ -132,11 +132,11 @@
         <p>The likelihood components provided by censored observations are:</p>
         <ul>
           <li>for exactly observed data: information on the probability of the event occurring at this time, i.e.
-            $f(X)$;</li>
-          <li>for right-censored observations: information on the survivor function up to a certain time, i.e. $S(C_r)$;
+            $f(X)$</li>
+          <li>for right-censored observations: information on the survivor function up to a certain time, i.e. $S(C_r)$
           </li>
           <li>for left-censored observations: information on the cumulative incidence up to a certain time, i.e.
-            $F(C_l)$;</li>
+            $F(C_l)$</li>
           <li>for interval-censored observations: information on the probability that the event is within this interval,
             i.e. $S(L) - S(R)$.</li>
         </ul>
@@ -159,7 +159,7 @@
         <p>In contrast, non-parametric models require fewer assumptions about the survival distribution,
           so can be applied when the functional form of the distribution is not known, but may require more
           data and not allow for extrapolation beyond the time period of the observed data. Comparisons
-          to non-parametric estimates can be made to assess the fit of a parametric model</p>
+          to non-parametric estimates can be made to assess the fit of a parametric model.</p>
 
         <h3 id="kaplan-meier">The Kaplan-Meier estimator</h3>
         <p>The Kaplan-Meier estimator is a widely-used, non-parametric method to estimate the survivor
@@ -196,7 +196,7 @@
           h^{(0)}(t)\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z})$$</p>
 
         <p>where $h^{(0)}(t)$ is the baseline hazard function, and $\beta_{m}$ are the regression coefficients. Notably,
-          the 'hazard ratio' for the $m$th covariate is a constant</p>
+          the 'hazard ratio' for the $m$th covariate is a constant:</p>
 
         <p>$$\frac{h(t \mid z_m = 1)}{h(t \mid z_m = 0)} = \frac{h^{(0)}(t)\exp(\beta_m 1)}{h^{(0)}(t)\exp(\beta_m 0)} =
           \exp(\beta_{m})$$</p>
