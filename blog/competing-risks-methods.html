@@ -94,10 +94,10 @@
 
         <p>In medical cohort studies, multiple study end-points are common (e.g. death, intensive care admission, and
           discharge). These multiple end-points are known as <em>competing risks</em> and may hinder the event of
-          interest, or modify the chance that this event occurs. Kaplan-Meier and Cox
-          proportional hazards models treat competing risks as censored observations, and do not account for
-          dependencies between events. Hence the assumption of independent times-to-events in these conventional
-          survival analyses is violated in the presence of competing risks.</p>
+          interest, or modify the chance that this event occurs. Kaplan-Meier and Cox proportional hazards models treat
+          competing risks as censored observations, and do not account for dependencies between events. Hence the
+          assumption of independent times-to-events in these conventional survival analyses is violated in the presence
+          of competing risks.</p>
 
         <div class="figure">
           <img src="../images/competing-risks.png" alt="An example of competing risks in survival data" />
@@ -107,14 +107,13 @@
 
         <p>To correctly address competing risks, "competing risks survival models" are available. In these models an
           individual is observed over time, with several possible events 'competing' until one takes place and the
-          individual transitions to the corresponding state. Importantly there is no
-          assumption of independence for the distribution of the time to competing events and censoring can still be
-          appropriately accounted for.</p>
+          individual transitions to the corresponding state. Importantly there is no assumption of independence for the
+          distribution of the time to competing events and censoring can still be appropriately accounted for.</p>
 
         <h3 id="cause-specific-functions">Cause-specific survival functions</h3>
         <p>
-          We'll start by defining the cause-specific hazard and cause-specific cumulative incidence
-          functions, which are the key components of competing risks survival analysis.
+          We'll start by defining the cause-specific hazard and cause-specific cumulative incidence functions, which are
+          the key components of competing risks survival analysis.
         </p>
 
         <h4 id="cause-specific-hazards">Cause-specific hazard function</h4>
@@ -131,7 +130,6 @@
                 II of this series</a> still holds in the presence of competing risks:</p>
 
             <p>$$h_j(t)=\frac{f_j(t)}{S(t)}$$</p>
-
 
             <h4 id="cause-specific-cumulative-incidence">Cause-specific cumulative incidence</h4>
 
@@ -159,13 +157,10 @@
                 <p>Firstly, by the non-parametric Nelson-Aalen estimator of the cause-specific hazard function for cause
                   $j$:</p>
 
-                <p>$$
-                  \hat{h}_j(t) = \frac{d_{j}(t)}{n(t\mbox{-})}
-                  $$</p>
+                <p>$$\hat{h}_j(t) = \frac{d_{j}(t)}{n(t\mbox{-})}$$</p>
 
                 <p>where $d_{j}(t)$ is the number of deaths due to cause $j$ at time $t$, and $n(t\mbox{-})$ is the
-                  number
-                  of individuals at risk just prior to $t$.</p>
+                  number of individuals at risk just prior to $t$.</p>
 
                 <p>With the Kaplan-Meier estimate of the survivor function defined in <a
                     href="classical-survival-methods.html#kaplan-meier">part
@@ -180,11 +175,11 @@
 
                         <p>Analogous to the Cox proportional hazards model described in <a
                             href="classical-survival-methods.html#cox-proportional-hazards">the last post</a>, the
-                          Fine-Gray proportional hazards model may be
-                          used estimate the hazard of a competing event (termed the sub-distribution hazard) among those
-                          yet to experience an event by time $t$. The risk set for the sub-distribution
-                          hazard consists of both those who have yet to experience any event, and those who have yet to
-                          experience the event of interest, but who have experienced a competing event.</p>
+                          Fine-Gray proportional hazards model may be used estimate the hazard of a competing event
+                          (termed the sub-distribution hazard) among those yet to experience an event by time $t$. The
+                          risk set for the sub-distribution hazard consists of both those who have yet to experience any
+                          event, and those who have yet to experience the event of interest, but who have experienced a
+                          competing event.</p>
 
                         <h4 id="sub-distribution-hazard">Sub-distribution hazard</h4>
 
@@ -200,27 +195,21 @@
                         <p>where, as before, $C$ is the random variable for the event that occurs.</p>
 
                         <h4 id="fine-gray-regression">Fine-Gray regression</h4>
-                        <p>Fine-Gray regression
-                          links
-                          the sub-distribution hazard, $\lambda_{j}$, to the cause-specific cumulative incidence
-                          function,
-                          $F_{j}$, through the relationship</p>
+                        
+                        <p>Fine-Gray regression links the sub-distribution hazard, $\lambda_{j}$, to the cause-specific
+                          cumulative incidence function, $F_{j}$, through the relationship:</p>
 
-                        <p>$$
-                          \lambda_{j}(t) = - \frac{d}{dt} \log{(1-F_{j}(t))}
-                          $$</p>
+                        <p>$$ \lambda_{j}(t) = - \frac{d}{dt} \log{(1-F_{j}(t))} $$</p>
 
                         <p>As with the Cox proportional hazards model, a proportional hazards regression model is
-                          assumed,
-                          where the hazard of cause $j$ at time $t$ for individual $i$ is:</p>
+                          assumed, where the hazard of cause $j$ at time $t$ for individual $i$ is:</p>
 
                         <p>$$
                           \lambda_{i,j}(t) = \exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_i)\lambda^{(0)}_{j}(t)
                           $$</p>
 
                         <p>with $\lambda^{(0)}_{j}(t)$ being the baseline sub-distribution hazard for cause $j$.
-                          Covariate
-                          coefficients are estimated by maximising the weighted partial likelihood
+                          Covariate coefficients are estimated by maximising the weighted partial likelihood
                           $L(\boldsymbol{\beta})$:</p>
 
                         <p>$$
@@ -231,24 +220,19 @@
 
                         <p>where $w_{i,j}$ are weights which account for the increasing probability of censoring with
                           increasing follow-up time, $D = \{T_1, T_2, \ldots, T_n\}$ are the set of distinct failure
-                          times,
-                          $R_i$ is the set of all individuals who are at risk of failure immediately before time $T_i$,
-                          $\boldsymbol{z}_{d_i}$ is the covariate vector for an individual who failed at time $T_i$, and
-                          $\boldsymbol{z}_j$
-                          is the covariate vector for the $j$th individual at risk at time $T_i$. Covariate effects on
-                          the
-                          sub-distribution hazard may be interpreted as covariate effects on the
-                          cumulative incidence of a competing event.</p>
+                          times, $R_i$ is the set of all individuals who are at risk of failure immediately before time
+                          $T_i$, $\boldsymbol{z}_{d_i}$ is the covariate vector for an individual who failed at time
+                          $T_i$, and $\boldsymbol{z}_j$ is the covariate vector for the $j$th individual at risk at time
+                          $T_i$. Covariate effects on the sub-distribution hazard may be interpreted as covariate
+                          effects on the cumulative incidence of a competing event.</p>
 
                         <h3 id="stratification">Stratification</h3>
 
                         <p>Whilst proportional hazards models are a common method for incorporating covariates in
-                          survival
-                          analyses, a more straightforward approach is through stratification. In a stratified model the
-                          population is subdivided according to covariate group (or strata), the survival is compared
-                          within
-                          each stratum, and the differences within stratum are combined to give an overall
-                          comparison.</p>
+                          survival analyses, a more straightforward approach is through stratification. In a stratified
+                          model the population is subdivided according to covariate group (or strata), the survival is
+                          compared within each stratum, and the differences within stratum are combined to give an
+                          overall comparison.</p>
 
                         <p>As stratification allows the baseline hazard to vary across strata it is sometimes used to
                           accommodate non-proportional hazards in Cox and Fine-Gray proportional hazards.

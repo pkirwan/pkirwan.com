@@ -118,7 +118,7 @@
         <p>Two important cases of stochastic processes are discrete parameter processes, when $T = \{\pm1, \pm2, \pm3,
           \dots\}$, and continuous parameter processes, when $T = \{t:-\infty < t < \infty\}$. Both may be restricted to
             the positive domain, in which case the parameter $t$ may be used to represent time, and these processes are
-            termed 'discrete-time' and 'continuous-time' processes</p>
+            termed 'discrete-time' and 'continuous-time' processes.</p>
 
             <h4 id="counting-processes">Counting processes</h4>
 
@@ -133,7 +133,7 @@
             <p>A stochastic process is called a 'Markov process' if the future state of a process depends only on the
               present state, and not on the sequence of events that preceded it. Equivalently, for a Markov process the
               conditional probability of a future state $X(t_{i+j})$ given $X(t_i)$ is independent of previous states
-              $X(t_0), X(t_1), \dots, X(t_{i-1})$</p>
+              $X(t_0), X(t_1), \dots, X(t_{i-1})$.</p>
 
             <h4 id="time-homogeneous-markov-processes">Time-homogeneous Markov processes</h4>
 
@@ -149,7 +149,7 @@
               and independently of each other. A homogeneous Poisson process is described by its constant intensity
               parameter $\lambda > 0$, which represents the average rate of events that occur per unit time. For any
               infinitesimal time interval $[t, t+\delta]$, as $\delta \rightarrow 0$, the probability of exactly one
-              event occurring in this interval is asymptotically $\lambda\delta$</p>
+              event occurring in this interval is asymptotically $\lambda\delta$.</p>
 
             <h4 id="multi-state-processes">Multi-state processes</h4>
 
@@ -267,8 +267,8 @@
               \boldsymbol{z}(t))$, which
               represent the instantaneous hazard of moving from state $r$ to state $s$ at time $t$, dependent on a set
               of explanatory, potentially time-varying, covariates $\boldsymbol{z}(t)$. Defining an individual's state
-              at time
-              $t$ as $X(t)$ then:</p>
+              at time $t$ as $X(t)$ then:</p>
+
             <p>$$q_{r,s}(t, \boldsymbol{z}(t)) = \lim_{\delta t\downarrow 0}\frac{\Pr(X(t+\delta t)=s \mid
               X(t)=r)}{\delta t}$$
             </p>
@@ -300,13 +300,9 @@
             <h4 id="covariates">Covariates</h4>
 
             <p>The (potentially time-varying) effect of a given set of $M$ covariates, $\boldsymbol{z}(t) = \{z_1(t),
-              \ldots,
-              z_M(t)\}$, on the transition intensities $q_{r,s}(t, \boldsymbol{z}(t))$ can be expressed via a
-              proportional
-              hazards
-              regression model. Typically these combine a parametric baseline hazard, $q^{(0)}_{r,s}(t)$, with
-              log-linear
-              regression:</p>
+              \ldots, z_M(t)\}$, on the transition intensities $q_{r,s}(t, \boldsymbol{z}(t))$ can be expressed via a
+              proportional hazards regression model. Typically these combine a parametric baseline hazard,
+              $q^{(0)}_{r,s}(t)$, with log-linear regression:</p>
 
             <p>$$\begin{align*}
               q_{r,s}(t, \boldsymbol{z}(t)) & = q^{(0)}_{r,s}(t)\exp\left(\sum_{m=1}^{M}\beta_{r,s,m}z_{m}(t)\right) \\
