@@ -129,7 +129,7 @@
 }
 
 #counting-process-fig {
-  height: 450px;
+  height: 120px;
 }
 
 #intermittent-missing-fig {
@@ -138,6 +138,10 @@
 
 #intermittent-observed-fig {
   height: 150px;
+}
+
+#three-state-model-fig {
+  height: 250px;
 }
 
 /* Dark mode support */

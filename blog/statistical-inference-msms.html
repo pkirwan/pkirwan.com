@@ -1,0 +1,131 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self' https://cdn.jsdelivr.net; upgrade-insecure-requests">
+  <title>Part VI: Statistical inference for multi-state models</title>
+  <link rel="stylesheet" type="text/css" href="../css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <link rel="stylesheet" type="text/css" href="../css/figures.css">
+
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+
+<body>
+  <div class="content">
+    <header>
+      <h1>Peter Kirwan</h1>
+      <nav>
+        <ul>
+          <li><a href="../index.html#about">About</a></li>
+          <li><a href="../index.html#blog" class="active">Survival data posts</a></li>
+          <li><a href="../index.html#recent-publications">Publications</a></li>
+          <li><a href="../index.html#talks">Talks</a></li>
+          <li><a href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <article class="blog-post-full">
+      <h2>Part VI: Statistical inference for multi-state models</h2>
+      <p class="post-date">April 24, 2025</p>
+
+      <div class="banner-image">
+        <img src="../images/statistical-inference-msms-banner.png" alt="Multi-state model" />
+      </div>
+
+      <div class="toc">
+        <h4>Contents</h4>
+        <ul>
+          <li><a href="#glossary">List of key terms</a></li>
+          <li><a href="#coming-next">Coming next</a></li>
+          <li><a href="#references">References</a></li>
+        </ul>
+      </div>
+
+      <div class="post-content">
+        <p>This is part six of a series on statistical methods for analysing time-to-event, or "survival" data.</p>
+
+        <div class="summary-box">
+          <h4>Key takeaways</h4>
+
+        </div>
+
+        <div class="figure">
+          <figure>
+            <div class="diagram-container" id="intermittent-observed-fig">
+              <!-- Axes -->
+              <div class="axis x-axis" style="top: 110px; left: 119px; width: 220px;"></div>
+              <div class="axis y-axis" style="top: 10px; left: 119px; height: 100px;"></div>
+              <div class="arrow x-arrow" style="top: 107px; left: 335px;"></div>
+
+              <!-- Axis ticks -->
+              <div class="tick y-tick" style="left: 114px; top: 79px;"></div>
+              <div class="tick y-tick" style="left: 114px; top: 48px;"></div>
+
+              <!-- Dashed vertical lines (observation times) -->
+              <div class="dashed-line dashed-vertical" style="top: 17px; left: 151px; height: 97px;"></div>
+              <div class="dashed-line dashed-vertical" style="top: 17px; left: 244px; height: 97px;"></div>
+              <div class="dashed-line dashed-vertical" style="top: 17px; left: 306px; height: 97px;"></div>
+              <div class="dashed-line dashed-horizontal" style="top: 67px; left: 370px; width: 14px;"></div>
+
+              <!-- State trajectory -->
+              <div class="line" style="top: 79px; left: 120px; width: 42px;"></div>
+              <div class="vertical-line" style="top: 48px; left: 161px; height: 31px;"></div>
+              <div class="line" style="top: 48px; left: 161px; width: 60px;"></div>
+              <div class="vertical-line" style="top: 48px; left: 220px; height: 32px;"></div>
+              <div class="line" style="top: 79px; left: 221px; width: 100px;"></div>
+              <div class="line" style="top: 47px; left: 370px; width: 14px;"></div>
+
+              <!-- Labels -->
+              <div class="label" style="top: 69px; left: 68px;">State 1</div>
+              <div class="label" style="top: 38px; left: 68px;">State 2</div>
+              <div class="label" style="top: 115px; left: 149px;">2</div>
+              <div class="label" style="top: 115px; left: 242px;">8</div>
+              <div class="label" style="top: 115px; left: 300px;">12</div>
+              <div class="label" style="top: 135px; left: 160px;">Follow-up time (weeks)</div>
+              <div class="label" style="top: 37px; left: 400px;">Underlying process</div>
+              <div class="label" style="top: 57px; left: 400px;">Observation times</div>
+            </div>
+          </figure>
+          <p class="caption">Figure 1: Example of intermittently-observed data with missed observations for an
+            underlying process.</p>
+        </div>
+
+        <h3 id="glossary">List of key terms</h3>
+        <div class="glossary">
+        </div>
+
+        <h3 id="coming-next">Coming next</h3>
+        <p></p>
+
+        <h3 id="references">References</h3>
+
+      </div>
+
+      <div class="post-navigation">
+        <a href="./multi-state-models.html">← Previous post</a>
+        <!-- <a href="./causal-inference.html">Next post →</a> -->
+      </div>
+    </article>
+
+    <footer>
+      <p>&copy; 2025 Peter Kirwan</p>
+    </footer>
+  </div>
+</body>
+
+</html>
