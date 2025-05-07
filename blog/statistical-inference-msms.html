@@ -44,12 +44,20 @@
       <p class="post-date">April 24, 2025</p>
 
       <div class="banner-image">
-        <img src="../images/statistical-inference-msms-banner.png" alt="Multi-state model" />
+        <img src="../images/statistical-inference-banner.png" alt="Intermittently-observed data" />
       </div>
 
       <div class="toc">
         <h4>Contents</h4>
         <ul>
+          <li><a href="#aalen-johansen">Aalen-Johansen estimator</a></li>
+          <li><a href="#multi-state-mixture-models">Multi-state mixture models</a></li>
+          <ul>
+            <li><a href="#transition-probabilities">Transition probabilities</a></li>
+            <li><a href="#likelihood-contributions">Likelihood contributions</a></li>
+          </ul>
+          <li><a href="#accounting-for-censoring">Accounting for censoring</a></li>
+          <li><a href="#implementing-multi-state-models">Implementing multi-state models</a></li>
           <li><a href="#glossary">List of key terms</a></li>
           <li><a href="#coming-next">Coming next</a></li>
           <li><a href="#references">References</a></li>
@@ -61,8 +69,166 @@
 
         <div class="summary-box">
           <h4>Key takeaways</h4>
-
+          <ul>
+            <li>The Aalen-Johansen estimator extends the Kaplan-Meier approach to provide non-parametric estimates of
+              transition probabilities in multi-state models</li>
+            <li>Multi-state mixture models allow for different transition types with their own probability distributions
+              and covariate effects</li>
+            <li>Intermittently-observed data with interval censoring can be properly handled by multi-state models when
+              observation schemes are non-informative</li>
+            <li>Covariates can influence both the probability of transitions between states and the timing of those
+              transitions</li>
+            <li>Both frequentist (maximum likelihood) and Bayesian (MCMC) approaches are available for fitting
+              multi-state models, with several specialised <tt>R</tt> packages providing implementation</li>
+          </ul>
         </div>
+
+        <p>This section describes two statistical inference methods (non-parametric and parametric multi-state
+          survival models). I discuss how these multi-state methods are well-suited to the investigation of
+          intermittently-observed data.</p>
+
+        <h3 id="aalen-johansen">Aalen-Johansen estimator</h3>
+
+        <p>The non-parametric Aalen-Johansen estimator can be used to estimate the transition probability matrix,
+          $\mathbf{P}(t)$ for a Markov process with a finite number of states. Firstly, let
+          $\mathbf{A}(t)$ be the matrix of cumulative transition intensities from state $r$ to state $s$:</p>
+
+        <p>$$
+          \mathbf{A}(t) = A_{r,s}(t) =
+          \begin{cases}
+          \int_{0}^{t}{q_{r,s}(u) du} & \text{if } r\neq s \\
+          -\sum_{r \neq s}{A_{r,s}(t)} & \text{if } r = s
+          \end{cases}
+          $$</p>
+
+        <p>The transition probability matrix for this process can be represented as:</p>
+
+        <p>$$
+          \mathbf{P} = \prod_{k = 1}^{K}{\left(\mathbb{I}+\Delta\mathbf{A}(t_k)\right)}
+          $$</p>
+
+        <p>where $\mathbb{I}$ is the identity matrix, $\Delta\mathbf{A}(t_k) = \mathbf{A}(t_k) - \mathbf{A}(t_k
+          \mbox{-})$,
+          and $t_k \mbox{-}$ represents the instant before time $t_k$~\parencite{Andersen1996-xs}. Substituting the
+          Nelson-Aalen estimator for $\mathbf{A}(t)$, then the Aalen-Johansen estimate of the transition probability
+          matrix is:</p>
+
+        <p>$$
+          \mathbf{{\hat{P}}}(t) = \hat{P}_{r,s}(t) = \prod_{k =
+          1}^{K}{\left(\mathbb{I}_{r,s}+\Delta\hat{A}_{r,s}(t_k)\right)}
+          $$</p>
+
+        <p>with:</p>
+
+        <p>$$
+          \Delta\hat{A}_{r,s}(t_k) =
+          \begin{cases}
+          \frac{\Delta N_{r,s}(t_k)}{Y_{r}(t_k \mbox{-})} & \text{if } r\neq s \\
+          \frac{-\Delta N_{s}(t_k)}{Y_{s}(t_k \mbox{-})} & \text{if } r = s
+          \end{cases}
+          $$</p>
+
+        <p>where $\Delta N_{r,s}(t_k)$ is the number of transitions from state $r$ to state $s$ at time $t_k$, $\Delta
+          N_{s}(t_k)$ is the number of transitions away from state $s$ at time $t_k$, and $Y_{r}(t_k \mbox{-})$ is the
+          number of individuals in state $r$ just before time $t_k$.</p>
+
+        <h3 id="multi-state-mixture-models">Multi-state mixture models</h3>
+
+        <p>For a general multi-state competing risks mixture model, assume that an individual $i$ who begins in state
+          $r$
+          makes a transition to a (pre-assigned) destination state $s$. Let $I_{i,r}$ be the indicator variable which
+          determines which transition will occur, the transition intensity at time $t$ is:</p>
+
+        <p>$$
+          q_{i,r,s}(t) =
+          \begin{cases}
+          q^{*}_{i,r,s}(t) & \text{if } I_{i,r} = s \\
+          0 & \text{otherwise}
+          \end{cases}
+          $$</p>
+
+        <p>where $q^{*}_{i,r,s}(t)$ is the transition intensity for the transition which occurs. The probability of
+          transition to state $s$ is defined as:</p>
+
+        </p>$$
+        \begin{align*}
+        \pi_{r,s} & = \Pr(I_{i,r} = s)
+        \end{align*}
+        $$</p>
+
+        <p>Let $T_{r,s}$ be the the time from entering state $r$ to moving to state $s$, given that this transition
+          occurs (i.e.\ the conditional sojourn time). A parametric distribution with parameters $\theta_{r,s}$ and
+          conditional density $f_{r,s}(. \mid \theta_{r,s})$ may be used to model $T_{r,s}$.</p>
+
+        <h4 id="transition-probabilities">Transition probabilities</h4>
+
+        <p>The probabilities of competing events $\pi_{r,s}$ can be related to a set of $m$ covariates $\boldsymbol{z} =
+          \{z_1,
+          \ldots, z_m\}$ via multinomial logistic regression. Define as $S_r$ the set of all competing states after $r$,
+          then the logit of transition to a given state $j \in S_r$ vs.\ transition to a baseline state $0 \in S_r$ is:
+        </p>
+
+        </p>$$
+        \ln\left(\frac{\pi_{r,j}(\boldsymbol{z})}{\pi_{r,0}(\boldsymbol{z})}\right) = \alpha_{r,j} +
+        \boldsymbol{\beta}_{r,j}^\mathsf{T} \boldsymbol{z}
+        $$</p>
+
+        <p>with $\alpha_{r,j}$ and $\boldsymbol{\beta}_{r,j} = \{\beta_{r,j,k};\; k = 1, \ldots m\}$ being regression
+          coefficients for the probability of transition to state $j$.</p>
+
+        <p>Meanwhile, parameters $\theta_{r,s}$ of the time to transition distribution can be related to a different (or
+          identical) set of $l$ covariates $\boldsymbol{z} = \{z_1, \ldots, z_l\}$ via a log-linear model with
+          coefficients $\gamma_{r,s}$ and $\boldsymbol{\omega}_{r,s} = \{\omega_{r,s,k};\; k = 1, \ldots, l\}$:</p>
+
+        </p>$$
+        \log(\theta_{r,s}(\boldsymbol{z}))=\gamma_{r,s} + \boldsymbol{\omega}_{r,s}^\mathsf{T} \boldsymbol{z}
+        $$</p>
+
+        <p>For most parametric time to transition distributions `accelerated failure time' models are considered, where
+          the covariates affect the rate of progression of time, i.e.\ the survival function $S(t \mid \boldsymbol{z})$
+          for an individual at time $t$ with covariates $\boldsymbol{z}$ is related to the baseline survival $S^{(0)}$
+          via:
+        </p>
+
+        </p>$$
+        S(t\mid \boldsymbol{z}) = S^{(0)}\left(\exp(\boldsymbol{\theta}^\mathsf{T}\boldsymbol{z})t\right)
+        $$</p>
+
+        <p>where $\boldsymbol{\theta}$ is a vector of regression coefficients.</p>
+
+        <h4 id="likelihood-contributions">Likelihood contributions</h4>
+
+        <p>The likelihood contributions are as follows:</p>
+
+        <p>
+        <ul>
+          <li>For an individual who reaches state $s$ at time $t$:
+            $$
+            l_i = \pi_i f(t\mid i=s)
+            $$
+          </li>
+          <li>For an individual who does not reach a state (e.g. remains in hospital) at time $t$:
+            $$
+            l_c = \sum_{i=1}^k\pi_i(1-F(t\mid i))
+            $$
+            where $F(t\mid i) = \int_0^t f(x\mid i)dx$ is the conditional cumulative distribution.
+          </li>
+        </ul>
+        </p>
+
+        <h3 id="accounting-for-censoring">Accounting for censoring</h3>
+
+        <p>As described in <a href="./classical-survival-methods.html#likelihood-estimation">part III of this
+            series</a>, survival models may be specified to account for censoring and truncation in observed data by
+          careful consideration and construction of the likelihood function. Multi-state survival models, in particular,
+          are well-suited to investigating interval-censored, or <em>intermittently-observed</em> data.
+        </p>
+
+        <p>In Figure 2 from <a href="./survival-analysis.html#interval-censoring">part II of this series</a>, changes in
+          an underlying process were detected with an intermittent observation scheme. Depending on the nature of the
+          underlying process, less frequent and/or irregular observation may result in transitions being undetected, as
+          shown in Figure 1 below. This could be an issue for survival models, particularly when there is a dependency
+          between the observation times and the underlying process.</p>
 
         <div class="figure">
           <figure>
@@ -105,14 +271,129 @@
             underlying process.</p>
         </div>
 
+        <p>An observation scheme is said to be <em>non-informative</em> if the likelihood is proportional to a scenario
+          where observation times were fixed in advance and chosen independently of the underlying
+          process. With a non-informative observation scheme then multi-state models can
+          correctly account for intermittently-observed data.</p>
+
+        <h3 id="implementing-multi-state-models">Implementing multi-state models</h3>
+
+        <p>A number of sophisticated statistical software packages exist to implement frequentist and Bayesian survival
+          and
+          multi-state models using the <tt>R</tt> programming language. Frequentist maximum
+          likelihood estimation tends to be less computationally intensive than Bayesian inference, and the latter may
+          require integrating over a vast number of parameters, which is usually impracticable for higher dimensions.
+          Instead, algorithms which simulate from the posterior distribution are often used to evaluate features of
+          these integrals. Markov Chain Monte Carlo (MCMC) algorithms have been widely used for this
+          application.</p>
+
+        <p>There are several specialised modelling packages available to fit multi-state models, including: <a
+            href="https://github.com/therneau/survival"><tt>survival</tt></a>, <a
+            href="https://chjackson.github.io/msm/"><tt>msm</tt></a> and <a
+            href="https://chjackson.github.io/flexsurv/index.html"><tt>flexsurv</tt></a> which fit models using maximum
+          likelihood, and <a href="https://mcmc-jags.sourceforge.io/"><tt>JAGS</tt></a> and <a
+            href="https://mc-stan.org/"><tt>STAN</tt></a> which fit Bayesian models using MCMC.
+        </p>
+
+        <p>Two useful online tutorials for running statistical inference for survival and multi-state models are:</p>
+        <ul>
+          <li><a href="https://www.emilyzabor.com/survival-analysis-in-r.html">Survival analysis in R</a> by Emily C.
+            Zabor</li>
+          <li><a href="https://chjackson.github.io/msm/msmcourse/">Multi-state modelling with msm: a practical
+              course</a> by Christopher Jackson</li>
+        </ul>
+
         <h3 id="glossary">List of key terms</h3>
         <div class="glossary">
+          <dl>
+            <dt>Aalen-Johansen estimator</dt>
+            <dd>A non-parametric estimator of the transition probability matrix for multi-state processes, extending the
+              Kaplan-Meier estimator</dd>
+
+            <dt>Cumulative transition intensities</dt>
+            <dd>The integrated hazards for transitions between states in a multi-state model over time</dd>
+
+            <dt>Transition probability matrix</dt>
+            <dd>A matrix containing probabilities of moving between different states within a specified time interval
+            </dd>
+
+            <dt>Multi-state mixture model</dt>
+            <dd>A model that combines multiple competing transitions with different probability distributions for
+              sojourn times</dd>
+
+            <dt>Conditional sojourn time</dt>
+            <dd>The time spent in a particular state before transitioning to a specific next state</dd>
+
+            <dt>Multinomial logistic regression</dt>
+            <dd>A regression model used to relate covariates to the probabilities of competing transitions in
+              multi-state models</dd>
+
+            <dt>Accelerated failure time model</dt>
+            <dd>A parametric survival model where covariates act multiplicatively on time, accelerating or decelerating
+              the failure process</dd>
+
+            <dt>Intermittently-observed data</dt>
+            <dd>Data where subjects are observed only at discrete time points, leading to interval censoring of state
+              transitions</dd>
+
+            <dt>Non-informative observation scheme</dt>
+            <dd>When observation times are independent of the underlying multi-state process, allowing unbiased
+              inference</dd>
+
+            <dt>Maximum likelihood estimation</dt>
+            <dd>A method of estimating model parameters by maximizing the likelihood function based on observed data
+            </dd>
+
+            <dt>Markov Chain Monte Carlo (MCMC)</dt>
+            <dd>A class of algorithms for sampling from probability distributions, commonly used for Bayesian inference
+              in multi-state models</dd>
+          </dl>
         </div>
 
         <h3 id="coming-next">Coming next</h3>
-        <p></p>
+        <p>In the next post I'll introduce the concept of causal inference from observational data and provide an
+          outline of three common methods to compute the average causal effect.</p>
 
         <h3 id="references">References</h3>
+        <ul>
+          <li>
+            Andersen PK, Borgan O, Gill RD, Keiding N. <a href="http://dx.doi.org/10.1007/978-1-4612-4348-9">Statistical
+              models based on counting processes</a>.
+            <em>Springer</em>; 1996. 784 p.
+          </li>
+          <li>
+            Fagerland MW, Hosmer DW, Bofin AM. <a href="http://dx.doi.org/10.1002/sim.3202">Multinomial goodness-of-fit
+              tests for logistic regression models</a>. <em>Stat Med</em>. 2008 Sep 20 [cited 2024 Feb
+            17];27(21):4238-53.
+          </li>
+          <li>
+            Ghani AC, Donnelly CA, Cox DR, <em>et al</em>. <a href="http://dx.doi.org/10.1093/aje/kwi230">Methods for
+              estimating the case fatality ratio for a novel, emerging infectious disease</a>. <em>Am J Epidemiol</em>.
+            2005 Sep 1;162(5):479-86.
+          </li>
+          <li>
+            Grüger J, Kay R, Schumacher M. <a href="https://www.ncbi.nlm.nih.gov/pubmed/1912263">The validity of
+              inferences based on incomplete observations in disease state models</a>. <em>Biometrics</em>. 1991
+            Jun;47(2):595-605.
+          </li>
+          <li>
+            Klein JP, Moeschberger ML. <a href="https://play.google.com/store/books/details?id=KSq0e-6VFJ0C">Survival
+              Analysis: Techniques for Censored and Truncated Data</a>. <em>Springer Science & Business Media</em>;
+            2005. 538 p.
+          </li>
+          <li>
+            van den Hout A. <a href="https://doi.org/10.1201/9781315374321">Multi-State Survival Models for
+              Interval-Censored Data</a>. <em>CRC Press</em>; 2016. 238 p.
+          </li>
+          <li>
+            Young GA, Smith RL. <a href="http://dx.doi.org/10.1017/cbo9780511755392">Essentials of Statistical
+              Inference</a>. <em>Cambridge University Press</em>; 2005.
+          </li>
+          <li>
+            Zhao H, Li Y, Sun J. <a href="http://dx.doi.org/10.1002/cjs.11143">Analyzing panel count data with a
+              dependent observation process and a terminal event</a>. <em>Can J Stat</em>. 2013 Mar;41(1):174-91.
+          </li>
+        </ul>
 
       </div>
 
