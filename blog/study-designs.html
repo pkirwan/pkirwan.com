@@ -1,0 +1,454 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self' https://cdn.jsdelivr.net; upgrade-insecure-requests">
+  <title>Part VIII: Study designs and biases</title>
+  <link rel="stylesheet" type="text/css" href="../css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <link rel="stylesheet" type="text/css" href="../css/figures.css">
+  <link rel="stylesheet" href="../font/inter.css">
+
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+
+<body>
+  <div class="content">
+    <header>
+      <h1>Peter Kirwan</h1>
+      <nav>
+        <ul>
+          <li><a href="../index.html#about">About</a></li>
+          <li><a href="../index.html#blog" class="active">Survival data posts</a></li>
+          <li><a href="../index.html#recent-publications">Publications</a></li>
+          <li><a href="../index.html#talks">Talks</a></li>
+          <li><a href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <article class="blog-post-full">
+      <h2>Part VIII: Study designs and biases</h2>
+      <p class="post-date">May 8, 2025</p>
+
+      <div class="banner-image">
+        <img src="../images/study-designs-banner.png" alt="Study designs" />
+      </div>
+
+      <div class="toc">
+        <h4>Contents</h4>
+        <ul>
+          <li><a href="#observational-study-designs">Observational study designs</a></li>
+          <ul>
+            <li><a href="#cross-sectional-studies">Cross-sectional studies</a></li>
+            <li><a href="#case-control-studies">Case-control studies</a></li>
+            <li><a href="#test-negative-case-control-studies">Test-negative case-control studies</a></li>
+            <li><a href="#cohort-studies">Cohort studies</a></li>
+          </ul>
+          <li><a href="#biases-in-observational-studies">Biases in observational studies</a></li>
+          <ul>
+            <li><a href="#information-bias">Information bias</a></li>
+            <li><a href="#collider-bias">Collider bias</a></li>
+            <li><a href="#confounding">Confounding</a></li>
+            <li><a href="#epidemic-phase-bias">Epidemic phase bias</a></li>
+          </ul>
+          <li><a href="#glossary">List of key terms</a></li>
+          <li><a href="#references">References</a></li>
+        </ul>
+      </div>
+
+      <div class="post-content">
+        <p>This is part eight of a series on statistical methods for analysing time-to-event, or "survival" data.</p>
+
+        <div class="summary-box">
+          <h4>Key takeaways</h4>
+          <ul>
+            <li>Different observational study designs (cross-sectional, case-control, cohort) are suited to different
+              research questions and data collection scenarios</li>
+            <li>Cross-sectional studies provide snapshots of prevalence at a single time point, while cohort studies
+              follow exposure groups over time</li>
+            <li>Case-control studies compare past exposures between those with and without outcomes, using odds ratios
+              to measure associations</li>
+            <li>Three main types of bias affect observational studies: information bias (measurement errors), collider
+              bias (selection effects), and confounding (unmeasured common causes)</li>
+            <li>Epidemic phase bias is specific to infectious disease studies with time-varying incidence and rapid
+              symptom onset</li>
+          </ul>
+        </div>
+
+        <p>In this final post of this series I describe a number of observational study designs and several potential
+          sources of bias common to these studies.</p>
+
+        <p>Observational studies are common in epidemiology and a valuable resource for understanding infectious disease
+          burden. Several different types of observational study design exist, which may be more or less suitable
+          depending on the research question, the need to control for specific biases, and the feasibility of data
+          collection.</p>
+
+        <div class="figure">
+          <img src="../images/study-designs.png" alt="A hierarchy showing different types of study designs" />
+          <p class="caption">Figure 1: A hierarchy of different types of study designs and the perceived quality of the
+            evidence.
+            Figure from:
+            Bodicoat D.</p>
+        </div>
+
+        <h3 id="observational-study-designs">Observational study designs</h3>
+
+        <p>Table 1 shows a $2 \times 2$ table which may be used to group participants in observational
+          studies and to inform the calculation of standard statistical measures.</p>
+
+        <table class="study-table">
+          <thead>
+            <tr>
+              <th rowspan="2" , colspan="2"></th>
+              <th colspan="2" class="outcome-header">Outcome</th>
+            </tr>
+            <tr>
+              <th>Yes</th>
+              <th>No</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th rowspan="2" class="exposure-header">Exposure</th>
+              <th>Yes</th>
+              <td>A</td>
+              <td>B</td>
+            </tr>
+            <tr>
+              <th>No</th>
+              <td>C</td>
+              <td>D</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="caption">Table 1: A $2 \times 2$ table of outcomes and exposures.</p>
+
+        <h4 id="cross-sectional-studies">Cross-sectional studies</h4>
+
+        <p>Cross-sectional studies may be used to assess:</p>
+
+        <ul>
+          <li> the <em>prevalence of an outcome</em>, defined as: $(A+C)/(A+B+C+D)$</li>
+          <li> the <em>prevalence of various different exposures</em>, defined as: $(A+B)/(A+B+C+D)$</li>
+        </ul>
+
+        <p>within a
+          population. They provide a snapshot of the population at a single point in time and can be relatively
+          straightforward to conduct using surveillance data.</p>
+
+        <h4 id="case-control-studies">Case-control studies</h4>
+
+        <p>Case-control studies are used to investigate the effects of specific exposures on an outcome. In these
+          studies
+          the outcome of interest has already occurred, individuals who have experienced the outcome are termed "cases",
+          and are compared to individuals without the outcome, known as "controls". The odds of being exposed are
+          compared in cases vs. controls via the <em>odds ratio</em>:
+          $$\frac{AD}{BC}$$
+        </p>
+
+        <h4 id="test-negative-case-control-studies">Test-negative case-control studies</h4>
+
+        <p>Test-negative case-control studies are a sub-type of case-control study. These studies aim to minimise bias
+          specifically as a result of test-seeking behaviour by selecting only individuals who test for a disease. As
+          for
+          case-control studies, the cases are individuals who test positive, controls are those who test negative, and
+          again the odds of being exposed are compared between cases and controls.</p>
+
+        <h4 id="cohort-studies">Cohort studies</h4>
+
+        <p>In cohort studies participants are selected based on their exposure status and followed up over time. The
+          incidence of the outcome of interest is compared between individuals with and without the exposure using the
+          <em>relative risk</em>:
+
+          $$
+          \frac{A/(A+B)}{C/(C+D)}
+          $$
+        </p>
+        <!-- 
+          For further discussion of test-negative case-control and cohort study designs, see
+          Section~\ref{sec:cohort-study-design}. -->
+
+        <h3 id="biases-in-observational-studies">Biases in observational studies</h3>
+
+        <p>Bias can be defined as: <em>any process at any stage of inference which tends to produce results or
+            conclusions that differ systematically from the truth</em>. All of the observational study designs
+          described above can include potential sources of bias, which are often grouped into three broad types:
+          information bias, collider bias, and confounding.</p>
+
+        <h4 id="information-bias">Information bias</h4>
+
+        <p>Information, or measurement, bias arises due to inaccuracies in data and may be induced by errors or missing
+          information in either the outcome or exposure variables, for example, incorrect coding of a
+          diagnosis. Information bias can be mitigated through careful study design and data
+          collection mechanisms, these could include: double entry of data, and linking information across different
+          systems for validation.</p>
+
+        <h4 id="collider-bias">Collider bias</h4>
+
+        <p>Collider bias, or selection bias, occurs when individuals are selected into an analysis by conditioning on
+          a common "collider" variable (a variable which is influenced by two other variables).
+          Figure 2 shows an example of collider bias: people who are regular smokers and people
+          at high risk of severe COVID-19 illness are both more likely to be admitted to hospital. By conditioning on
+          hospitalisation a distorted association between smoking and COVID-19 mortality could be induced, and this
+          bias may occur in either a positive or negative direction. For example: a negative association between
+          smoking and COVID-19 severity was reported by more than one early risk-factor study for COVID-19, with a
+          review concluding this result may have been a result of collider bias.</p>
+
+        <div class="figure">
+          <figure>
+            <div class="diagram-container" id="causal-dag-fig">
+              <!-- Node C (top) -->
+              <div class="dag-node"
+                style="top: 0px; left: 200px; width:200px; border-color: #333; border-style: solid; border-width: 1px;">
+                Hospitalisation</div>
+
+              <!-- Node A (bottom left) -->
+              <div class="dag-node"
+                style="top: 70px; left: 100px; width:150px;height: 70px; border-color: #333; border-style: solid; border-width: 1px;">
+                Regular smoker</div>
+
+              <!-- Node Y (bottom right) -->
+              <div class="dag-node"
+                style="top: 70px; left: 352px; width:150px; height: 70px; border-color: #333; border-style: solid; border-width: 1px;">
+                COVID-19 severity</div>
+
+              <!-- Arrow from C to A -->
+              <div class="dag-arrow" style="top: 48px; left: 400px; transform: rotate(-135deg);">
+                <div class="dag-arrow-line"></div>
+                <div class="dag-arrow-head"></div>
+              </div>
+
+              <!-- Arrow from A to Y -->
+              <div class="dag-arrow" style="top: 103px; left: 327px;">
+                <div class="dag-arrow-line-dashed"></div>
+              </div>
+
+              <!-- Arrow from A to Y -->
+              <div class="dag-arrow" style="top: 103px; left: 302px;">
+                <div class="dag-arrow-line-dashed"></div>
+              </div>
+
+              <!-- Arrow from A to Y -->
+              <div class="dag-arrow" style="top: 103px; left: 277px;">
+                <div class="dag-arrow-line-dashed"></div>
+              </div>
+
+              <!-- Arrow from A to Y -->
+              <div class="dag-arrow" style="top: 103px; left: 252px;">
+                <div class="dag-arrow-line-dashed"></div>
+              </div>
+
+              <!-- Arrow from C to Y -->
+              <div class="dag-arrow" style="top: 48px; left: 175px; transform: rotate(-45deg);">
+                <div class="dag-arrow-line"></div>
+                <div class="dag-arrow-head"></div>
+              </div>
+            </div>
+          </figure>
+          <p class="caption">Figure 2: Causal diagram showing the effect of collider
+            bias, where conditioning on hospitalisation induces a distorted association between smoking and COVID-19
+            severity. Conditioned on variables have bounding boxes, distorted associations are shown as dashed
+            lines.</p>
+        </div>
+
+        <p>Collider bias is most easily avoided by not conditioning on the collider, but this may be impractical
+          depending
+          on the nature of data collection. In the context of
+          COVID-19, Griffith et al. have suggested several methods for assessing the sensitivity of model results to
+          collider bias, such as inverse probability weighting. Where information is available, the extent of the bias
+          can also be examined by comparing the profile of selected individuals to the wider population of interest,
+          e.g. whether hospitalised individuals tend to be older or more likely to have comorbidities as compared to
+          the general population.</p>
+
+        <h4 id="confounding">Confounding</h4>
+
+        <p>Confounding is related to collider bias, but occurs by not conditioning on an explanatory variable. As a
+          result
+          confounding is sometimes termed <em>latent variable</em> bias. Confounding introduces a "backdoor path", an
+          additional
+          source of association between the explanatory variable and the outcome, so the measured association cannot be
+          interpreted as a causal effect.</p>
+
+        <p>An example of confounding is shown in the causal diagram in Figure 3: during vaccine roll-out older people
+          were more likely to receive a COVID-19 vaccine, but also more likely to experience
+          severe COVID-19. If age group is not adjusted for then a distorted association between vaccination and
+          COVID-19 severity may be induced. Confounding can be avoided by ensuring that factors that might be associated
+          with the outcome are measured and adjusted for.</p>
+
+        <div class="figure">
+          <figure>
+            <div class="diagram-container" id="causal-dag-fig">
+              <!-- Node C (top) -->
+              <div class="dag-node" style="top: 0px; left: 200px; width:200px;">Age group</div>
+
+              <!-- Node A (bottom left) -->
+              <div class="dag-node"
+                style="top: 70px; left: 100px; width:150px;height: 70px; border-color: #333; border-style: solid; border-width: 1px;">
+                COVID-19 severity</div>
+
+              <!-- Node Y (bottom right) -->
+              <div class="dag-node"
+                style="top: 70px; left: 352px; width:150px; height: 70px; border-color: #333; border-style: solid; border-width: 1px;">
+                Vaccination</div>
+
+              <!-- Arrow from C to A -->
+              <div class="dag-arrow" style="top: 48px; left: 370px; transform: rotate(45deg);">
+                <div class="dag-arrow-line"></div>
+                <div class="dag-arrow-head"></div>
+              </div>
+
+              <!-- Arrow from A to Y -->
+              <div class="dag-arrow" style="top: 103px; left: 327px;">
+                <div class="dag-arrow-line-dashed"></div>
+              </div>
+
+              <!-- Arrow from A to Y -->
+              <div class="dag-arrow" style="top: 103px; left: 302px;">
+                <div class="dag-arrow-line-dashed"></div>
+              </div>
+
+              <!-- Arrow from A to Y -->
+              <div class="dag-arrow" style="top: 103px; left: 277px;">
+                <div class="dag-arrow-line-dashed"></div>
+              </div>
+
+              <!-- Arrow from A to Y -->
+              <div class="dag-arrow" style="top: 103px; left: 252px;">
+                <div class="dag-arrow-line-dashed"></div>
+              </div>
+
+              <!-- Arrow from C to Y -->
+              <div class="dag-arrow" style="top: 48px; left: 200px; transform: rotate(135deg);">
+                <div class="dag-arrow-line"></div>
+                <div class="dag-arrow-head"></div>
+              </div>
+            </div>
+          </figure>
+          <p class="caption">Figure 3: Causal diagram showing the effect of confounding,
+            where not conditioning on age group induces a distorted association between vaccination and COVID-19
+            severity.
+            Conditioned on variables have bounding boxes, distorted associations are shown as dashed
+            lines.</p>
+        </div>
+
+        <h4 id="epidemic-phase-bias">Epidemic phase bias</h4>
+
+        <p>Epidemic phase bias occurs in studies with time-varying incidence of infection. This bias is induced by a
+          relationship between the time from infection to symptom onset and an individual's eventual outcome, e.g.
+          those who go on to die may experience a more rapid onset of symptoms following infection, an average of $c$
+          days sooner. Since estimates must be conditioned on the observed symptom onset date, rather than the
+          unobserved infection date, this relationship can introduce bias into results when an epidemic is in a mode of
+          growth or decline.</p>
+
+        <p>Epidemic phase bias is corrected by "shifting" the symptom onset date among those who experience the more
+          severe
+          outcome to be $c$ days later, so that the time from infection to symptom onset is uncorrelated with the
+          outcome
+          (the time-to-event of interest remains the same for both outcomes.) As the true value of $c$ is typically
+          unknown, sensitivity analysis with differing values of $c$ can be used to assess the susceptibility of
+          results
+          to this bias.</p>
+
+        <h3 id="glossary">List of key terms</h3>
+        <div class="glossary">
+          <dl>
+            <dt>Cross-sectional study</dt>
+            <dd>A study design that examines the prevalence of outcomes and exposures at a single point in time</dd>
+
+            <dt>Case-control study</dt>
+            <dd>A study that compares past exposures between individuals with (cases) and without (controls) an outcome
+              of interest</dd>
+
+            <dt>Test-negative case-control study</dt>
+            <dd>A case-control study where both cases and controls are selected from individuals who sought testing,
+              reducing healthcare-seeking bias</dd>
+
+            <dt>Cohort study</dt>
+            <dd>A study that follows groups with different exposure levels over time to compare incidence of outcomes
+            </dd>
+
+            <dt>Odds ratio</dt>
+            <dd>A measure of association comparing the odds of exposure between cases and controls</dd>
+
+            <dt>Relative risk</dt>
+            <dd>The ratio of outcome incidence between exposed and unexposed groups in a cohort study</dd>
+
+            <dt>Information bias</dt>
+            <dd>Systematic error arising from inaccuracies in measuring exposures or outcomes</dd>
+
+            <dt>Collider bias</dt>
+            <dd>Bias introduced by conditioning on a variable that is influenced by both the exposure and outcome</dd>
+
+            <dt>Confounding</dt>
+            <dd>Bias that occurs when a third variable is associated with both the exposure and outcome, creating a
+              spurious association</dd>
+
+            <dt>Epidemic phase bias</dt>
+            <dd>Bias in infectious disease studies caused by the relationship between symptom onset timing and disease
+              severity during epidemic growth or decline</dd>
+          </dl>
+        </div>
+
+        <h3 id="references">References</h3>
+        <ul>
+          <li>
+            Baker C. <a href="https://doi.org/10.21061/epidemiology">Epidemiology: Study Designs</a>.
+            <em>Blacksburg</em>; 2023.
+          </li>
+          <li>
+            Bodicoat D. <a
+              href="https://www.theanalysisfactor.com/study-designs-health-research-evidence-hierarchy/">Types of Study
+              Designs in Health Research: The Evidence Hierarchy</a>.
+          </li>
+          <li>
+            Griffith GJ, Morris TT, Tudball MJ, et al. <a href="https://doi.org/10.1038/s41467-020-19478-2">Collider bias
+              undermines our understanding of COVID-19 disease risk and severity</a>. <em>Nature Communications</em>.
+            11(1),5749.
+          </li>
+          <li>
+            Hernán MA, Robins JM. <a href="https://miguelhernan.org/whatifbook">Causal Inference: What If</a>.
+            <em>CRC Press</em>; 2023, 312 pp.
+          </li>
+          <li>
+            Seaman SR, Nyberg T, Overton C, Pascall DJ, et al. <a
+              href="https://doi.org/10.1177/09622802221107105">Adjusting for time of infection or positive test when
+              estimating the risk of a post-infection outcome in an epidemic</a>. <em>Statistical Methods in Medical
+              Research</em>. 2022;31(10):1942-58.
+          </li>
+          <li>
+            Wenzl T. <a href="https://doi.org/10.2760/564217">Smoking and COVID-19 - A review of studies suggesting a
+              protective effect of smoking against COVID-19</a>. <em>Publications Office</em>. 2020.
+          </li>
+          <li>
+            Woodward M. <a href="https://doi.org/10.1201/b16343">Epidemiology: Study Design and Data Analysis</a>.
+            <em>Chapman & Hall/CRC Texts in Statistical Science</em>; 2013.
+          </li>
+        </ul>
+      </div>
+
+      <div class="post-navigation">
+        <a href="./causal-inference.html">← Previous post</a>
+      </div>
+    </article>
+
+    <footer>
+      <p>&copy; 2025 Peter Kirwan</p>
+    </footer>
+  </div>
+</body>
+
+</html>

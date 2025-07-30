@@ -9,6 +9,7 @@
   <title>Peter Kirwan</title>
   <link rel="stylesheet" type="text/css" href="./css/normalize.css">
   <link rel="stylesheet" type="text/css" href="./css/style.css">
+  <link rel="stylesheet" href="./font/inter.css">
 </head>
 
 <body>
@@ -51,138 +52,143 @@
       analysis, and causal inference from observational data.</p>
 
     <div class="blog-posts">
-      <article class="blog-post">
-        <div class="post-content">
-          <h3><a href="./blog/key-concepts-infectious-disease.html">Part I: Key concepts in infectious disease
-              research</a></h3>
-          <p class="post-excerpt">An overview of key concepts, introducing some of the challenges in estimating the
-            burden of infectious disease.</p>
-          <div class="tags">
-            <span class="tag">Incidence</span>
-            <span class="tag">Prevalence</span>
-            <span class="tag">Severity</span>
-            <span class="tag">Epidemiology</span>
-          </div>
-          <p class="post-date">March 20, 2025</p>
-        </div>
-        <div class="post-thumbnail">
-          <a href="./blog/key-concepts-infectious-disease.html"><img src="./images/infectious-disease-banner.webp"
-              alt="Infectious disease" /></a>
-        </div>
-      </article>
-
-      <article class="blog-post">
-        <div class="post-content">
-          <h3><a href="./blog/survival-analysis.html">Part II: Survival analysis</a></h3>
-          <p class="post-excerpt">An introduction to survival analysis, time-to-event data, and how we handle censored
-            observations in epidemiological research.</p>
-          <div class="tags">
-            <span class="tag">Censoring</span>
-            <span class="tag">Truncation</span>
-            <span class="tag">Hazard function</span>
-            <span class="tag">Survival function</span>
-          </div>
-          <p class="post-date">March 27, 2025</p>
-        </div>
-        <div class="post-thumbnail">
-          <a href="./blog/survival-analysis.html"><img src="./images/survival-analysis-banner.jpg"
-              alt="Survival analysis" /></a>
-        </div>
-      </article>
-
-      <article class="blog-post">
-        <div class="post-content">
-          <h3><a href="./blog/classical-survival-methods.html">Part III: Classical survival methods</a></h3>
-          <p class="post-excerpt">Exploring two fundamental approaches to analysing survival data: non-parametric
-            Kaplan-Meier estimation and semi-parametric Cox proportional hazards models.</p>
-          <div class="tags">
-            <span class="tag">Likelihood</span>
-            <span class="tag">Survival models</span>
-            <span class="tag">Kaplan-Meier</span>
-            <span class="tag">Cox models</span>
-          </div>
-          <p class="post-date">April 3, 2025</p>
-        </div>
-        <div class="post-thumbnail">
-          <a href="./blog/classical-survival-methods.html"><img src="./images/survival-methods-banner.png"
-              alt="Kaplan-Meier" /></a>
-        </div>
-      </article>
-
-      <article class="blog-post">
-        <div class="post-content">
-          <h3><a href="./blog/competing-risks-methods.html">Part IV: Competing Risks in Survival Analysis</a></h3>
-          <p class="post-excerpt">How to handle scenarios where multiple possible events can occur, and the challenges
-            this presents for traditional survival methods.</p>
-          <div class="tags">
-            <span class="tag">Competing risks</span>
-            <span class="tag">Aalen-Johansen</span>
-            <span class="tag">Fine-Grey</span>
-            <span class="tag">Stratification</span>
-          </div>
-          <p class="post-date">April 10, 2025</p>
-        </div>
-        <div class="post-thumbnail">
-          <a href="./blog/competing-risks-methods.html"><img src="./images/competing-risks-banner.png"
-              alt="Competing risks" /></a>
-        </div>
-      </article>
-
-      <article class="blog-post">
-        <div class="post-content">
-          <h3><a href="./blog/multi-state-models.html">Part V: Multi-State Models</a></h3>
-          <p class="post-excerpt">Some theory of multi-state models and their applications in epidemiology,
-            including estimating transition intensities and the time spent in a state.</p>
-          <div class="tags">
-            <span class="tag">Multi-state models</span>
-            <span class="tag">Transition intensity</span>
-            <span class="tag">Markov models</span>
-            <span class="tag">Semi-Markov models</span>
-          </div>
-          <p class="post-date">April 17, 2025</p>
-        </div>
-        <div class="post-thumbnail">
-          <a href="./blog/multi-state-models.html"><img src="./images/multi-state-models-banner.png"
-              alt="Multi-state model" /></a>
-        </div>
-      </article>
-
-      <article class="blog-post">
-        <div class="post-content">
-          <h3><a href="./blog/statistical-inference-msms.html">Part VI: Statistical inference for multi-state models</a>
-          </h3>
-          <p class="post-excerpt">Explanation of two statistical inference methods (non-parametric and parametric
-            multi-state survival models) and how these multi-state methods are well-suited to the investigation of
-            intermittently-observed data.</p>
-          <div class="tags">
-            <span class="tag">Multi-state models</span>
-            <span class="tag">Statistical inference</span>
-            <span class="tag">Intermittently-observed data</span>
-          </div>
-          <p class="post-date">April 24, 2025</p>
-        </div>
-        <div class="post-thumbnail">
-          <a href="./blog/statistical-inference-msms.html"><img src="./images/statistical-inference-banner.png"
-              alt="Intermittently-observed data" /></a>
-        </div>
-      </article>
-
-      <!-- <article class="blog-post">
+      <a href="./blog/key-concepts-infectious-disease.html">
         <article class="blog-post">
-        <div class="post-content">
-          <h3><a href="./blog/causal-inference.html">Part VII: Key concepts in causal inference</a></h3>
-          <p class="post-excerpt">Challenges and methods for inferring causal relationships from observational data,
-          including propensity score matching and instrumental variables.</p>
-          <div class="tags">
-            <span class="tag">Causal inference</span>
+          <div class="post-content">
+            <h3>I: Key concepts in infectious disease research</h3>
+            <p class="post-excerpt">An overview of key concepts, introducing some of the challenges in estimating the
+              burden of infectious disease.</p>
+            <div class="tags">
+              <span class="tag">Incidence</span>
+              <span class="tag">Prevalence</span>
+              <span class="tag">Severity</span>
+            </div>
           </div>
-          <p class="post-date">April 24, 2025</p>
-        </div>
-        <div class="post-thumbnail">
-          <a href="./blog/causal-inference.html"><img src="./images/causal-inference-banner.png"
-              alt="Causal inference" /></a>
-        </div>
-      </article> -->
+          <div class="post-thumbnail">
+            <img src="./images/infectious-disease-banner.webp" alt="Infectious disease" />
+          </div>
+        </article>
+      </a>
+
+      <a href="./blog/survival-analysis.html">
+        <article class="blog-post">
+          <div class="post-content">
+            <h3>II: Survival analysis</h3>
+            <p class="post-excerpt">An introduction to survival analysis, time-to-event data, and how we handle censored
+              observations in epidemiological research.</p>
+            <div class="tags">
+              <span class="tag">Censoring</span>
+              <span class="tag">Truncation</span>
+              <span class="tag">Hazard function</span>
+            </div>
+          </div>
+          <div class="post-thumbnail">
+            <img src="./images/survival-analysis-banner.jpg" alt="Survival analysis" />
+          </div>
+        </article>
+      </a>
+
+      <a href="./blog/classical-survival-methods.html">
+        <article class="blog-post">
+          <div class="post-content">
+            <h3>III: Classical survival methods</h3>
+            <p class="post-excerpt">Exploring two fundamental approaches to analysing survival data: non-parametric
+              Kaplan-Meier estimation and semi-parametric Cox proportional hazards models.</p>
+            <div class="tags">
+              <span class="tag">Likelihood</span>
+              <span class="tag">Survival models</span>
+            </div>
+          </div>
+          <div class="post-thumbnail">
+            <img src="./images/survival-methods-banner.png" alt="Kaplan-Meier" />
+          </div>
+        </article>
+      </a>
+
+      <a href="./blog/competing-risks-methods.html">
+        <article class="blog-post">
+          <div class="post-content">
+            <h3>IV: Competing risks in survival analysis</h3>
+            <p class="post-excerpt">How to handle scenarios where multiple possible events can occur, and the challenges
+              this presents for traditional survival methods.</p>
+            <div class="tags">
+              <span class="tag">Competing risks</span>
+              <span class="tag">Stratification</span>
+            </div>
+          </div>
+          <div class="post-thumbnail">
+            <img src="./images/competing-risks-banner.png" alt="Competing risks" />
+          </div>
+        </article>
+      </a>
+
+      <a href="./blog/multi-state-models.html">
+        <article class="blog-post">
+          <div class="post-content">
+            <h3>V: Multi-state models</h3>
+            <p class="post-excerpt">Some theory of multi-state models and their applications in epidemiology,
+              including estimating transition intensities and the time spent in a state.</p>
+            <div class="tags">
+              <span class="tag">Transition intensity</span>
+              <span class="tag">Markov property</span>
+            </div>
+          </div>
+          <div class="post-thumbnail">
+            <img src="./images/multi-state-models-banner.png" alt="Multi-state model" />
+          </div>
+        </article>
+      </a>
+
+      <a href="./blog/statistical-inference-msms.html">
+        <article class="blog-post">
+          <div class="post-content">
+            <h3>VI: Statistical inference for multi-state models</h3>
+            <p class="post-excerpt">Details of two statistical inference methods and how these are well-suited to the
+              investigation of intermittently-observed data.</p>
+            <div class="tags">
+              <span class="tag">Multi-state models</span>
+              <span class="tag">Statistical inference</span>
+            </div>
+          </div>
+          <div class="post-thumbnail">
+            <img src="./images/statistical-inference-banner.png" alt="Intermittently-observed data" />
+          </div>
+        </article>
+      </a>
+
+      <a href="./blog/causal-inference.html">
+        <article class="blog-post">
+          <div class="post-content">
+            <h3>VII: Key concepts in causal inference</h3>
+            <p class="post-excerpt">Challenges and methods for inferring causal relationships from observational data,
+              including propensity score matching and instrumental variables.</p>
+            <div class="tags">
+              <span class="tag">Causal inference</span>
+            </div>
+          </div>
+          <div class="post-thumbnail">
+            <img src="./images/causal-inference-banner.png" alt="Causal inference" />
+          </div>
+        </article>
+      </a>
+
+      <a href="./blog/study-designs.html">
+        <article class="blog-post">
+          <div class="post-content">
+            <h3>VIII: Study designs and biases</h3>
+            <p class="post-excerpt">An overview of different observational study designs and the potential biases that
+              can arise.</p>
+            <div class="tags">
+              <span class="tag">Biases</span>
+              <span class="tag">Confounding</span>
+            </div>
+          </div>
+          <div class="post-thumbnail">
+            <img src="./images/study-designs-banner.png" alt="Study designs" />
+          </div>
+        </article>
+      </a>
+
     </div>
 
     <h2 id="recent-publications">Recent publications</h2>

@@ -7,6 +7,7 @@
   <link rel="stylesheet" type="text/css" href="../css/normalize.css">
   <link rel="stylesheet" type="text/css" href="../css/style.css">
   <link rel="stylesheet" type="text/css" href="../css/figures.css">
+  <link rel="stylesheet" href="../font/inter.css">
 
   <!-- MathJax Configuration -->
   <script>
@@ -316,20 +317,20 @@
                   distribution with probability density function $f(t)$.
                   The distribution function of $T$, also known as the cumulative incidence function, is
                   the
-                  probability of "failure" before time $t$, defined as:</p>
+                  probability of "failure" before time $t$, defined as:
 
-                <p>$$F(t) = \Pr(T < t)=\int_0^t f(u) du$$</p>
+                $$F(t) = \Pr(T < t)=\int_0^t f(u) du$$</p>
 
                     <h4 id="survivor-function">The survivor function</h4>
                     <p>The survivor function $S(t)$ gives the probability of surviving (not experiencing the event)
                       beyond
                       time
                       $t$.
-                      This is the cornerstone of survival analysis and is defined as:</p>
+                      This is the cornerstone of survival analysis and is defined as:
 
-                    <p>$$S(t) = \Pr(T \geq t) = 1 - F(t)$$</p>
+                    $$S(t) = \Pr(T \geq t) = 1 - F(t)$$
 
-                    <p>where $T$ is the random variable representing the time until the event occurs.</p>
+                    where $T$ is the random variable representing the time until the event occurs.</p>
 
                     <h4 id="hazard-function">The hazard function</h4>
                     <p>The hazard function $h(t)$ represents the instantaneous rate of experiencing the event at time
@@ -338,26 +339,28 @@
                       survival up to that point. Think of it as the "risk" at each moment, conditional on having
                       survived so
                       far:
-                    </p>
 
-                    <p>$$h(t) = \lim_{\delta t \to 0} \frac{\Pr(t \leq T < t+\delta t | T \geq t)}{\delta t}$$</p>
+                    $$h(t) = \lim_{\delta t \to 0} \frac{\Pr(t \leq T < t+\delta t | T \geq t)}{\delta t}$$
 
-                        <p>By conditional probability, $\Pr(A \mid B) = \Pr(AB)/\Pr(B)$, so the hazard function can also
+                      By conditional probability, $\Pr(A \mid B) = \Pr(AB)/\Pr(B)$, so the hazard function can also
                           be expressed as:
-                        <p>$$\begin{aligned}
+
+                        $$\begin{aligned}
                           h(t) &= \lim_{\delta t \downarrow 0} \left\{\frac{\Pr(t \leq T < t + \delta t)}{\delta t \Pr(T
                             \geq t)}\right\} \\ &=\lim_{\delta t \downarrow 0} \left\{\frac{F(t + \delta t) -
                             F(t)}{\delta t S(t)}\right\} \\ &=\lim_{\delta t \downarrow 0} \left\{\frac{F(t + \delta t)
-                            - F(t)}{\delta t}\right\}\frac{1}{S(t)} \end{aligned}$$</p>
-                            <p>This limit is the definition of the derivative of $F(t)$ with respect to $t$, and
-                              therefore equal to $f(t)$:</p>
-                            <p>$$\lim_{\delta t \downarrow 0} \left\{\frac{F(t + \delta t) - F(t)}{\delta t}\right\} =
-                              \frac{d}{dt}F(t) = f(t)$$</p>
+                            - F(t)}{\delta t}\right\}\frac{1}{S(t)} \end{aligned}$$
 
-                            <p>Hence the hazard function is related to the survivor function through the
-                              relationship:</p>
+                      This limit is the definition of the derivative of $F(t)$ with respect to $t$, and
+                              therefore equal to $f(t)$:
 
-                            <p>$$h(t) = \frac{f(t)}{S(t)}$$</p>
+                        $$\lim_{\delta t \downarrow 0} \left\{\frac{F(t + \delta t) - F(t)}{\delta t}\right\} =
+                              \frac{d}{dt}F(t) = f(t)$$
+                              
+                      Hence the hazard function is related to the survivor function through the
+                              relationship:
+
+                            $$h(t) = \frac{f(t)}{S(t)}$$</p>
 
                             <h3 id="glossary">List of key terms</h3>
                             <div class="glossary">

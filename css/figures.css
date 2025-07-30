@@ -6,7 +6,7 @@
   width: 630px;
   /* Fixed width to preserve diagram layout */
   height: auto;
-  min-height: 160px;
+  min-height: 120px;
   /* Ensure enough vertical space */
 }
 
@@ -119,6 +119,54 @@
   margin-right: 8px;
 }
 
+.dag-node {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.dag-arrow {
+  position: absolute;
+  width: 30px;
+  height: 2px;
+}
+
+.dag-arrow-line {
+  width: 25px;
+  height: 2px;
+  background-color: rgb(73, 135, 206);
+}
+
+.dag-arrow-line-dashed {
+  width: 25px;
+  height: 2px;
+  border-top: 2px dashed rgb(73, 135, 206);
+  background-color: transparent;
+}
+
+.dag-arrow-curved {
+  width: 25px;
+  height: 2px;
+  background-color: rgb(73, 135, 206);
+}
+
+.dag-arrow-head {
+  position: absolute;
+  right: 0;
+  top: -3px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid rgb(73, 135, 206);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+
 /* Individual figure heights */
 #censoring-fig {
   height: 190px;
@@ -129,19 +177,49 @@
 }
 
 #counting-process-fig {
-  height: 120px;
+  height: 140px;
 }
 
 #intermittent-missing-fig {
-  height: 150px;
+  height: 160px;
 }
 
 #intermittent-observed-fig {
-  height: 150px;
+  height: 160px;
 }
 
 #three-state-model-fig {
   height: 250px;
+}
+
+#causal-dag-fig {
+  height: 80px;
+}
+
+/* Table styles */
+
+.study-table {
+  border-collapse: collapse;
+  margin: 20px auto;
+  font-family: inherit;
+}
+
+.study-table th,
+.study-table td {
+  border: 1px solid #333;
+  padding: 14px 16px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.outcome-header {
+  font-weight: bold;
+}
+
+.exposure-header {
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+  font-weight: bold;
 }
 
 /* Dark mode support */
@@ -181,6 +259,27 @@
 
   .label {
     color: #e0e0e0;
+  }
+
+  .dag-node {
+    color: #e0e0e0;
+  }
+
+  .dag-arrow-line {
+    background-color: rgb(100, 149, 237);
+  }
+
+.dag-arrow-line-dashed {
+    border-top-color: rgb(100, 149, 237);
+  }
+
+  .dag-arrow-head {
+    border-left-color: rgb(100, 149, 237);
+  }
+
+  .study-table th,
+  .study-table td {
+    border: 1px solid #eee;
   }
 }
 

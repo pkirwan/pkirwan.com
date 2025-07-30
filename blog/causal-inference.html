@@ -7,6 +7,7 @@
   <link rel="stylesheet" type="text/css" href="../css/normalize.css">
   <link rel="stylesheet" type="text/css" href="../css/style.css">
   <link rel="stylesheet" type="text/css" href="../css/figures.css">
+  <link rel="stylesheet" href="../font/inter.css">
 
   <!-- MathJax Configuration -->
   <script>
@@ -44,11 +45,28 @@
       <p class="post-date">May 1, 2025</p>
 
       <div class="banner-image">
-        <img src="../images/causal-inference-banner.png" alt="Multi-state model" />
+        <img src="../images/causal-inference-banner.png" alt="Causal inference" />
       </div>
 
       <div class="toc">
         <h4>Contents</h4>
+        <ul>
+          <li><a href="#assessing-causal-effects">Assessing causal effects</a></li>
+          <li><a href="#causal-diagrams">Causal diagrams and local independence</a></li>
+          <li><a href="#causal-inference">Causal inference from observational data</a></li>
+          <ul>
+            <li><a href="#identifiability-conditions">Identifiability conditions</a></li>
+          </ul>
+          <li><a href="#causal-methods">Methods to compute the average causal effect</a></li>
+          <ul>
+            <li><a href="#inverse-probability-weighting">Inverse probability weighting</a></li>
+            <li><a href="#matching">Matching</a></li>
+            <li><a href="#standardisation">Standardisation</a></li>
+          </ul>
+          <li><a href="#glossary">List of key terms</a></li>
+          <li><a href="#coming-next">Coming next</a></li>
+          <li><a href="#references">References</a></li>
+        </ul>
       </div>
 
       <div class="post-content">
@@ -56,26 +74,325 @@
 
         <div class="summary-box">
           <h4>Key takeaways</h4>
+          <ul>
+            <li>Randomised trials provide strong evidence for causation, but observational data can also support causal
+              inference under strict conditions</li>
+            <li>Causal diagrams (DAGs) help visualise relationships between variables, while local independence graphs
+              represent continuous-time causal processes</li>
+            <li>Three key conditions enable causal inference from observational data: consistency, exchangeability, and
+              positivity</li>
+            <li>Exchangeability (no unmeasured confounding) is usually the most challenging assumption to verify in
+              practice</li>
+            <li>Three main methods estimate causal effects: inverse probability weighting, matching, and standardisation
+              (g-formula)</li>
+            <li>Each method creates a "pseudo-population" where treatment assignment becomes independent of confounders
+            </li>
+          </ul>
         </div>
 
-        <p></p>
+        <p>In this post I introduce the concept of causal inference from observational data and provide an
+          outline
+          of three common methods to compute the average causal effect.</p>
+
+        <h3 id="assessing-causal-effects">Assessing causal effects</h3>
+
+        <p>In trial settings, well-designed randomised experiments, where the treated and untreated are theoretically
+          exchangeable (or <em>exogenous</em>), provide a rigorous way to assess causal effects within a specific
+          population.
+          Under these ideal conditions, any observed association between the treatment and the outcome can be more
+          confidently interpreted as causation, due to the minimisation of confounding and selection bias. However, even
+          randomised trials have limitations, with potential issues including external validity or the <em>Hawthorne
+            effect</em>
+          - where participants modify their behaviour in response to being observed.</p>
+
+        <p>In contrast, observational data typically present more challenges in establishing causality due to the
+          potential
+          for unmeasured confounding and selection bias. If an explicit causal question is defined (e.g. the effect of a
+          well-specified hypothetical intervention), and certain stringent conditions fulfilled (such as no unmeasured
+          confounding, positivity, and consistency) it becomes possible to make causal inferences from observational
+          data. This approach, referred to as the <em>potential outcome framework</em>, requires careful consideration
+          of the study design, choice of appropriate statistical methods, and transparent reporting of assumptions, with
+          any causal claims depending on the plausibility of these assumptions.</p>
+
+        <h3 id="causal-diagrams">Causal diagrams and local independence</h3>
+
+        <p>Causal diagrams are a graphical tool used to visualise causal relationships. One class
+          of causal diagrams are causal directed acyclic graphs (causal DAGs). In these graphs, nodes represent
+          measurements or interventions at discrete times, and edges between
+          nodes indicate causal effects, an example is shown in Figure 1. The lack of an edge between
+          nodes can be interpreted as the absence of a direct effect.</p>
+
+        <div class="figure">
+          <figure>
+            <div class="diagram-container" id="causal-dag-fig">
+              <!-- Node C (top) -->
+              <div class="dag-node" style="top: 20px; left: 270px;">C</div>
+
+              <!-- Node A (bottom left) -->
+              <div class="dag-node" style="top: 90px; left: 270px;">A</div>
+
+              <!-- Node Y (bottom right) -->
+              <div class="dag-node" style="top: 90px; left: 340px;">Y</div>
+
+              <!-- Arrow from C to A -->
+              <div class="dag-arrow" style="top: 68px; left: 270px; transform: rotate(90deg);">
+                <div class="dag-arrow-line"></div>
+                <div class="dag-arrow-head"></div>
+              </div>
+
+              <!-- Arrow from A to Y -->
+              <div class="dag-arrow" style="top: 103px; left: 305px;">
+                <div class="dag-arrow-line"></div>
+                <div class="dag-arrow-head"></div>
+              </div>
+
+              <!-- Arrow from C to Y -->
+              <div class="dag-arrow" style="top: 68px; left: 305px; transform: rotate(45deg);">
+                <div class="dag-arrow-line"></div>
+                <div class="dag-arrow-head"></div>
+              </div>
+            </div>
+          </figure>
+          <p class="caption">Figure 1: Example of a causal DAG representing discrete measurements for treatment, $A$,
+            causes of treatment, $C$, and outcome, $Y$.</p>
+        </div>
+
+        <p>Whilst causal DAGs are useful to describe relationships between discrete-time processes, they are poorly
+          suited
+          to describing causality in continuous-time, as changes in quantities or the occurrence of events are not
+          represented. Instead, for continuous-time processes, the concept of <em>local
+            independence</em> may be applied to consider how well a future value of an intensity process (such as a
+          transition intensity in a multi-state model) is predicted by the past. Local independence can be
+          viewed as <em>immediate causation</em>, and can be represented in a type of causal diagram known as a local
+          independence graph. In these graphs, nodes represent stochastic processes and edges between nodes represent
+          immediate causal influence, example shown in Figure 2.</p>
+
+        <div class="figure">
+          <figure>
+            <div class="diagram-container" id="causal-dag-fig">
+              <!-- Node C (top) -->
+              <div class="dag-node" style="top: 20px; left: 270px;">C</div>
+
+              <!-- Node A (bottom left) -->
+              <div class="dag-node" style="top: 90px; left: 270px;">A</div>
+
+              <!-- Node Y (bottom right) -->
+              <div class="dag-node" style="top: 90px; left: 340px;">Y</div>
+
+              <!-- Arrow from C to A -->
+              <div class="dag-arrow" style="top: 68px; left: 270px; transform: rotate(90deg);">
+                <div class="dag-arrow-curved"></div>
+                <div class="dag-arrow-head"></div>
+              </div>
+
+              <!-- Arrow from A to Y -->
+              <div class="dag-arrow" style="top: 103px; left: 305px;">
+                <div class="dag-arrow-curved"></div>
+                <div class="dag-arrow-head"></div>
+              </div>
+
+            </div>
+          </figure>
+          <p class="caption">Figure 2: Example of a local independence graph representing continuous
+            processes for treatment, $A$, causes of treatment, $C$, and outcome, $Y$. In local independence graphs only
+            immediate causal influences are shown.</p>
+        </div>
+
+        <h3 id="causal-inference">Causal inference from observational data</h3>
+
+        <p>To make causal inference from observational data we rely on being able to analyse the data as if treatment
+          had
+          been randomly assigned, conditional on a set of measured covariates $Z$. This is termed a <em>conditionally
+            randomised</em> experiment.</p>
+
+        <p>Let $Y = (0:$ doesn't experience outcome, $1:$ experiences outcome$)$ be a random variable for an
+          observed outcome, and $A = (0:$ untreated, $1:$ treated$)$ be a random variable for an observed treatment,
+          then:
+
+          $$\Pr(Y = 1 \mid A = 1)$$
+
+          is the probability of experiencing the outcome given treatment. Define the potential outcome under treatment
+          $a$ as $Y^a$, then the potential outcome under the observed treatment is: $Y^A = Y$.</p>
+
+
+        <h4 id="identifiability-conditions">Identifiability conditions</h4>
+
+        <p>Three <em>identifiability conditions</em> are required for an observational study to be treated as a
+          conditionally
+          randomised experiment:</p>
+
+        <ol>
+          <li><strong>Consistency</strong>: the values of treatment under comparison correspond to well-defined
+            interventions
+            that, in turn, correspond to the versions of treatment in the data, i.e.
+            $Y^a = Y$ for individuals with $A = a$
+          </li>
+
+          <li><strong>Exchangeability</strong>: the conditional probability of receiving every value of treatment
+            depends only
+            on measured covariates $Z$. This is alternatively phrased as: conditional on a set of measured covariates
+            $Z$,
+            the untreated group, had they been treated, would experience the same average outcome as the treated group,
+            i.e.
+            $$\Pr(Y^a = 1 \mid A = 1, Z = z) = \Pr(Y^a = 1 \mid A = 0, Z = z)$$
+
+            or equivalently, $Y^a \mathrel{\perp\!\!\!\!\perp} A \mid Z = z$, the counterfactual outcome and the
+            observed treatment are independent within the covariate levels $Z = z$;</p>
+          </li>
+
+          <li><strong>Positivity</strong>: the probability of receiving every value of treatment $a$ conditional on
+            $Z = z$ is positive, i.e.
+            $$\Pr(A = a \mid Z = z) > 0 \quad\text{for all } z \text{ where } \Pr(Z = z) \neq 0$$
+          </li>
+
+        </ol>
+
+        <p>Among these conditions, consistency and positivity are usually straightforward to check in observational
+          studies
+          whilst exchangeability relies on the assumption that all predictors of an outcome have been measured. It is
+          usually impossible to guarantee exchangeability, but understanding the potential for biases such as
+          confounding
+          and collider bias (defined below) can inform which covariates to include such that the assumption will be
+          approximately true.</p>
+
+        <p>If the three identifiability conditions are fulfilled, a (hypothetical) randomised experiment, known as a
+          <em>target trial</em>, may be emulated using causal inference from observational data, with the average causal
+          effect
+          quantified as $E(Y^{a = 1}) - E(Y^{a = 0})$.
+        </p>
+
+        <h3 id="causal-methods">Methods to compute the average causal effect</h3>
+
+        <p>Three commonly-used methods to compute the average causal effect are inverse probability weighting, matching,
+          and standardisation.</p>
+
+        <h4 id="inverse-probability-weighting">Inverse probability weighting</h4>
+
+        <p>The concept of inverse probability weighting is to assign weights to each individual in the
+          cohort
+          based on the inverse of the probability of receiving the observed treatment level, conditional on their
+          covariates, $Z$. For example, a treated individual, $A = 1$, with a set of covariates $Z = z$ would be
+          assigned
+          a weight of $1/\Pr(A = 1 \mid Z = z)$. Conversely, an untreated individual, $A = 0$, with covariates $Z = z'$
+          would be assigned a weight of $1/\Pr(A = 0 \mid Z = z')$. These weights are used to adjust for potential
+          baseline confounders when estimating the causal effect of treatment, allowing the creation of a
+          <em>pseudo-population</em> where treatment assignment is independent of the observed
+          covariates.
+        </p>
+
+        <h4 id="matching">Matching</h4>
+
+        <p>Matching involves constructing a subset of the population in which the distribution of
+          covariates,
+          $Z$,
+          is the same for the treated and untreated groups. This is typically achieved by pairing each treated
+          individual
+          with an untreated individual with the same or similar covariate values. The causal effect can be estimated as
+          the average difference in outcomes among the matched pairs.</p>
+
+        <h4 id="standardisation">Standardisation</h4>
+
+        <p>Standardisation involves estimating the counterfactual risk using a weighted average of the
+          risks (or
+          standardisation of the risks) in each covariate level. For example, for a covariate $Z$ with two levels
+          $(0,1)$:
+
+          $$\Pr(Y^a = 1) = \Pr(Y = 1 \mid Z = 1, A = a)\Pr(Z = 1) + \Pr(Y = 1 \mid Z = 0, A = a)\Pr(Z = 0)$$
+
+          which generalises to:
+
+          $$\Pr(Y^a = 1) = \sum_z{\Pr(Y = 1 \mid Z = z, A = a)\Pr(Z = z)}$$
+
+          The standardised mean $E(Y^a) = \sum_z{E(Y \mid Z = z, A = a)\Pr(Z = z)}$ is known as the
+          <em>g-formula</em>.
+        </p>
 
         <h3 id="glossary">List of key terms</h3>
         <div class="glossary">
-          
+          <dl>
+            <dt>Potential outcome framework</dt>
+            <dd>A theoretical framework for causal inference that considers what would have happened under different
+              treatment scenarios</dd>
+
+            <dt>Exchangeability</dt>
+            <dd>The assumption that treated and untreated groups would have the same outcomes if they received the same
+              treatment</dd>
+
+            <dt>Consistency</dt>
+            <dd>The assumption that the treatment received matches the treatment being studied in the causal question
+            </dd>
+
+            <dt>Positivity</dt>
+            <dd>The assumption that all individuals have some probability of receiving any treatment level</dd>
+
+            <dt>Directed acyclic graph (DAG)</dt>
+            <dd>A graphical representation of causal relationships where arrows show causal effects and no cycles exist
+            </dd>
+
+            <dt>Local independence</dt>
+            <dd>The concept that future values of a process depend only on the immediate past, used for continuous-time
+              causal relationships</dd>
+
+            <dt>Inverse probability weighting</dt>
+            <dd>A method that weights observations by the inverse probability of receiving their observed treatment to
+              adjust for confounding</dd>
+
+            <dt>Matching</dt>
+            <dd>A method that pairs treated and untreated individuals with similar characteristics to estimate causal
+              effects</dd>
+
+            <dt>Standardisation (g-formula)</dt>
+            <dd>A method that calculates causal effects by standardising outcome risks across covariate levels</dd>
+
+            <dt>Target trial</dt>
+            <dd>A hypothetical randomised trial that would answer the causal question of interest</dd>
+          </dl>
         </div>
 
         <h3 id="coming-next">Coming next</h3>
-        <p></p>
+        <p>In the final post of this series, I'll explore different observational study designs and several of the
+          biases that can affect inference in observational research: information bias, collider bias, confounding, and
+          epidemic phase bias.</p>
 
         <h3 id="references">References</h3>
-       
+        <ul>
+          <li>
+            Aalen OO, Røysland K, Gran JM, Kouyos R et al. <a href="https://doi.org/10.1177/0962280213520436">Can we
+              believe the DAGs? A comment on the relationship between causal DAGs and mechanisms</a>. <em>Stat. Methods
+              Med. Res.</em> 2016; 25(5), pp. 2294-2314.
+          </li>
+          <li>
+            Didelez V. <a href="https://doi.org/10.1111/j.1467-9868.2007.00634.x">Graphical Models for Marked Point
+              Processes Based on Local Independence</a>. <em>J. R. Stat. Soc. Series B Stat. Methodol</em>. 2008; 70(1),
+            pp.245-264.
+          </li>
+          <li>
+            Griffith GJ, Morris TT, Tudball MJ, et al. <a href="https://doi.org/10.1038/s41467-020-19478-2">Collider
+              bias
+              undermines our understanding of COVID-19 disease risk and severity</a>. <em>Nature Communications</em>.
+            11(1),5749.
+          </li>
+          <li>
+            Hernán MA, Robins JM. <a href="https://doi.org/10.1136/jech.2004.029496">Estimating causal effects from
+              epidemiological data</a>. <em>J. Epidemiol. Community Health</em>. 2006;60(7), pp.578-586.
+          </li>
+          <li>
+            Hernán MA, Robins JM. <a href="https://miguelhernan.org/whatifbook">Causal Inference: What If</a>.
+            <em>CRC Press</em>; 2023, 312 pp.
+          </li>
+          <li>
+            McCambridge J, Witton J, Elbourne DR. <a href="https://doi.org/10.1016/j.jclinepi.2013.08.015">Systematic
+              review of the Hawthorne
+              effect: new concepts are needed to study research participation effects</a>. <em>J. Clin. Epidemiol.</em>
+            2014;67(3),pp.267-277.
+          </li>
+        </ul>
 
       </div>
 
       <div class="post-navigation">
         <a href="./statistical-inference-msms.html">← Previous post</a>
-        <!-- <a href="./study-designs-b.html">Next post →</a> -->
+        <a href="./study-designs.html">Next post →</a>
       </div>
     </article>
 

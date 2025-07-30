@@ -7,6 +7,7 @@
   <link rel="stylesheet" type="text/css" href="../css/normalize.css">
   <link rel="stylesheet" type="text/css" href="../css/style.css">
   <link rel="stylesheet" type="text/css" href="../css/figures.css">
+  <link rel="stylesheet" href="../font/inter.css">
 
   <!-- MathJax Configuration -->
   <script>
@@ -91,44 +92,44 @@
 
         <p>The non-parametric Aalen-Johansen estimator can be used to estimate the transition probability matrix,
           $\mathbf{P}(t)$ for a Markov process with a finite number of states. Firstly, let
-          $\mathbf{A}(t)$ be the matrix of cumulative transition intensities from state $r$ to state $s$:</p>
+          $\mathbf{A}(t)$ be the matrix of cumulative transition intensities from state $r$ to state $s$:
 
-        <p>$$
+          $$
           \mathbf{A}(t) = A_{r,s}(t) =
           \begin{cases}
           \int_{0}^{t}{q_{r,s}(u) du} & \text{if } r\neq s \\
           -\sum_{r \neq s}{A_{r,s}(t)} & \text{if } r = s
           \end{cases}
-          $$</p>
+          $$
 
-        <p>The transition probability matrix for this process can be represented as:</p>
+          The transition probability matrix for this process can be represented as:
 
-        <p>$$
+          $$
           \mathbf{P} = \prod_{k = 1}^{K}{\left(\mathbb{I}+\Delta\mathbf{A}(t_k)\right)}
-          $$</p>
+          $$
 
-        <p>where $\mathbb{I}$ is the identity matrix, $\Delta\mathbf{A}(t_k) = \mathbf{A}(t_k) - \mathbf{A}(t_k
+          where $\mathbb{I}$ is the identity matrix, $\Delta\mathbf{A}(t_k) = \mathbf{A}(t_k) - \mathbf{A}(t_k
           \mbox{-})$,
-          and $t_k \mbox{-}$ represents the instant before time $t_k$~\parencite{Andersen1996-xs}. Substituting the
+          and $t_k \mbox{-}$ represents the instant before time $t_k$. Substituting the
           Nelson-Aalen estimator for $\mathbf{A}(t)$, then the Aalen-Johansen estimate of the transition probability
-          matrix is:</p>
+          matrix is:
 
-        <p>$$
+          $$
           \mathbf{{\hat{P}}}(t) = \hat{P}_{r,s}(t) = \prod_{k =
           1}^{K}{\left(\mathbb{I}_{r,s}+\Delta\hat{A}_{r,s}(t_k)\right)}
-          $$</p>
+          $$
 
-        <p>with:</p>
+          with:
 
-        <p>$$
+          $$
           \Delta\hat{A}_{r,s}(t_k) =
           \begin{cases}
           \frac{\Delta N_{r,s}(t_k)}{Y_{r}(t_k \mbox{-})} & \text{if } r\neq s \\
           \frac{-\Delta N_{s}(t_k)}{Y_{s}(t_k \mbox{-})} & \text{if } r = s
           \end{cases}
-          $$</p>
+          $$
 
-        <p>where $\Delta N_{r,s}(t_k)$ is the number of transitions from state $r$ to state $s$ at time $t_k$, $\Delta
+          where $\Delta N_{r,s}(t_k)$ is the number of transitions from state $r$ to state $s$ at time $t_k$, $\Delta
           N_{s}(t_k)$ is the number of transitions away from state $s$ at time $t_k$, and $Y_{r}(t_k \mbox{-})$ is the
           number of individuals in state $r$ just before time $t_k$.</p>
 
@@ -137,26 +138,26 @@
         <p>For a general multi-state competing risks mixture model, assume that an individual $i$ who begins in state
           $r$
           makes a transition to a (pre-assigned) destination state $s$. Let $I_{i,r}$ be the indicator variable which
-          determines which transition will occur, the transition intensity at time $t$ is:</p>
+          determines which transition will occur, the transition intensity at time $t$ is:
 
-        <p>$$
+          $$
           q_{i,r,s}(t) =
           \begin{cases}
           q^{*}_{i,r,s}(t) & \text{if } I_{i,r} = s \\
           0 & \text{otherwise}
           \end{cases}
-          $$</p>
+          $$
 
-        <p>where $q^{*}_{i,r,s}(t)$ is the transition intensity for the transition which occurs. The probability of
-          transition to state $s$ is defined as:</p>
+          where $q^{*}_{i,r,s}(t)$ is the transition intensity for the transition which occurs. The probability of
+          transition to state $s$ is defined as:
 
-        </p>$$
-        \begin{align*}
-        \pi_{r,s} & = \Pr(I_{i,r} = s)
-        \end{align*}
-        $$</p>
+          $$
+          \begin{align*}
+          \pi_{r,s} & = \Pr(I_{i,r} = s)
+          \end{align*}
+          $$
 
-        <p>Let $T_{r,s}$ be the the time from entering state $r$ to moving to state $s$, given that this transition
+          Let $T_{r,s}$ be the the time from entering state $r$ to moving to state $s$, given that this transition
           occurs (i.e.\ the conditional sojourn time). A parametric distribution with parameters $\theta_{r,s}$ and
           conditional density $f_{r,s}(. \mid \theta_{r,s})$ may be used to model $T_{r,s}$.</p>
 
@@ -166,41 +167,36 @@
           \{z_1,
           \ldots, z_m\}$ via multinomial logistic regression. Define as $S_r$ the set of all competing states after $r$,
           then the logit of transition to a given state $j \in S_r$ vs.\ transition to a baseline state $0 \in S_r$ is:
-        </p>
 
-        </p>$$
-        \ln\left(\frac{\pi_{r,j}(\boldsymbol{z})}{\pi_{r,0}(\boldsymbol{z})}\right) = \alpha_{r,j} +
-        \boldsymbol{\beta}_{r,j}^\mathsf{T} \boldsymbol{z}
-        $$</p>
+          $$
+          \ln\left(\frac{\pi_{r,j}(\boldsymbol{z})}{\pi_{r,0}(\boldsymbol{z})}\right) = \alpha_{r,j} +
+          \boldsymbol{\beta}_{r,j}^\mathsf{T} \boldsymbol{z}
+          $$
 
-        <p>with $\alpha_{r,j}$ and $\boldsymbol{\beta}_{r,j} = \{\beta_{r,j,k};\; k = 1, \ldots m\}$ being regression
+          with $\alpha_{r,j}$ and $\boldsymbol{\beta}_{r,j} = \{\beta_{r,j,k};\; k = 1, \ldots m\}$ being regression
           coefficients for the probability of transition to state $j$.</p>
 
         <p>Meanwhile, parameters $\theta_{r,s}$ of the time to transition distribution can be related to a different (or
           identical) set of $l$ covariates $\boldsymbol{z} = \{z_1, \ldots, z_l\}$ via a log-linear model with
-          coefficients $\gamma_{r,s}$ and $\boldsymbol{\omega}_{r,s} = \{\omega_{r,s,k};\; k = 1, \ldots, l\}$:</p>
+          coefficients $\gamma_{r,s}$ and $\boldsymbol{\omega}_{r,s} = \{\omega_{r,s,k};\; k = 1, \ldots, l\}$:
 
-        </p>$$
-        \log(\theta_{r,s}(\boldsymbol{z}))=\gamma_{r,s} + \boldsymbol{\omega}_{r,s}^\mathsf{T} \boldsymbol{z}
-        $$</p>
+          $$
+          \log(\theta_{r,s}(\boldsymbol{z}))=\gamma_{r,s} + \boldsymbol{\omega}_{r,s}^\mathsf{T} \boldsymbol{z}
+          $$</p>
 
         <p>For most parametric time to transition distributions `accelerated failure time' models are considered, where
-          the covariates affect the rate of progression of time, i.e.\ the survival function $S(t \mid \boldsymbol{z})$
-          for an individual at time $t$ with covariates $\boldsymbol{z}$ is related to the baseline survival $S^{(0)}$
-          via:
-        </p>
+        the covariates affect the rate of progression of time, i.e.\ the survival function $S(t \mid \boldsymbol{z})$
+        for an individual at time $t$ with covariates $\boldsymbol{z}$ is related to the baseline survival $S^{(0)}$
+        via:
 
-        </p>$$
-        S(t\mid \boldsymbol{z}) = S^{(0)}\left(\exp(\boldsymbol{\theta}^\mathsf{T}\boldsymbol{z})t\right)
-        $$</p>
+        $$ S(t\mid \boldsymbol{z}) = S^{(0)}\left(\exp(\boldsymbol{\theta}^\mathsf{T}\boldsymbol{z})t\right) $$
 
-        <p>where $\boldsymbol{\theta}$ is a vector of regression coefficients.</p>
+        where $\boldsymbol{\theta}$ is a vector of regression coefficients.</p>
 
         <h4 id="likelihood-contributions">Likelihood contributions</h4>
 
-        <p>The likelihood contributions are as follows:</p>
+        <p>The likelihood contributions are as follows:
 
-        <p>
         <ul>
           <li>For an individual who reaches state $s$ at time $t$:
             $$
@@ -232,7 +228,7 @@
 
         <div class="figure">
           <figure>
-            <div class="diagram-container" id="intermittent-observed-fig">
+            <div class="diagram-container" id="intermittent-missing-fig">
               <!-- Axes -->
               <div class="axis x-axis" style="top: 110px; left: 119px; width: 220px;"></div>
               <div class="axis y-axis" style="top: 10px; left: 119px; height: 100px;"></div>
@@ -399,7 +395,7 @@
 
       <div class="post-navigation">
         <a href="./multi-state-models.html">← Previous post</a>
-        <!-- <a href="./causal-inference.html">Next post →</a> -->
+        <a href="./causal-inference.html">Next post →</a>
       </div>
     </article>
 

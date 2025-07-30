@@ -7,6 +7,7 @@
   <link rel="stylesheet" type="text/css" href="../css/normalize.css">
   <link rel="stylesheet" type="text/css" href="../css/style.css">
   <link rel="stylesheet" type="text/css" href="../css/figures.css">
+  <link rel="stylesheet" href="../font/inter.css">
 
   <!-- MathJax Configuration -->
   <script>
@@ -141,11 +142,11 @@
               next (termed the <em>transition probability</em>) is independent of the time parameter $t$. Equivalently,
               for $\Pr(X(t + u) = s \mid X(t) = r)$ denoting the conditional probability of a process $X(\cdot)$ being
               in state $s$ at time $t + u$, given the process was in state $r$ at time $t$, a Markov process is
-              time-homogeneous if:</p>
+              time-homogeneous if:
 
-            <p>$$\Pr(X(t+u) = s \mid X(t) = r) = \Pr(X(u) = s \mid X(0) = r)$$</p>
+              $$\Pr(X(t+u) = s \mid X(t) = r) = \Pr(X(u) = s \mid X(0) = r)$$
 
-            <p>A well-known time-homogeneous Markov counting process is the Poisson process, where events occur randomly
+              A well-known time-homogeneous Markov counting process is the Poisson process, where events occur randomly
               and independently of each other. A homogeneous Poisson process is described by its constant intensity
               parameter $\lambda > 0$, which represents the average rate of events that occur per unit time. For any
               infinitesimal time interval $[t, t+\delta]$, as $\delta \rightarrow 0$, the probability of exactly one
@@ -267,66 +268,65 @@
               \boldsymbol{z}(t))$, which
               represent the instantaneous hazard of moving from state $r$ to state $s$ at time $t$, dependent on a set
               of explanatory, potentially time-varying, covariates $\boldsymbol{z}(t)$. Defining an individual's state
-              at time $t$ as $X(t)$ then:</p>
+              at time $t$ as $X(t)$ then:
 
-            <p>$$q_{r,s}(t, \boldsymbol{z}(t)) = \lim_{\delta t\downarrow 0}\frac{\Pr(X(t+\delta t)=s \mid
+              $$q_{r,s}(t, \boldsymbol{z}(t)) = \lim_{\delta t\downarrow 0}\frac{\Pr(X(t+\delta t)=s \mid
               X(t)=r)}{\delta t}$$
-            </p>
 
-            <p>From <a href="./survival-analysis.html#hazard-function">the definition of the hazard function</a>, this
+            From <a href="./survival-analysis.html#hazard-function">the definition of the hazard function</a>, this
               transition intensity is equivalent to the hazard of
               transition from one state to another. These transition intensities form a <em>transition intensity
                 matrix</em> $\mathbf{Q}$, whose rows sum to zero, with diagonal entries defined by:
 
-            <p>$$q_{r,r}(t, \boldsymbol{z}(t)) = - \sum_{s \neq r} q_{r,s}(t, \boldsymbol{z}(t))$$</p>
+              $$q_{r,r}(t, \boldsymbol{z}(t)) = - \sum_{s \neq r} q_{r,s}(t, \boldsymbol{z}(t))$$
 
-            <p>For the example three-state model shown in Figure 2 this matrix would be:</p>
+            For the example three-state model shown in Figure 2 this matrix would be:
 
-            <p>$$
+            $$
               \mathbf{Q} = \begin{bmatrix}
               -q_{1,2}-q_{1,3} & q_{1,2} & q_{1,3} \\
               q_{2,1} & -q_{2,1}-q_{2,3} & q_{2,3} \\
               0 & 0 & 0 \\
               \end{bmatrix}
-              $$</p>
+              $$
 
-            <p>Here, state 3 is known as an 'absorbing' state, as individuals do not leave the state after arrival,
+            Here, state 3 is known as an 'absorbing' state, as individuals do not leave the state after arrival,
               while states 1 and 2 are `transient' states. The <em>transition probability matrix</em>, which contains
               the probabilities of moving between states within a time-interval of length $t$ is derived from the
-              transition intensity matrix by the matrix exponential:</p>
+              transition intensity matrix by the matrix exponential:
 
-            <p>$$\mathbf{P}(t) = \exp(t\mathbf{Q}) = \sum_{n=0}^{\infty}\frac{t^n}{n!}\mathbf{Q}^n$$</p>
+            $$\mathbf{P}(t) = \exp(t\mathbf{Q}) = \sum_{n=0}^{\infty}\frac{t^n}{n!}\mathbf{Q}^n$$</p>
 
             <h4 id="covariates">Covariates</h4>
 
             <p>The (potentially time-varying) effect of a given set of $M$ covariates, $\boldsymbol{z}(t) = \{z_1(t),
               \ldots, z_M(t)\}$, on the transition intensities $q_{r,s}(t, \boldsymbol{z}(t))$ can be expressed via a
               proportional hazards regression model. Typically these combine a parametric baseline hazard,
-              $q^{(0)}_{r,s}(t)$, with log-linear regression:</p>
+              $q^{(0)}_{r,s}(t)$, with log-linear regression:
 
-            <p>$$\begin{align*}
+            $$\begin{align*}
               q_{r,s}(t, \boldsymbol{z}(t)) & = q^{(0)}_{r,s}(t)\exp\left(\sum_{m=1}^{M}\beta_{r,s,m}z_{m}(t)\right) \\
               & = q^{(0)}_{r,s}(t)\exp\left(\boldsymbol{\beta}_{r,s}^\mathsf{T}\boldsymbol{z}(t)\right)
-              \end{align*}$$</p>
+              \end{align*}$$
 
-            <p>where $\exp(\beta_{r,s,m})$ is the hazard ratio for the $m$th covariate on the $r \rightarrow s$
+            where $\exp(\beta_{r,s,m})$ is the hazard ratio for the $m$th covariate on the $r \rightarrow s$
               transition.</p>
 
             <h4 id="sojourn-time">Sojourn time</h4>
 
             <p>The time spent in a state prior to transition is termed the <em>sojourn time</em>, with its mean given by
-              the inverse of the transition intensity for remaining in the state:</p>
+              the inverse of the transition intensity for remaining in the state:
 
-            <p>$$E(T_r) = -\frac{1}{q_{r,r}}$$</p>
+            $$E(T_r) = -\frac{1}{q_{r,r}}$$</p>
 
             <h3 id="discrete-time-msms">Discrete-time multi-state models</h3>
 
             <p>For population studies which measure duration in discrete time, discrete-time multi-state models may be
               applied. Since the concept of instantaneous risk does not apply in discrete time, transition probabilities
               are instead defined which represent the probability of transition from state $r$ to state $s$ in the time
-              interval $(t_i,t_j]$, $t_j>t_i$:</p>
+              interval $(t_i,t_j]$, $t_j>t_i$:
 
-            <p>$$p_{r,s}(t_i, t_j) = \Pr(X(t_j) = s \mid X(t_i) = r)$$</p>
+            $$p_{r,s}(t_i, t_j) = \Pr(X(t_j) = s \mid X(t_i) = r)$$</p>
 
             <h3 id="semi-hidden">Semi-Markov and hidden Markov models</h3>
 
