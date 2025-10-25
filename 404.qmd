@@ -1,0 +1,17 @@
+---
+page-layout: full
+toc: false
+title: "404 - Page not found"
+---
+
+::: {.centered}
+
+# 404
+
+![](./images/404.png)
+
+Page not found
+
+[Go to the home page →](https://www.pkirwan.com)
+
+:::

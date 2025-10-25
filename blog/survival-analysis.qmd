@@ -1,0 +1,560 @@
+---
+title: "Part II: Survival analysis"
+date: "2025-03-27"
+description: "An introduction to survival analysis, time-to-event data, and how we handle censored observations in epidemiological research."
+image: "../images/survival-analysis-banner.jpg"
+categories:
+  - Censoring
+  - Truncation
+execute:
+  echo: false
+  message: false
+  warning: false
+---
+
+This is part two of a series on statistical methods for analysing time-to-event, or "survival" data.
+
+## What is survival analysis? {#what-is-survival-analysis}
+
+Survival analysis involves studying "time-to-event" data, also termed "survival data" - a powerful statistical framework that helps us answer questions about *when* events occur. It applies to any scenario where we're interested in the time from a given origin to the occurrence of an event (the endpoint).
+
+In infectious disease research, survival data are commonly used to describe clinical origins and endpoints, for example:
+
+- Time from study recruitment to infection
+- Duration from hospitalisation to discharge
+- Period from infection until recovery or death
+
+These data may be combined with information on patient characteristics (age, gender, socioeconomic status) and clinical variables (vaccination status, treatments). Survival analysis techniques help us to understand how these factors influence outcomes.
+
+## Incomplete information {#incomplete-information}
+
+One of the most distinctive aspects of survival analysis is how it handles incomplete information. In real-world studies, we often don't observe the complete "story" for each participant. This incompleteness comes in several forms:
+
+### Censoring {#censoring}
+
+Censoring occurs when information about an individual is only known within certain intervals or "censoring times".
+
+#### Right-censoring
+
+The most common type of censoring occurs when our study ends before we observe the event of interest. For example, if we're studying time to COVID-19 infection, and a participant remains uninfected when our study concludes, they're "right-censored" - we know they remained infection-free for at least the duration of the study, but we don't know what happens afterward.
+
+More formally, we lack information to the "right" (or future) of the right-censoring time, $C_r$. In this scenario we say an individual is right-censored at time $C_r < X$, where $X$ is the time that the event of interest takes place.
+
+#### Left-censoring
+
+If, on the other hand, the event of interest occurs at an unknown time, $X$, before we started observing the participant at time $C_l$ this is known as "left-censoring". For instance, if we're studying HIV infection, and a participant tests positive at their first visit, we know they acquired HIV at some point before joining the study, but we don't know exactly when. In this scenario we say the individual is left-censored at time $C_l > X$.
+
+#### Administrative censoring
+
+Sometimes we impose censoring on our dataset, limiting the time-to-event data for each individual to a pre-specified cut-off, with any events beyond this period not considered, e.g. mortality within 30 days of hospital admission. This is known as administrative censoring.
+
+::: {#fig-censoring}
+
+```{r, fig.height = 3}
+library(ggplot2)
+
+# Define the data for the four patients
+patients <- data.frame(
+  patient = 1:4,
+  y_pos = c(4, 3, 2, 1),
+  start_x = c(2, 5, 0, 2.5),
+  end_x = c(7, 9, 4, 7.5),
+  type = c(
+    "No censoring",
+    "Left-censoring",
+    "Right-censoring",
+    "Administrative"
+  ),
+  start_dot = c(TRUE, TRUE, FALSE, TRUE),
+  end_dot = c(TRUE, FALSE, TRUE, TRUE)
+)
+
+# Censoring times
+C_l <- 1.5
+C_r <- 8.5
+admin_cutoff <- 6
+
+ggplot() +
+  # Add horizontal lines for each patient
+  geom_segment(
+    data = patients,
+    aes(x = start_x, xend = end_x, y = y_pos, yend = y_pos),
+    color = "#E74C3C",
+    linewidth = 1.2
+  ) +
+
+  # Add start dots
+  geom_point(
+    data = patients[patients$start_dot, ],
+    aes(x = start_x, y = y_pos),
+    color = "#000",
+    size = 3,
+    shape = 16
+  ) +
+
+  # Add end dots
+  geom_point(
+    data = patients[patients$end_dot, ],
+    aes(x = end_x, y = y_pos),
+    color = "#000",
+    size = 3,
+    shape = 16
+  ) +
+
+  # Add vertical dashed lines for censoring times
+  geom_segment(
+    aes(x = C_l, xend = C_l, y = 0.5, yend = 4.3),
+    linetype = "dashed",
+    color = "gray40",
+    linewidth = 0.7
+  ) +
+  geom_segment(
+    aes(x = C_r, xend = C_r, y = 0.5, yend = 4.3),
+    linetype = "dashed",
+    color = "gray40",
+    linewidth = 0.7
+  ) +
+  geom_segment(
+    aes(x = admin_cutoff, xend = admin_cutoff, y = 0.7, yend = 1.3),
+    linetype = "dashed",
+    color = "gray40",
+    linewidth = 0.7
+  ) +
+
+  # Add labels for censoring times
+  annotate("text", x = C_l, y = 0.3, label = "C[l]", size = 4, parse = TRUE) +
+  annotate("text", x = C_r, y = 0.3, label = "C[r]", size = 4, parse = TRUE) +
+  annotate(
+    "text",
+    x = admin_cutoff,
+    y = 1.4,
+    label = "30 days",
+    size = 3,
+    hjust = 0.5
+  ) +
+
+  # Add legend text
+  annotate(
+    "text",
+    x = 11,
+    y = 4,
+    label = "Observed origin and outcome, no censoring",
+    hjust = 0,
+    size = 3.5
+  ) +
+  annotate(
+    "text",
+    x = 11,
+    y = 3,
+    label = "Right-censoring (outcome not reported)",
+    hjust = 0,
+    size = 3.5
+  ) +
+  annotate(
+    "text",
+    x = 11,
+    y = 2,
+    label = "Left-censoring (origin not reported)",
+    hjust = 0,
+    size = 3.5
+  ) +
+  annotate(
+    "text",
+    x = 11,
+    y = 1,
+    label = "Administrative censoring at 30 days",
+    hjust = 0,
+    size = 3.5
+  ) +
+
+  # Set axis properties
+  scale_x_continuous(name = NULL, breaks = NULL, limits = c(0, 20)) +
+  scale_y_continuous(name = NULL, breaks = NULL, limits = c(0, 4.5)) +
+
+  # Add arrows for axes
+  annotate(
+    "segment",
+    x = 0,
+    xend = 10.5,
+    y = 0.5,
+    yend = 0.5,
+    arrow = arrow(length = unit(0.15, "inches"), type = "closed"),
+    linewidth = 0.5
+  ) +
+  annotate("segment", x = 0, xend = 0, y = 0.5, yend = 4.3, linewidth = 0.5) +
+
+  # Theme settings
+  theme_void() +
+  theme(
+    plot.margin = margin(10, 10, 10, 10),
+    panel.background = element_rect(fill = "white", color = NA),
+    plot.background = element_rect(fill = "white", color = NA)
+  )
+
+```
+Examples of right, left, and administrative censoring for patients in time-to-event data with origin and outcome information reported. $C_l$: left-censoring time, $C_r$: right-censoring time, $\bullet$: reported origin, outcome, or intermediate event.
+
+:::
+
+#### Interval censoring {#interval-censoring}
+
+Often, we only know that an event happened between two observation points, i.e. within a censoring interval $(L, R],\ L < X < R$. An example is the infection time for an individual which is typically not directly observed, but we can assume it occurs in-between a negative and positive test. Interval censoring is a feature of "intermittently-observed" data, where individuals are tested for the presence of infection at several time-points. Such interval-censored data can still be used to detect changes in an individual's infection status when testing is sufficiently frequent, as shown in @fig-interval-censoring.
+
+::: {#fig-interval-censoring}
+
+```{r, fig.height = 3}
+library(ggplot2)
+
+# Observation times (weeks)
+obs_times <- c(2, 4, 6, 8, 10, 12)
+
+# State trajectory data
+# Horizontal segments
+trajectory_h <- data.frame(
+  x_start = c(0, 2, 6),
+  x_end = c(2, 6, 12),
+  state = c(1, 2, 1)
+)
+
+# Vertical transitions
+trajectory_v <- data.frame(
+  x = c(2, 6),
+  state_from = c(1, 2),
+  state_to = c(2, 1)
+)
+
+# Underlying process (dashed line to the right)
+underlying <- data.frame(
+  x_start = 13,
+  x_end = 13.5,
+  state = 2
+)
+
+# Create the plot
+ggplot() +
+  # Add vertical dashed lines for observation times
+  geom_segment(
+    aes(x = obs_times, xend = obs_times, y = rep(0.5,6), yend = rep(2.3, 6)),
+    linetype = "dashed",
+    color = "gray50",
+    linewidth = 0.6
+  ) +
+
+  # Add state trajectory - horizontal segments
+  geom_segment(
+    data = trajectory_h,
+    aes(x = x_start, xend = x_end, y = state, yend = state),
+    color = "#E74C3C",
+    linewidth = 1.2
+  ) +
+
+  # Add state trajectory - vertical transitions
+  geom_segment(
+    data = trajectory_v,
+    aes(x = x, xend = x, y = state_from, yend = state_to),
+    color = "#E74C3C",
+    linewidth = 1.2
+  ) +
+
+  # Add underlying process line
+  geom_segment(
+    aes(x = 13, xend = 13.5, y = 2, yend = 2),
+    color = "#E74C3C",
+    linewidth = 1.2
+  ) +
+
+  # Add obseration times line
+  geom_segment(
+    aes(x = 13, xend = 13.5, y = 1.5, yend = 1.5),
+    color = "gray50",
+    linewidth = 0.6,
+    linetype = "dashed"
+  ) +
+
+  # Y-axis labels
+  annotate("text", x = -0.5, y = 1, label = "State 1", hjust = 1, size = 3.5) +
+  annotate("text", x = -0.5, y = 2, label = "State 2", hjust = 1, size = 3.5) +
+
+  # X-axis time labels
+  annotate(
+    "text",
+    x = obs_times,
+    y = 0.3,
+    label = as.character(obs_times),
+    size = 3.5
+  ) +
+  annotate(
+    "text",
+    x = 6,
+    y = 0.1,
+    label = "Follow-up time (weeks)",
+    size = 3.5
+  ) +
+
+  # Legend labels
+  annotate(
+    "text",
+    x = 14.5,
+    y = 2,
+    label = "Underlying process",
+    hjust = 0,
+    size = 3.5
+  ) +
+  annotate(
+    "text",
+    x = 14.5,
+    y = 1.5,
+    label = "Observation times",
+    hjust = 0,
+    size = 3.5
+  ) +
+
+  # Set axis properties
+  scale_x_continuous(
+    name = NULL,
+    breaks = NULL,
+    limits = c(-2, 19),
+    expand = c(0, 0)
+  ) +
+  scale_y_continuous(
+    name = NULL,
+    breaks = c(1, 2),
+    limits = c(0, 2.5),
+    expand = c(0, 0)
+  ) +
+
+  # Add axes with arrow for x-axis
+  annotate(
+    "segment",
+    x = 0,
+    xend = 12.5,
+    y = 0.5,
+    yend = 0.5,
+    arrow = arrow(length = unit(0.15, "inches"), type = "closed"),
+    linewidth = 0.5
+  ) +
+  annotate("segment", x = 0, xend = 0, y = 0.5, yend = 2.3, linewidth = 0.5) +
+
+  # Add y-axis ticks
+  annotate("segment", x = -0.1, xend = 0, y = 1, yend = 1, linewidth = 0.5) +
+  annotate("segment", x = -0.1, xend = 0, y = 2, yend = 2, linewidth = 0.5) +
+
+  # Theme settings
+  theme_void() +
+  theme(
+    plot.margin = margin(10, 10, 10, 10),
+    panel.background = element_rect(fill = "white", color = NA),
+    plot.background = element_rect(fill = "white", color = NA)
+  )
+
+```
+
+Example of interval censoring with intermittently-observed data for an underlying process.
+:::
+
+### Truncation {#truncation}
+
+While censoring gives us partial information, truncation occurs when information about an individual is completely unobserved, and unavailable at the time of data collection or analysis. This is different from censoring because censored individuals are at least partially observed, while truncated individuals never enter our dataset. As with censoring, both left, right, and interval-truncation are possible.
+
+- **Left truncation**: occurs when only event-times which take place after the left-truncation time, $Y_l$, are available. For example, if individuals whose infection occurs prior to the study, $X < Y_l$, are not included in our dataset.
+- **Right-truncation**: occurs when only event-times which take place before the right-truncation time, $Y_r$, are available. For example, when we have no knowledge of individuals who are at risk but whose event of interest takes place after the study endpoint, $X > Y_r$.
+- **Interval-truncation**: occurs when only event-times which take place within a specific truncation interval $[Y_l, Y_r]$ are available for observation. The key difference from left- and right-truncation is that in interval-truncation, both the left and right boundaries of the observation window play a role in determining which event-times are observed.
+
+::: {#fig-truncation}
+
+```{r, fig.height = 3}
+library(ggplot2)
+
+patients <- data.frame(
+  patient = 1:3,
+  y_pos = c(3, 2, 1),
+  start_x = c(2.5, 6.5, 0),
+  end_x = c(5.5, 7.5, 1.5),
+  type = c("Left-truncation", "Right-truncation", "No truncation"),
+  show_dot = c(TRUE, TRUE, TRUE)
+)
+
+# Truncation boundaries
+Y_l <- 2 # Left-truncation time
+Y_r <- 6 # Right-truncation time
+
+# Create the plot
+ggplot() +
+  # Add horizontal lines for each patient
+  geom_segment(
+    data = patients,
+    aes(x = start_x, xend = end_x, y = y_pos, yend = y_pos),
+    color = "#E74C3C",
+    linewidth = 1.2
+  ) +
+
+  # Add event dots
+  geom_point(
+    data = patients[patients$show_dot, ],
+    aes(x = end_x, y = y_pos),
+    color = "#000",
+    size = 3,
+    shape = 16
+  ) +
+
+  # Add vertical dashed lines for truncation times
+  geom_segment(
+    aes(x = Y_l, xend = Y_l, y = 0.4, yend = 3.4),
+    linetype = "dashed",
+    color = "gray40",
+    linewidth = 0.7
+  ) +
+  geom_segment(
+    aes(x = Y_r, xend = Y_r, y = 0.4, yend = 3.4),
+    linetype = "dashed",
+    color = "gray40",
+    linewidth = 0.7
+  ) +
+
+  # Add labels for truncation times
+  annotate(
+    "text",
+    x = Y_l,
+    y = 0.2,
+    label = "Y[l]",
+    size = 4,
+    parse = TRUE
+  ) +
+  annotate(
+    "text",
+    x = Y_r,
+    y = 0.2,
+    label = "Y[r]",
+    size = 4,
+    parse = TRUE
+  ) +
+
+  # Add legend text
+  annotate(
+    "text",
+    x = 9,
+    y = 3,
+    label = "Observed time-to-event, no truncation",
+    hjust = 0,
+    size = 3.5
+  ) +
+  annotate(
+    "text",
+    x = 9,
+    y = 2,
+    label = "Right-truncation",
+    hjust = 0,
+    size = 3.5
+  ) +
+  annotate(
+    "text",
+    x = 9,
+    y = 1,
+    label = "Left-truncation",
+    hjust = 0,
+    size = 3.5
+  ) +
+
+  # Set axis properties
+  scale_x_continuous(name = NULL, breaks = NULL, limits = c(0, 14)) +
+  scale_y_continuous(name = NULL, breaks = NULL, limits = c(0, 3.5)) +
+
+  # Add arrows for axes
+  annotate(
+    "segment",
+    x = 0,
+    xend = 8.5,
+    y = 0.4,
+    yend = 0.4,
+    arrow = arrow(length = unit(0.15, "inches"), type = "closed"),
+    linewidth = 0.5
+  ) +
+  annotate("segment", x = 0, xend = 0, y = 0.4, yend = 3.3, linewidth = 0.5) +
+
+  # Theme settings
+  theme_void() +
+  theme(
+    plot.margin = margin(10, 10, 10, 10),
+    panel.background = element_rect(fill = "white", color = NA),
+    plot.background = element_rect(fill = "white", color = NA)
+  )
+
+```
+
+Examples of left and right-truncation for patients in time-to-event data, assuming only information within the truncation interval ($Y_l$ ,$Y_r$) is observed. $Y_l$: left-truncation time, $Y_r$: right-truncation time, $\bullet$: outcome time.
+
+:::
+
+## When standard statistics aren't enough {#key-concepts}
+
+Why can't we just use regular statistical methods like t-tests or linear regression for time-to-event data? The key challenge is that censoring and truncation create a form of missing data that's not random. If we removed all censored observations or treated censoring times as event times, we'd introduce severe bias.
+
+Survival analysis methods are specifically designed for valid statistical estimation of incomplete data while avoiding these biases. We'll start off by defining several fundamental functions for survival analysis:
+
+### The cumulative incidence function {#cumulative-incidence}
+
+Let $T$ be the independent and identically distributed (i.i.d) random variable representing the survival time, $T = t > 0$, for an individual, and assume this random variable has a probability distribution with probability density function $f(t)$.
+
+The distribution function of $T$, also known as the cumulative incidence function, is the probability of "failure" before time $t$, defined as:
+
+$$F(t) = \Pr(T < t)=\int_0^t f(u) du$$
+
+### The survivor function {#survivor-function}
+
+The survivor function $S(t)$ gives the probability of surviving (not experiencing the event) beyond time $t$. This is the cornerstone of survival analysis and is defined as:
+
+$$S(t) = \Pr(T \geq t) = 1 - F(t)$$
+
+where $T$ is the random variable representing the time until the event occurs.
+
+The survivor function starts at 1 (everyone is "alive" at time 0) and decreases toward 0 as time progresses. It has an intuitive interpretation: $S(6 \text{ months}) = 0.8$ means 80% of individuals remain event-free after 6 months.
+
+### The hazard function {#hazard-function}
+
+The hazard function $h(t)$ represents the instantaneous rate of experiencing the event at time $t$, given survival up to that point. Think of it as the "risk" at each moment, conditional on having survived so far:
+
+$$h(t) = \lim_{\delta t \to 0} \frac{\Pr(t \leq T < t+\delta t | T \geq t)}{\delta t}$$
+
+By conditional probability, $\Pr(A \mid B) = \Pr(AB)/\Pr(B)$, so the hazard function can also be expressed as:
+
+$$\begin{aligned}
+h(t) &= \lim_{\delta t \downarrow 0} \left\{\frac{\Pr(t \leq T < t + \delta t)}{\delta t \Pr(T \geq t)}\right\} \\ 
+&=\lim_{\delta t \downarrow 0} \left\{\frac{F(t + \delta t) - F(t)}{\delta t S(t)}\right\} \\ 
+&=\lim_{\delta t \downarrow 0} \left\{\frac{F(t + \delta t) - F(t)}{\delta t}\right\}\frac{1}{S(t)} 
+\end{aligned}$$
+
+This limit is the definition of the derivative of $F(t)$ with respect to $t$, and therefore equal to $f(t)$:
+
+$$\lim_{\delta t \downarrow 0} \left\{\frac{F(t + \delta t) - F(t)}{\delta t}\right\} = \frac{d}{dt}F(t) = f(t)$$
+                              
+Hence the hazard function is related to the survivor function through the relationship:
+
+$$h(t) = \frac{f(t)}{S(t)}$$
+
+::: {.callout-note}
+## Key takeaways
+
+- Survival analysis deals with "time-to-event" data, helping us understand *when* events happen, not just *if* they happen
+- This approach handles incomplete information through concepts like censoring (when we have partial information) and truncation (when some subjects are never observed)
+- Standard statistical methods can't properly handle censored data, which is why specialised survival analysis techniques are essential
+- The survivor function $S(t)$ gives the probability of not experiencing the event beyond time $t$
+- The hazard function $h(t)$ represents the instantaneous risk of the event at time $t$, given survival up to that point
+:::
+
+## Coming next {#coming-next}
+
+In the next post, I'll introduce the likelihood function and explore two classical methods for analysing survival data:
+
+- The Kaplan-Meier estimator: a non-parametric approach to estimate survival probabilities;
+- The Cox proportional hazards model: a semi-parametric regression technique for examining covariate effects.
+
+## References {#references}
+
+- Collett D. [Modelling Survival Data in Medical Research](https://www.taylorfrancis.com/books/mono/10.1201/9781003282525/modelling-survival-data-medical-research-david-collett) *Chapman & Hall/CRC Texts in Statistical Science* 2023.
+- Klein JP, Moeschberger ML. [Survival Analysis: Techniques for Censored and Truncated Data](https://play.google.com/store/books/details?id=KSq0e-6VFJ0C)
+
+::: {.post-navigation}
+[← Previous post](key-concepts-infectious-disease.qmd)
+
+[Next post →](classical-survival-methods.qmd)
+:::

@@ -1,0 +1,175 @@
+---
+title: ""
+page-layout: full
+toc: false
+---
+
+## About {#about}
+
+::: {.about-container}
+::: {.about-text}
+I'm a Research Associate at the [MRC Biostatistics Unit](https://www.mrc-bsu.cam.ac.uk) in Cambridge. My PhD focussed on [applications of multi-state models to estimate infectious disease burden](https://doi.org/10.17863/CAM.112581), specifically HIV and COVID-19. My current research involves the development of multi-state "back-calculation" models to estimate HIV incidence and undiagnosed HIV prevalence.
+
+[GitHub](https://github.com/pkirwan) · [ORCiD](https://orcid.org/0000-0001-6904-0500) · [Mastodon](https://fediscience.org/@pkirwan)
+:::
+
+::: {.profile-image}
+![](./images/profile-photo.jpg){width=200}
+:::
+:::
+
+## Statistical methods for survival data {#blog}
+
+This series of blog posts provides an introduction to statistical methods for survival data, with applications for infectious disease modelling and epidemiology. Topics include: classical survival methods, competing risks analysis, and causal inference from observational data.
+
+::: {.blog-posts}
+
+::: {.blog-post}
+[![](./images/infectious-disease-banner.webp)](./blog/key-concepts-infectious-disease.qmd)
+
+### [I: Key concepts in infectious disease research](./blog/key-concepts-infectious-disease.qmd)
+
+An overview of key concepts, introducing some of the challenges in estimating the burden of infectious disease.
+
+::: {.tags}
+[Incidence]{.tag} [Prevalence]{.tag} [Severity]{.tag}
+:::
+:::
+
+::: {.blog-post}
+[![](./images/survival-analysis-banner.jpg)](./blog/survival-analysis.qmd)
+
+### [II: Survival analysis](./blog/survival-analysis.qmd)
+
+An introduction to survival analysis, time-to-event data, and how we handle censored observations in epidemiological research.
+
+::: {.tags}
+[Censoring]{.tag} [Truncation]{.tag}
+:::
+:::
+
+::: {.blog-post}
+[![](./images/survival-methods-banner.png)](./blog/classical-survival-methods.qmd)
+
+### [III: Classical survival methods](./blog/classical-survival-methods.qmd)
+
+Exploring two fundamental approaches to analysing survival data: non-parametric Kaplan-Meier estimation and semi-parametric Cox proportional hazards models.
+
+::: {.tags}
+[Likelihood]{.tag} [Survival models]{.tag}
+:::
+:::
+
+::: {.blog-post}
+[![](./images/competing-risks-banner.png)](./blog/competing-risks-methods.qmd)
+
+### [IV: Competing risks in survival analysis](./blog/competing-risks-methods.qmd)
+
+How to handle scenarios where multiple possible events can occur, and the challenges this presents for traditional survival methods.
+
+::: {.tags}
+[Competing risks]{.tag} [Stratification]{.tag}
+:::
+:::
+
+::: {.blog-post}
+[![](./images/multi-state-models-banner.png)](./blog/multi-state-models.qmd)
+
+### [V: Multi-state models](./blog/multi-state-models.qmd)
+
+Some theory of multi-state models and their applications in epidemiology, including estimating transition intensities and the time spent in a state.
+
+::: {.tags}
+[Transition intensity]{.tag} [Markov property]{.tag}
+:::
+:::
+
+::: {.blog-post}
+[![](./images/statistical-inference-banner.png)](./blog/statistical-inference-msms.qmd)
+
+### [VI: Statistical inference for multi-state models](./blog/statistical-inference-msms.qmd)
+
+Details of two statistical inference methods for multi-state models and how these are well-suited to the investigation of intermittently-observed data.
+
+::: {.tags}
+[Multi-state models]{.tag} [Statistical inference]{.tag}
+:::
+:::
+
+::: {.blog-post}
+[![](./images/causal-inference-banner.png)](./blog/causal-inference.qmd)
+
+### [VII: Key concepts in causal inference](./blog/causal-inference.qmd)
+
+Challenges and methods for inferring causal relationships from observational data, including propensity score matching and instrumental variables.
+
+::: {.tags}
+[Causal inference]{.tag} [DAGs]{.tag}
+:::
+:::
+
+::: {.blog-post}
+[![](./images/study-designs-banner.png)](./blog/study-designs.qmd)
+
+### [VIII: Study designs and biases](./blog/study-designs.qmd)
+
+An overview of different observational study designs and the potential biases that can arise, including selection bias and confounding.
+
+::: {.tags}
+[Bias]{.tag} [Confounding]{.tag}
+:::
+:::
+
+:::
+
+## Recent publications {#recent-publications}
+
+::: {.publications}
+
+::: {.publication}
+**2024**
+
+[Protection of vaccine boosters and prior infection against mild/asymptomatic and moderate COVID-19 infection in the UK SIREN healthcare worker cohort: October 2023 to March 2024](https://doi.org/10.1016/j.jinf.2024.106293). *Journal of Infection*.
+:::
+
+::: {.publication}
+**2024**
+
+[Effect of second booster vaccinations and prior infection against SARS-CoV-2 in the UK SIREN healthcare worker cohort](https://doi.org/10.1016/j.lanepe.2023.100809). *The Lancet Regional Health - Europe*.
+:::
+
+::: {.publication}
+**2022**
+
+[Re-assessing the late HIV diagnosis surveillance definition in the era of increased and frequent testing](https://doi.org/10.1111/hiv.13394). *HIV Medicine*.
+:::
+
+::: {.publication}
+**2022**
+
+[Trends in COVID-19 hospital outcomes in England before and after vaccine introduction, a cohort study](https://doi.org/10.1038/s41467-022-32458-y). *Nature Communications*.
+:::
+
+:::
+
+[Full list of publications](https://scholar.google.co.uk/citations?user=pxDDqncAAAAJ) (via Google Scholar).
+
+## Recorded talks {#talks}
+
+::: {.publication}
+**2024**
+
+[Multi-state modelling to estimate infectious disease burden](https://www.youtube.com/watch?v=361Cmi9Zb7I). *University of Cambridge, UK*.
+:::
+
+## Contact {#contact}
+
+::: {.contact-container}
+::: {.contact-info}
+Feel free to reach out about research collaborations, speaking opportunities, or general enquiries:
+
+📧 pdk29 [at] cam [dot] ac [dot] uk
+
+🐘 [@pkirwan@fediscience.org](https://fediscience.org/@pkirwan)
+:::
+:::

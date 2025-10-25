@@ -1,0 +1,42 @@
+project:
+  type: website
+
+website:
+  title: "Peter Kirwan"
+  description: "Research Associate at MRC Biostatistics Unit, Cambridge"
+  navbar:
+    right:
+      - href: index.qmd
+        text: Home
+      - text: "About"
+        href: index.qmd#about
+      - text: "Survival data posts"
+        href: index.qmd#blog
+      - text: "Publications"
+        href: index.qmd#recent-publications
+      - text: "Talks"
+        href: index.qmd#talks
+      - text: "Contact"
+        href: index.qmd#contact
+    search: false
+    pinned: true
+    toggle-position: right
+    collapse-below: lg
+  page-footer: 
+    right: "© 2025 Peter Kirwan"
+
+format:
+  html:
+    theme: 
+      light: [cosmo, light_style.scss]
+      dark: [cosmo, dark_style.scss]
+    css: style.css
+    toc: true
+    toc-location: right
+    page-layout: full
+    header-includes: <link rel="stylesheet" href="../font/inter.css">
+    mainfont: "Inter"
+    fontsize: 1.1em
+    respect-user-color-scheme: true
+    hide-description: true
+    crossrefs-hover: false

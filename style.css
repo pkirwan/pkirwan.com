@@ -1,0 +1,201 @@
+/* Custom styles for Peter Kirwan's website */
+h1 {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+h2 {
+  font-size: 1.3rem;
+  font-weight: 500;
+  border-bottom: none;
+}
+
+h3 {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+a {
+  color: #1b95e0;
+}
+
+.about-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.about-text {
+  flex: 1;
+}
+
+.profile-image {
+  flex-shrink: 0;
+}
+
+.profile-image img {
+  border-radius: 8px;
+}
+
+/* Blog posts grid */
+.blog-posts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.blog-post {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  min-height: 440px;
+}
+
+.blog-post:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.blog-posts h3 {
+  margin-top: 1rem;
+  padding: 0 1.5rem;
+  font-size: 1.1rem;
+}
+
+.blog-post p {
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.blog-post img {
+  width: 100%;
+  height: 170px;
+  padding: 0;
+  overflow: hidden;
+  order: -1;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.blog-post:hover .post-thumbnail img {
+  transform: scale(1.05);
+}
+
+/* Tags styling */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.tag {
+  background-color: #f8f9fa;
+  color: #495057;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  border: 1px solid #dee2e6;
+}
+
+/* Publications styling */
+.publications {
+  margin: 2rem 0;
+}
+
+.publication {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.publication:last-child {
+  border-bottom: none;
+}
+
+.publication strong {
+  font-weight: 600;
+  min-width: 60px;
+  flex-shrink: 0;
+}
+
+.publication p {
+  margin: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .about-container {
+    flex-direction: column;
+  }
+  
+  .blog-post {
+    flex-direction: column;
+  }
+  
+  .blog-post img {
+    width: 100%;
+    height: 150px;
+    order: -1;
+  }
+  
+  .publication {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Override Quarto defaults */
+.quarto-title {
+  margin-bottom: 1rem;
+}
+
+/* Link styling */
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.nav-link:hover, .navbar-nav .nav-link.active:hover, .navbar-brand:hover {
+  color: #1b95e0;
+}
+.sidebar nav[role="doc-toc"] ul > li > a.active, .sidebar nav[role="doc-toc"] ul > li > ul > li > a.active {
+	border-left: 1px solid #1b95e0;
+	color: #1b95e0 !important;
+}
+
+.sidebar nav[role="doc-toc"] ul > li > a:hover, .sidebar nav[role="doc-toc"] ul > li > ul > li > a:hover {
+  color: #1b95e0 !important;
+}
+
+.navbar-nav .nav-link.active {
+	color: var(--bs-nav-link-color);
+}
+
+.post-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.centered {
+  text-align: center;
+}
