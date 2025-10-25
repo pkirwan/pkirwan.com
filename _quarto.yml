@@ -40,3 +40,6 @@ format:
     respect-user-color-scheme: true
     hide-description: true
     crossrefs-hover: false
+
+execute:
+  freeze: auto

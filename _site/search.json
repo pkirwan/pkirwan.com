@@ -130,7 +130,7 @@
     "href": "blog/multi-state-models.html#references",
     "title": "Part V: Multi-state models",
     "section": "References",
-    "text": "References\n\nAndersen PK, Keiding N. Multi-state models for event history analysis. Statistical Methods in Medical Research. 2002;11(2):91-115.\nCook RJ, Lawless JF. The Statistical Analysis of Recurrent Events. Springer Science & Business Media; 2007.\nHougaard P. Analysis of Multivariate Survival Data. Springer Science & Business Media; 2000.\nJackson CH. Multi-state models for panel data: the msm package for R. Journal of Statistical Software. 2011;38(8):1-29.\nMeira-Machado L, de Uña-Álvarez J, Cadarso-Suárez C, Andersen PK. Multi-state models for the analysis of time-to-event data. Statistical Methods in Medical Research. 2009;18(2):195-222.\nPutter H, Fiocco M, Geskus RB. Tutorial in biostatistics: competing risks and multi-state models. Statistics in Medicine. 2007;26(11):2389-2430.\n\n\n← Previous post\nNext post →"
+    "text": "References\n\nAalen O, Borgan O, Gjessing H. Survival and Event History Analysis: A Process Point of View. Springer; 2008. 540 p.\nAndersen PK, Borgan O, Gill RD, Keiding N. Statistical models based on counting processes. Springer; 1996. 784 p.\nAndersen PK, Keiding N. Multi-state models for event history analysis. Stat Methods Med Res. 2002;11(2):91-115.\nChiang CL. An introduction to stochastic processes and their applications. RE Krieger; 1980.\nPutter H, Fiocco M, Geskus RB. Tutorial in biostatistics: competing risks and multi-state models. Stat Med. 2007;26(11):2389-430.\nvan den Hout A. Multi-State Survival Models for Interval-Censored Data. CRC Press; 2016. 238 p.\n\n\n← Previous post\nNext post →"
   },
   {
     "objectID": "blog/competing-risks-methods.html",
@@ -291,7 +291,7 @@
     "href": "blog/classical-survival-methods.html#references",
     "title": "Part III: Classical survival methods",
     "section": "References",
-    "text": "References\n\nAustin PC. A Tutorial on Multilevel Survival Analysis: Methods, Models and Applications. Int Stat Rev. 2017;85(2):185-203.\nCollett D. Modelling Survival Data in Medical Research Chapman & Hall/CRC Texts in Statistical Science 2023.\nKlein JP, Moeschberger ML. Survival Analysis: Techniques for Censored and Truncated Data\nWasserman LA. All of statistics. Springer. 2004.\n\n\n← Previous post\nNext post →"
+    "text": "References\n\nAustin PC. A Tutorial on Multilevel Survival Analysis: Methods, Models and Applications. Int Stat Rev. 2017;85(2):185-203.\nCollett D. Modelling Survival Data in Medical Research. Chapman & Hall/CRC Texts in Statistical Science 2023.\nKlein JP, Moeschberger ML. Survival Analysis: Techniques for Censored and Truncated Data.\nWasserman LA. All of statistics. Springer. 2004.\n\n\n← Previous post\nNext post →"
   },
   {
     "objectID": "blog/key-concepts-infectious-disease.html",
@@ -326,7 +326,7 @@
     "href": "blog/key-concepts-infectious-disease.html#references",
     "title": "Part I: Key concepts in infectious disease research",
     "section": "References",
-    "text": "References\n\nAccorsi EK, Qiu X, Rumpler E, et al. How to detect and reduce potential sources of biases in studies of SARS-CoV-2 and COVID-19. Eur J Epidemiol. 2021;36(2):179-96.\nDe Angelis D, Presanis AM, Birrell PJ, et al. Four key challenges in infectious disease modelling using data from multiple sources. Epidemics. 2015;10:83-7.\nLipsitch M, Cohen T, Cooper B, et al. Transmission dynamics and control of severe acute respiratory syndrome. Science. 2003;300(5627):1966-70.\nPerez-Guzman PN, Knock E, Imai N, et al. Epidemiological drivers of transmissibility and severity of SARS-CoV-2 in England. Nat Commun. 2023;14(1):4279.\nSteward K. Incidence vs Prevalence. Immunology & Microbiology from Technology Networks. Technology Networks; 2020.\nWestreich D. Berkson’s bias, selection bias, and missing data. Epidemiology. 2012;23(1):159-64.\nWorld Health Organization. Estimating mortality from COVID-19 (Scientific Brief). World Health Organization; 2020.\n\nFor more details about key concepts in epidemiology and infectious disease research, see:\n\nEpidemiology: Study design and data analysis by Mark Woodward\n\n\n← Back to all posts\nNext post →"
+    "text": "References\n\nAccorsi EK, Qiu X, Rumpler E, et al. How to detect and reduce potential sources of biases in studies of SARS-CoV-2 and COVID-19.. Eur J Epidemiol. 2021;36(2):179-96.\nDe Angelis D, Presanis AM, Birrell PJ, et al. Four key challenges in infectious disease modelling using data from multiple sources.. Epidemics. 2015;10:83-7.\nLipsitch M, Cohen T, Cooper B, et al. Transmission dynamics and control of severe acute respiratory syndrome. Science. 2003;300(5627):1966-70.\nPerez-Guzman PN, Knock E, Imai N, et al. Epidemiological drivers of transmissibility and severity of SARS-CoV-2 in England. Nat Commun. 2023;14(1):4279.\nSteward K. Incidence vs Prevalence. Immunology & Microbiology from Technology Networks. Technology Networks; 2020.\nWestreich D. Berkson’s bias, selection bias, and missing data. Epidemiology. 2012;23(1):159-64.\nWorld Health Organization. Estimating mortality from COVID-19 (Scientific Brief). World Health Organization; 2020.\n\nFor more details about key concepts in epidemiology and infectious disease research, see:\n\nEpidemiology: Study design and data analysis by Mark Woodward\n\n\n← Back to all posts\nNext post →"
   },
   {
     "objectID": "blog/statistical-inference-msms.html",
@@ -417,6 +417,6 @@
     "href": "blog/survival-analysis.html#references",
     "title": "Part II: Survival analysis",
     "section": "References",
-    "text": "References\n\nCollett D. Modelling Survival Data in Medical Research Chapman & Hall/CRC Texts in Statistical Science 2023.\nKlein JP, Moeschberger ML. Survival Analysis: Techniques for Censored and Truncated Data\n\n\n← Previous post\nNext post →"
+    "text": "References\n\nCollett D. Modelling Survival Data in Medical Research. Chapman & Hall/CRC Texts in Statistical Science 2023.\nKlein JP, Moeschberger ML. Survival Analysis: Techniques for Censored and Truncated Data.\n\n\n← Previous post\nNext post →"
   }
 ]
