@@ -550,8 +550,8 @@ In the next post, I'll introduce the likelihood function and explore two classic
 
 ## References {#references}
 
-- Collett D. [Modelling Survival Data in Medical Research](https://www.taylorfrancis.com/books/mono/10.1201/9781003282525/modelling-survival-data-medical-research-david-collett) *Chapman & Hall/CRC Texts in Statistical Science* 2023.
-- Klein JP, Moeschberger ML. [Survival Analysis: Techniques for Censored and Truncated Data](https://play.google.com/store/books/details?id=KSq0e-6VFJ0C)
+- Collett D. [Modelling Survival Data in Medical Research](https://www.taylorfrancis.com/books/mono/10.1201/9781003282525/modelling-survival-data-medical-research-david-collett). *Chapman & Hall/CRC Texts in Statistical Science* 2023.
+- Klein JP, Moeschberger ML. [Survival Analysis: Techniques for Censored and Truncated Data](https://play.google.com/store/books/details?id=KSq0e-6VFJ0C).
 
 ::: {.post-navigation}
 [← Previous post](key-concepts-infectious-disease.qmd)

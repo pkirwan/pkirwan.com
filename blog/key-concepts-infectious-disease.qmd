@@ -81,8 +81,8 @@ In the next post I'll provide an introduction to survival analysis, time-to-even
 
 ## References {#references}
 
-- Accorsi EK, Qiu X, Rumpler E, *et al*. [How to detect and reduce potential sources of biases in studies of SARS-CoV-2 and COVID-19.](https://link.springer.com/article/10.1007/s10654-021-00727-7) *Eur J Epidemiol.* 2021;36(2):179-96.
-- De Angelis D, Presanis AM, Birrell PJ, *et al*. [Four key challenges in infectious disease modelling using data from multiple sources.](http://dx.doi.org/10.1016/j.epidem.2014.09.004) *Epidemics*. 2015;10:83-7.
+- Accorsi EK, Qiu X, Rumpler E, *et al*. [How to detect and reduce potential sources of biases in studies of SARS-CoV-2 and COVID-19.](https://link.springer.com/article/10.1007/s10654-021-00727-7). *Eur J Epidemiol.* 2021;36(2):179-96.
+- De Angelis D, Presanis AM, Birrell PJ, *et al*. [Four key challenges in infectious disease modelling using data from multiple sources.](http://dx.doi.org/10.1016/j.epidem.2014.09.004). *Epidemics*. 2015;10:83-7.
 - Lipsitch M, Cohen T, Cooper B, *et al*. [Transmission dynamics and control of severe acute respiratory syndrome](https://www.science.org/doi/10.1126/science.1086616). *Science*. 2003;300(5627):1966-70.
 - Perez-Guzman PN, Knock E, Imai N, *et al*. [Epidemiological drivers of transmissibility and severity of SARS-CoV-2 in England](http://dx.doi.org/10.1038/s41467-023-39661-5). *Nat Commun*. 2023;14(1):4279.
 - Steward K. [Incidence vs Prevalence](http://www.technologynetworks.com/immunology/articles/incidence-vs-prevalence-329073). Immunology & Microbiology from Technology Networks. Technology Networks; 2020.

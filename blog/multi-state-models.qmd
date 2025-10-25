@@ -32,7 +32,7 @@ Two important cases of stochastic processes are discrete parameter processes, wh
 
 ### Counting processes {#counting-processes}
 
-In survival analyses, the focus is typically on observing events as they occur over time, forming a class of stochastic process known as a <em>point process</em>. If the number of events that occur over time are counted, then the stochastic process is instead known as a <em>counting process</em>. Counting processes form the basis for multi-state models, and linkage to the theory of martingales (not discussed here) provides a theoretical framework for these models.
+In survival analyses, the focus is typically on observing events as they occur over time, forming a class of stochastic process known as a *point process*. If the number of events that occur over time are counted, then the stochastic process is instead known as a *counting process*. Counting processes form the basis for multi-state models, and linkage to the theory of martingales (not discussed here) provides a theoretical framework for these models.
 
 ### Markov process {#markov-process}
 
@@ -40,7 +40,7 @@ A stochastic process is called a 'Markov process' if the future state of a proce
 
 ### Time-homogeneous Markov processes {#time-homogeneous-markov-processes}
 
-Markov processes are said to be 'time-homogeneous' if the probability of transition from one state to the next (termed the <em>transition probability</em>) is independent of the time parameter $t$. Equivalently, for $\Pr(X(t + u) = s \mid X(t) = r)$ denoting the conditional probability of a process $X(\cdot)$ being in state $s$ at time $t + u$, given the process was in state $r$ at time $t$, a Markov process is time-homogeneous if:
+Markov processes are said to be 'time-homogeneous' if the probability of transition from one state to the next (termed the *transition probability*) is independent of the time parameter $t$. Equivalently, for $\Pr(X(t + u) = s \mid X(t) = r)$ denoting the conditional probability of a process $X(\cdot)$ being in state $s$ at time $t + u$, given the process was in state $r$ at time $t$, a Markov process is time-homogeneous if:
 
 $$
 \Pr(X(t+u) = s \mid X(t) = r) = \Pr(X(u) = s \mid X(0) = r)
@@ -208,7 +208,7 @@ where $\exp(\beta_{r,s,m})$ is the hazard ratio for the $m$th covariate on the $
 
 ### Sojourn time {#sojourn-time}
 
-The time spent in a state prior to transition is termed the <em>sojourn time</em>, with its mean given by the inverse of the transition intensity for remaining in the state:
+The time spent in a state prior to transition is termed the *sojourn time*, with its mean given by the inverse of the transition intensity for remaining in the state:
 
 $$E(T_r) = -\frac{1}{q_{r,r}}$$
 
@@ -240,12 +240,12 @@ In the next post, I'll discuss statistical inference methods for multi-state mod
 
 ## References {#references}
 
-- Andersen PK, Keiding N. Multi-state models for event history analysis. *Statistical Methods in Medical Research*. 2002;11(2):91-115.
-- Cook RJ, Lawless JF. *The Statistical Analysis of Recurrent Events*. Springer Science & Business Media; 2007.
-- Hougaard P. *Analysis of Multivariate Survival Data*. Springer Science & Business Media; 2000.
-- Jackson CH. *Multi-state models for panel data: the msm package for R*. Journal of Statistical Software. 2011;38(8):1-29.
-- Meira-Machado L, de Uña-Álvarez J, Cadarso-Suárez C, Andersen PK. Multi-state models for the analysis of time-to-event data. *Statistical Methods in Medical Research*. 2009;18(2):195-222.
-- Putter H, Fiocco M, Geskus RB. Tutorial in biostatistics: competing risks and multi-state models. *Statistics in Medicine*. 2007;26(11):2389-2430.
+- Aalen O, Borgan O, Gjessing H. [Survival and Event History Analysis: A Process Point of View](https://play.google.com/store/books/details?id=2toprArSUMAC). *Springer*; 2008. 540 p.
+- Andersen PK, Borgan O, Gill RD, Keiding N. [Statistical models based on counting processes](http://dx.doi.org/10.1007/978-1-4612-4348-9). *Springer*; 1996. 784 p.
+- Andersen PK, Keiding N. [Multi-state models for event history analysis](http://dx.doi.org/10.1191/0962280202SM276ra). *Stat Methods Med Res*. 2002;11(2):91-115.
+- Chiang CL. An introduction to stochastic processes and their applications. *RE Krieger*; 1980.
+- Putter H, Fiocco M, Geskus RB. [Tutorial in biostatistics: competing risks and multi-state models](http://dx.doi.org/10.1002/sim.2712). *Stat Med*. 2007;26(11):2389-430.
+- van den Hout A. [Multi-State Survival Models for Interval-Censored Data](https://doi.org/10.1201/9781315374321). *CRC Press*; 2016. 238 p.
 
 ::: {.post-navigation}
 [← Previous post](competing-risks-methods.qmd)

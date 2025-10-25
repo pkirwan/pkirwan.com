@@ -102,8 +102,8 @@ In the next post, I'll explain how to handle scenarios where multiple possible e
 ## References {#references}
 
 - Austin PC. [A Tutorial on Multilevel Survival Analysis: Methods, Models and Applications](http://dx.doi.org/10.1111/insr.12214). *Int Stat Rev*. 2017;85(2):185-203.
-- Collett D. [Modelling Survival Data in Medical Research](https://www.taylorfrancis.com/books/mono/10.1201/9781003282525/modelling-survival-data-medical-research-david-collett) *Chapman & Hall/CRC Texts in Statistical Science* 2023.
-- Klein JP, Moeschberger ML. [Survival Analysis: Techniques for Censored and Truncated Data](https://play.google.com/store/books/details?id=KSq0e-6VFJ0C)
+- Collett D. [Modelling Survival Data in Medical Research](https://www.taylorfrancis.com/books/mono/10.1201/9781003282525/modelling-survival-data-medical-research-david-collett). *Chapman & Hall/CRC Texts in Statistical Science* 2023.
+- Klein JP, Moeschberger ML. [Survival Analysis: Techniques for Censored and Truncated Data](https://play.google.com/store/books/details?id=KSq0e-6VFJ0C).
 - Wasserman LA. [All of statistics](https://books.google.com/books?hl=en&lr=&id=th3fbFI1DaMC&oi=fnd&pg=PA1&dq=All+Statistics+Concise+Course+Statistical+Inference+Wasserman&ots=eRiUBZMis9&sig=o9uqf2nz1ytzCEOVbRS2oXprG8w). *Springer*. 2004.
 
 ::: {.post-navigation}
