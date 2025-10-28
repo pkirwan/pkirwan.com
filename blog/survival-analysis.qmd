@@ -534,11 +534,11 @@ $$h(t) = \frac{f(t)}{S(t)}$$
 ::: {.callout-note}
 ## Key takeaways
 
-- Survival analysis deals with "time-to-event" data, helping us understand *when* events happen, not just *if* they happen
-- This approach handles incomplete information through concepts like censoring (when we have partial information) and truncation (when some subjects are never observed)
-- Standard statistical methods can't properly handle censored data, which is why specialised survival analysis techniques are essential
-- The survivor function $S(t)$ gives the probability of not experiencing the event beyond time $t$
-- The hazard function $h(t)$ represents the instantaneous risk of the event at time $t$, given survival up to that point
+- Survival analysis deals with "time-to-event" data, helping us understand *when* events happen, not just *if* they happen.
+- This approach handles incomplete information through concepts like censoring (when we have partial information) and truncation (when some subjects are never observed).
+- Standard statistical methods can't properly handle censored data, which is why specialised survival analysis techniques are essential.
+- The survivor function $S(t)$ gives the probability of not experiencing the event beyond time $t$.
+- The hazard function $h(t)$ represents the instantaneous risk of the event at time $t$, given survival up to that point.
 :::
 
 ## Coming next {#coming-next}

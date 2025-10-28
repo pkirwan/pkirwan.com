@@ -121,13 +121,13 @@ As stratification allows the baseline hazard to vary across strata it is sometim
 ::: {.callout-note}
 ## Key takeaways
 
-- Competing risks occur when individuals can experience multiple possible events that prevent the observation of other events
-- Standard survival methods (Kaplan-Meier, Cox) can produce biased estimates when competing risks are present
-- The cause-specific hazard function measures the instantaneous risk of a specific event type
-- The cause-specific cumulative incidence function gives the probability of experiencing a specific event type over time
-- The Aalen-Johansen estimator is the non-parametric method for estimating cumulative incidence in competing risks scenarios
-- The Fine-Gray model allows regression analysis for competing risks data by modelling the sub-distribution hazard
-- Stratification can accommodate non-proportional hazards in both Cox and Fine-Gray models
+- Competing risks occur when individuals can experience multiple possible events that prevent the observation of other events.
+- Standard survival methods (Kaplan-Meier, Cox) can produce biased estimates when competing risks are present.
+- The cause-specific hazard function measures the instantaneous risk of a specific event type.
+- The cause-specific cumulative incidence function gives the probability of experiencing a specific event type over time.
+- The Aalen-Johansen estimator is the non-parametric method for estimating cumulative incidence in competing risks scenarios.
+- The Fine-Gray model allows regression analysis for competing risks data by modelling the sub-distribution hazard.
+- Stratification can accommodate non-proportional hazards in both Cox and Fine-Gray models.
 :::
 
 ## Coming next {#coming-next}

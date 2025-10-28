@@ -84,12 +84,12 @@ where $D = \{T_1, T_2, \ldots, T_n\}$ are the set of distinct failure times, $R_
 ::: {.callout-note}
 ## Key takeaways
 
-- Statistical inference allows us to estimate survival distributions despite incomplete data from censoring or truncation
-- Likelihood functions connect our statistical models to observed data, with special adaptations for censored and truncated observations
-- Parametric models assume a specific distribution for survival times, while non-parametric approaches make fewer assumptions
-- The Kaplan-Meier estimator is a non-parametric method to estimate the survivor function from censored data
-- The Cox proportional hazards model relates survival times to explanatory variables through a semi-parametric approach
-- The proportional hazards assumption means that the ratio of hazards between different groups remains constant over time
+- Statistical inference allows us to estimate survival distributions despite incomplete data from censoring or truncation.
+- Likelihood functions connect our statistical models to observed data, with special adaptations for censored and truncated observations.
+- Parametric models assume a specific distribution for survival times, while non-parametric approaches make fewer assumptions.
+- The Kaplan-Meier estimator is a non-parametric method to estimate the survivor function from censored data.
+- The Cox proportional hazards model relates survival times to explanatory variables through a semi-parametric approach.
+- The proportional hazards assumption means that the ratio of hazards between different groups remains constant over time.
 :::
 
 ## Coming next {#coming-next}

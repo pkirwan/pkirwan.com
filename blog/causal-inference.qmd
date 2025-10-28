@@ -174,12 +174,12 @@ The standardised mean $E(Y^a) = \sum_z{E(Y \mid Z = z, A = a)\Pr(Z = z)}$ is kno
 ::: {.callout-note}
 ## Key takeaways
 
-- Randomised trials provide strong evidence for causation, but observational data can also support causal inference under strict conditions
-- Causal diagrams (DAGs) help visualise relationships between variables, while local independence graphs represent continuous-time causal processes
-- Three key conditions enable causal inference from observational data: consistency, exchangeability, and positivity
-- Exchangeability (no unmeasured confounding) is usually the most challenging assumption to verify in practice
-- Three main methods estimate causal effects: inverse probability weighting, matching, and standardisation (g-formula)
-- Each method creates a "pseudo-population" where treatment assignment becomes independent of confounders
+- Randomised trials provide strong evidence for causation, but observational data can also support causal inference under strict conditions.
+- Causal diagrams (DAGs) help visualise relationships between variables, while local independence graphs represent continuous-time causal processes.
+- Three key conditions enable causal inference from observational data: consistency, exchangeability, and positivity.
+- Exchangeability (no unmeasured confounding) is usually the most challenging assumption to verify in practice.
+- Three main methods estimate causal effects: inverse probability weighting, matching, and standardisation (g-formula).
+- Each method creates a "pseudo-population" where treatment assignment becomes independent of confounders.
 :::
 
 ## Coming next {#coming-next}

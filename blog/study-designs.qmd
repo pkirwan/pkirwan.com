@@ -178,11 +178,11 @@ Epidemic phase bias is corrected by "shifting" the symptom onset date among thos
 ::: {.callout-note}
 ## Key takeaways
 
-- Different observational study designs (cross-sectional, case-control, cohort) are suited to different research questions and data collection scenarios
-- Cross-sectional studies provide snapshots of prevalence at a single time point, while cohort studies follow exposure groups over time
-- Case-control studies compare past exposures between those with and without outcomes, using odds ratios to measure associations
-- Three main types of bias affect observational studies: information bias (measurement errors), collider bias (selection effects), and confounding (unmeasured common causes)
-- Epidemic phase bias is specific to infectious disease studies with time-varying incidence and rapid symptom onset
+- Different observational study designs (cross-sectional, case-control, cohort) are suited to different research questions and data collection scenarios.
+- Cross-sectional studies provide snapshots of prevalence at a single time point, while cohort studies follow exposure groups over time.
+- Case-control studies compare past exposures between those with and without outcomes, using odds ratios to measure associations.
+- Three main types of bias affect observational studies: information bias (measurement errors), collider bias (selection effects), and confounding (unmeasured common causes).
+- Epidemic phase bias is specific to infectious disease studies with time-varying incidence and rapid symptom onset.
 
 :::
 

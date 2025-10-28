@@ -227,11 +227,11 @@ Hidden Markov models may also be specified to allow for unobserved, or 'latent',
 ::: {.callout-note}
 ## Key takeaways
 
-- Multi-state models extend standard survival methods by allowing individuals to move between multiple states over time, not just from "alive" to "dead"
-- These models are built on stochastic processes theory, particularly Markov processes, where future states depend only on the present state
-- Transition intensities (analogous to hazard rates) describe the instantaneous risk of moving from one state to another
-- Multi-state models can incorporate covariates to identify factors that influence transition rates between states
-- Different model variations (time-homogeneous, semi-Markov, hidden Markov) provide flexibility to model complex disease processes with various assumptions
+- Multi-state models extend standard survival methods by allowing individuals to move between multiple states over time, not just from "alive" to "dead".
+- These models are built on stochastic processes theory, particularly Markov processes, where future states depend only on the present state.
+- Transition intensities (analogous to hazard rates) describe the instantaneous risk of moving from one state to another.
+- Multi-state models can incorporate covariates to identify factors that influence transition rates between states.
+- Different model variations (time-homogeneous, semi-Markov, hidden Markov) provide flexibility to model complex disease processes with various assumptions.
 :::
 
 ## Coming next {#coming-next}

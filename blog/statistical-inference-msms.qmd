@@ -291,11 +291,11 @@ Two useful online tutorials for running statistical inference for survival and m
 ::: {.callout-note}
 ## Key takeaways
 
-- The Aalen-Johansen estimator extends the Kaplan-Meier approach to provide non-parametric estimates of transition probabilities in multi-state models
-- Multi-state mixture models allow for different transition types with their own probability distributions and covariate effects
-- Intermittently-observed data with interval censoring can be properly handled by multi-state models when observation schemes are non-informative
-- Covariates can influence both the probability of transitions between states and the timing of those transitions
-- Both frequentist (maximum likelihood) and Bayesian (MCMC) approaches are available for fitting multi-state models, with several specialised `R` packages providing implementation
+- The Aalen-Johansen estimator extends the Kaplan-Meier approach to provide non-parametric estimates of transition probabilities in multi-state models.
+- Multi-state mixture models allow for different transition types with their own probability distributions and covariate effects.
+- Intermittently-observed data with interval censoring can be properly handled by multi-state models when observation schemes are non-informative.
+- Covariates can influence both the probability of transitions between states and the timing of those transitions.
+- Both frequentist (maximum likelihood) and Bayesian (MCMC) approaches are available for fitting multi-state models, with several specialised `R` packages providing implementation.
 
 :::
 
