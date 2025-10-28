@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Peter Kirwan">
+<meta name="dcterms.date" content="2025-03-20">
+<meta name="description" content="An overview of key concepts, introducing some of the challenges in estimating the burden of infectious disease.">
 
-<title>Peter Kirwan</title>
+<title>Part I: Key concepts in infectious disease research – Peter Kirwan</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,25 +26,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6aa7beace821ed751f58dfe60cd888a9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-1dcf8f7c4b5e194aeb69a94b63b10692.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-6aa7beace821ed751f58dfe60cd888a9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6aa7beace821ed751f58dfe60cd888a9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-1dcf8f7c4b5e194aeb69a94b63b10692.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-6aa7beace821ed751f58dfe60cd888a9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -57,36 +58,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-blog-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-image','listing-reading-time','listing-title','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-blog-listing'] = new List('listing-blog-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-<link rel="stylesheet" href="./font/inter.css">
+<link rel="stylesheet" href="../../font/inter.css">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -118,10 +90,10 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="common/style.css">
-<meta property="og:title" content="– Peter Kirwan">
-<meta property="og:description" content="Research Associate at MRC Biostatistics Unit, Cambridge">
-<meta property="og:image" content="https://www.pkirwan.com/common/profile-photo.jpg">
+<link rel="stylesheet" href="../../common/style.css">
+<meta property="og:title" content="Part I: Key concepts in infectious disease research – Peter Kirwan">
+<meta property="og:description" content="An overview of key concepts, introducing some of the challenges in estimating the burden of infectious disease.">
+<meta property="og:image" content="https://www.pkirwan.com/blog/key-concepts-infectious-disease/infectious-disease-banner.webp">
 <meta property="og:site_name" content="Peter Kirwan">
 </head>
 
@@ -299,13 +271,13 @@ window.Quarto = {
   </script>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Peter Kirwan</span>
     </a>
   </div>
@@ -315,27 +287,27 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./index.html#about"> 
+    <a class="nav-link" href="../../index.html#about"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./index.html#blog"> 
+    <a class="nav-link" href="../../index.html#blog"> 
 <span class="menu-text">Survival data posts</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./index.html#recent-publications"> 
+    <a class="nav-link" href="../../index.html#recent-publications"> 
 <span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./index.html#talks"> 
+    <a class="nav-link" href="../../index.html#talks"> 
 <span class="menu-text">Talks</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./index.html#contact"> 
+    <a class="nav-link" href="../../index.html#contact"> 
 <span class="menu-text">Contact</span></a>
   </li>  
 </ul>
@@ -347,276 +319,197 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Part I: Key concepts in infectious disease research</h1>
+                  <div>
+        <div class="description">
+          An overview of key concepts, introducing some of the challenges in estimating the burden of infectious disease.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Incidence</div>
+                <div class="quarto-category">Prevalence</div>
+                <div class="quarto-category">Severity</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p><a href="https://www.pkirwan.com">Peter Kirwan</a> <a href="https://orcid.org/0000-0001-6904-0500" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 20, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#epidemiological-measures" id="toc-epidemiological-measures" class="nav-link active" data-scroll-target="#epidemiological-measures">Epidemiological measures</a>
+  <ul class="collapse">
+  <li><a href="#r-number" id="toc-r-number" class="nav-link" data-scroll-target="#r-number">The <span class="math inline">\(R\)</span> number</a></li>
+  </ul></li>
+  <li><a href="#estimating-burden" id="toc-estimating-burden" class="nav-link" data-scroll-target="#estimating-burden">Estimating the burden of infectious disease</a>
+  <ul class="collapse">
+  <li><a href="#incidence-and-prevalence" id="toc-incidence-and-prevalence" class="nav-link" data-scroll-target="#incidence-and-prevalence">Incidence and prevalence</a></li>
+  <li><a href="#severity" id="toc-severity" class="nav-link" data-scroll-target="#severity">Severity</a></li>
+  <li><a href="#effectiveness-of-interventions" id="toc-effectiveness-of-interventions" class="nav-link" data-scroll-target="#effectiveness-of-interventions">Effectiveness of interventions</a></li>
+  <li><a href="#challenges-in-estimating" id="toc-challenges-in-estimating" class="nav-link" data-scroll-target="#challenges-in-estimating">Challenges in estimating infectious disease burden</a></li>
+  </ul></li>
+  <li><a href="#coming-next" id="toc-coming-next" class="nav-link" data-scroll-target="#coming-next">Coming next</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
 
 
-<section id="about" class="level2">
-<h2 class="anchored" data-anchor-id="about">About</h2>
-<div class="about-container">
-<div class="about-text">
-<p>I’m a Research Associate at the <a href="https://www.mrc-bsu.cam.ac.uk">MRC Biostatistics Unit</a> in Cambridge. My PhD focussed on <a href="https://doi.org/10.17863/CAM.112581">applications of multi-state models to estimate infectious disease burden</a>, specifically HIV and COVID-19. My current research involves the development of multi-state “back-calculation” models to estimate HIV incidence and undiagnosed HIV prevalence.</p>
-<p><a href="https://github.com/pkirwan">GitHub</a> · <a href="https://orcid.org/0000-0001-6904-0500">ORCiD</a> · <a href="https://fediscience.org/@pkirwan">Mastodon</a></p>
+
+<p>This is part one of a series on statistical methods for analysing time-to-event, or “survival” data.</p>
+<section id="epidemiological-measures" class="level2">
+<h2 class="anchored" data-anchor-id="epidemiological-measures">Epidemiological measures</h2>
+<p>Epidemiology is the study and analysis of patterns of diseases and determinants of health in a population. In the context of infectious diseases, epidemiologists and statisticians employ several standard measures of disease burden to assess the impact of a disease, and to guide the appropriate public health response. These measures include:</p>
+<ul>
+<li>the <strong>incidence of infection</strong>, defined as the rate of new infections occurring over a specific period of time, e.g.&nbsp;new cases per 1,000 people per year;</li>
+<li>the <strong>prevalence of infection</strong>, defined as the proportion of the population that have the disease at a specific point in time, regardless of when they became infected;</li>
+<li>for diseases with adverse outcomes, the <strong>mortality associated with infection</strong>, defined as the incidence of death from the disease.</li>
+</ul>
+<section id="r-number" class="level3">
+<h3 class="anchored" data-anchor-id="r-number">The <span class="math inline">\(R\)</span> number</h3>
+<p>A key measure of the spread of a disease, related to the incidence of infection, is the basic reproduction number, denoted <span class="math inline">\(R_0\)</span>. The <span class="math inline">\(R_0\)</span> value measures the expected number of cases directly generated by one case in a population where all individuals are susceptible to infection.</p>
+<p>For instance, if <span class="math inline">\(R_0 = 3\)</span> for a particular disease then one infected individual will, on average, infect three others. When <span class="math inline">\(R_0 &gt; 1\)</span> an infection will spread in a population, whereas when <span class="math inline">\(R_0 &lt; 1\)</span> the disease will eventually die out.</p>
+<p>Importantly, not every individual within a population will be equally susceptible to infection. Immunity to a pathogen might be acquired through vaccination or recovery from previous infection, both of which can provide a level of protection against future infections. Through widespread vaccination, immunity can be conferred to a large portion of a population, reducing susceptibility and thereby decreasing <span class="math inline">\(R_0\)</span>.</p>
+</section>
+</section>
+<section id="estimating-burden" class="level2">
+<h2 class="anchored" data-anchor-id="estimating-burden">Estimating the burden of infectious disease</h2>
+<p>To understand how quickly a virus is spreading through a population, and the corresponding burden of disease, timely and robust estimates are required. The incidence of new cases, prevalence of undiagnosed infection, and extent of disease severity can all inform policy makers seeking to implement effective and appropriate public health measures.</p>
+<section id="incidence-and-prevalence" class="level3">
+<h3 class="anchored" data-anchor-id="incidence-and-prevalence">Incidence and prevalence</h3>
+<div id="fig-incidence-prevalence" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-incidence-prevalence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./incidence-prevalence.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
-<div class="profile-image">
-<p><img src="./common/profile-photo.jpg" class="img-fluid" width="200"></p>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-incidence-prevalence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: An example of the prevalence and incidence of HIV in the US over time. Incidence measures new cases over time, while prevalence measures total active cases at a specific point. Figure from: Steward K.
+</figcaption>
+</figure>
+</div>
+<p>Incidence of infection and the prevalence of an infectious disease in a population are generally unobserved, with observable information restricted to test outcomes among subsets of a population. Testing processes may themselves be influenced by unobserved parameters, such as an individual’s propensity to test, and the time from infection to symptom presentation (if symptoms present at all).</p>
+<p>To reconstruct the incidence and prevalence of infection from the available testing data, statistical and mathematical modelling techniques which adjust for sampling biases are employed. These techniques combine information from a range of sources to make valid statistical inference about unobserved incidence and prevalence.</p>
+</section>
+<section id="severity" class="level3">
+<h3 class="anchored" data-anchor-id="severity">Severity</h3>
+<p>Two common metrics used to understand the severity of infectious diseases and the factors associated with adverse outcomes are the infection fatality risk (IFR) and case fatality risk (CFR):</p>
+<ul>
+<li><strong>Infection Fatality Risk (IFR)</strong>: The percentage of <em>all infected people</em> who die from the disease (including those whose infections were never detected)</li>
+<li><strong>Case Fatality Rate (CFR)</strong>: The percentage of <em>confirmed cases</em> who die from the disease</li>
+</ul>
+<p>Since infections resulting in death are more likely to be recorded, and mild infections (particularly asymptomatic infections) less likely to be recorded, the CFR will almost always be higher than the IFR. Statistical modelling can be used to relate these measures of severity to underlying characteristics collected through case-surveillance data.</p>
+</section>
+<section id="effectiveness-of-interventions" class="level3">
+<h3 class="anchored" data-anchor-id="effectiveness-of-interventions">Effectiveness of interventions</h3>
+<p>Monitoring outcomes among a target group after the introduction of a public health intervention allows for the real-world effectiveness of the intervention to be assessed, and changes over time to be detected. For example, effectiveness estimates might consider reductions in the transmission or acquisition of an infection among a treated group compared to an untreated group. Making these estimates requires reliable testing data, recognition of potential biases, and methodologies which can account for these biases.</p>
+</section>
+<section id="challenges-in-estimating" class="level3">
+<h3 class="anchored" data-anchor-id="challenges-in-estimating">Challenges in estimating infectious disease burden</h3>
+<p>The majority of the data available for infectious disease monitoring relies on observational data, where a population is followed without actively intervening on an exposure in a randomised way. As a result, estimates of infectious disease burden are often considerably complicated by selection bias, which arises when the selected population observed is different from the general population of interest.</p>
+<div id="fig-biases" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-biases-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./biases.webp" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biases-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Schematic showing recruitment-based biases in a hypothetical serosurvey. Figure from: Accorsi <em>et al.</em>
+</figcaption>
+</figure>
+</div>
+<p>Common causes of selection bias in observational data include: testing policies (which may vary nationally and sub-nationally), individual health-seeking behaviour, test availability, clinician decision-making, and detection rates of different tests. Inaccuracies in the available case-surveillance data may also arise: at data input, due to incomplete/inaccurate reporting or misdiagnosis; and at data collection, due to insufficient surveillance infrastructure and data processing methods.</p>
+<p>Unless these potential sources of bias are well-understood and accounted for they can affect the validity of estimates. For example, the IFR measure of severity requires complete knowledge of both the number of infections and number of deaths. Particularly in the early stages of a pandemic, when testing is either unavailable or sub-optimal, these quantities may be impossible to measure. The CFR is more straightforward to assess, since confirmed infections are more likely to be recorded, but this measure is highly sensitive to testing practices. This was particularly the case during the initial wave of the COVID-19 pandemic, when biases in case-surveillance led to wide variability in national estimates of the case-fatality rate, from 0.1% to over 25%.</p>
+<p>Even when knowledge of these multi-faceted biases is available, statistical methodologies must be carefully chosen to properly control for the biases.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key takeaways
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Incidence of infection is the number of people who acquire an infection within a given period, whereas prevalence is the number of people who have the infection at one time.</li>
+<li>The basic reproduction number, <span class="math inline">\(R_0\)</span>, is the expected number of cases directly generated by one case in a population.</li>
+<li>There are various ways to assess the impact of a disease, these include incidence and prevalence, as well as disease severity and the effectiveness of interventions.</li>
+<li>Measuring the burden of infectious disease using observational data is difficult and requires a special class of statistical methods.</li>
+</ul>
 </div>
 </div>
 </section>
-<section id="blog" class="level2">
-<h2 class="anchored" data-anchor-id="blog">Statistical methods for survival data</h2>
-<p>This series of blog posts provides an introduction to statistical methods for survival data, with applications for infectious disease modelling and epidemiology. Topics include: classical survival methods, competing risks analysis, and causal inference from observational data.</p>
-<div id="listing-blog-listing" class="quarto-listing quarto-listing-container-grid">
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="SW5jaWRlbmNlJTJDUHJldmFsZW5jZSUyQ1NldmVyaXR5" data-listing-date-sort="1742428800000" data-listing-file-modified-sort="1761669315202" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1227">
-<a href="./blog/key-concepts-infectious-disease/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./blog/key-concepts-infectious-disease/infectious-disease-banner.webp" class="thumbnail-image card-img" style="height: 200px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Part I: Key concepts in infectious disease research
-</h5>
-<div class="listing-reading-time card-text text-muted">7 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('SW5jaWRlbmNl'); return false;">Incidence</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UHJldmFsZW5jZQ=='); return false;">Prevalence</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('U2V2ZXJpdHk='); return false;">Severity</div>
-
-</div>
-<div class="card-text listing-description delink">
-<p>An overview of key concepts, introducing some of the challenges in estimating the burden of infectious disease.</p>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="1" data-categories="Q2Vuc29yaW5nJTJDVHJ1bmNhdGlvbg==" data-listing-date-sort="1743033600000" data-listing-file-modified-sort="1761669315202" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3412">
-<a href="./blog/survival-analysis/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./blog/survival-analysis/survival-analysis-banner.jpg" class="thumbnail-image card-img" style="height: 200px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Part II: Survival analysis
-</h5>
-<div class="listing-reading-time card-text text-muted">18 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q2Vuc29yaW5n'); return false;">Censoring</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('VHJ1bmNhdGlvbg=='); return false;">Truncation</div>
-
-</div>
-<div class="card-text listing-description delink">
-<p>An introduction to survival analysis, time-to-event data, and how we handle censored observations in epidemiological research.</p>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="2" data-categories="TGlrZWxpaG9vZCUyQ1N1cnZpdmFsJTIwbW9kZWxz" data-listing-date-sort="1743634800000" data-listing-file-modified-sort="1761669315199" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1121">
-<a href="./blog/classical-survival-methods/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./blog/classical-survival-methods/survival-methods-banner.png" class="thumbnail-image card-img" style="height: 200px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Part III: Classical survival methods
-</h5>
-<div class="listing-reading-time card-text text-muted">6 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TGlrZWxpaG9vZA=='); return false;">Likelihood</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('U3Vydml2YWwlMjBtb2RlbHM='); return false;">Survival models</div>
-
-</div>
-<div class="card-text listing-description delink">
-<p>Exploring two fundamental approaches to analysing survival data: non-parametric Kaplan-Meier estimation and semi-parametric Cox proportional hazards models.</p>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="3" data-categories="Q29tcGV0aW5nJTIwcmlza3MlMkNTdHJhdGlmaWNhdGlvbg==" data-listing-date-sort="1744239600000" data-listing-file-modified-sort="1761669315199" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1136">
-<a href="./blog/competing-risks-methods/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./blog/competing-risks-methods/competing-risks-banner.png" class="thumbnail-image card-img" style="height: 200px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Part IV: Competing risks survival methods
-</h5>
-<div class="listing-reading-time card-text text-muted">6 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q29tcGV0aW5nJTIwcmlza3M='); return false;">Competing risks</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('U3RyYXRpZmljYXRpb24='); return false;">Stratification</div>
-
-</div>
-<div class="card-text listing-description delink">
-<p>How to handle scenarios where multiple possible events can occur, and the challenges this presents for traditional survival methods.</p>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="4" data-categories="VHJhbnNpdGlvbiUyMGludGVuc2l0eSUyQ01hcmtvdiUyMHByb3BlcnR5" data-listing-date-sort="1744844400000" data-listing-file-modified-sort="1761669315199" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2621">
-<a href="./blog/multi-state-models/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./blog/multi-state-models/multi-state-models-banner.png" class="thumbnail-image card-img" style="height: 200px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Part V: Multi-state models
-</h5>
-<div class="listing-reading-time card-text text-muted">14 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('VHJhbnNpdGlvbiUyMGludGVuc2l0eQ=='); return false;">Transition intensity</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TWFya292JTIwcHJvcGVydHk='); return false;">Markov property</div>
-
-</div>
-<div class="card-text listing-description delink">
-<p>Some theory of multi-state models and their applications in epidemiology, including estimating transition intensities and the time spent in a state.</p>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="5" data-categories="TXVsdGktc3RhdGUlMjBtb2RlbHMlMkNTdGF0aXN0aWNhbCUyMGluZmVyZW5jZQ==" data-listing-date-sort="1745449200000" data-listing-file-modified-sort="1761669315201" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1912">
-<a href="./blog/statistical-inference-msms/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./blog/statistical-inference-msms/statistical-inference-banner.png" class="thumbnail-image card-img" style="height: 200px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Part VI: Statistical inference for multi-state models
-</h5>
-<div class="listing-reading-time card-text text-muted">10 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TXVsdGktc3RhdGUlMjBtb2RlbHM='); return false;">Multi-state models</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('U3RhdGlzdGljYWwlMjBpbmZlcmVuY2U='); return false;">Statistical inference</div>
-
-</div>
-<div class="card-text listing-description delink">
-<p>Details of two statistical inference methods for multi-state models and how these are well-suited to the investigation of intermittently-observed data.</p>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="6" data-categories="Q2F1c2FsJTIwaW5mZXJlbmNlJTJDREFHcw==" data-listing-date-sort="1746054000000" data-listing-file-modified-sort="1761669315199" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1686">
-<a href="./blog/causal-inference/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./blog/causal-inference/causal-inference-banner.png" class="thumbnail-image card-img" style="height: 200px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Part VII: Key concepts in causal inference
-</h5>
-<div class="listing-reading-time card-text text-muted">9 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q2F1c2FsJTIwaW5mZXJlbmNl'); return false;">Causal inference</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('REFHcw=='); return false;">DAGs</div>
-
-</div>
-<div class="card-text listing-description delink">
-<p>Challenges and methods for inferring causal relationships from observational data, including propensity score matching and instrumental variables.</p>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="7" data-categories="QmlhcyUyQ0NvbmZvdW5kaW5n" data-listing-date-sort="1746658800000" data-listing-file-modified-sort="1761669315201" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1740">
-<a href="./blog/study-designs/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./blog/study-designs/study-designs-banner.png" class="thumbnail-image card-img" style="height: 200px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Part VIII: Study designs and biases
-</h5>
-<div class="listing-reading-time card-text text-muted">9 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Qmlhcw=='); return false;">Bias</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q29uZm91bmRpbmc='); return false;">Confounding</div>
-
-</div>
-<div class="card-text listing-description delink">
-<p>An overview of different observational study designs and the potential biases that can arise, including selection bias and confounding.</p>
-</div>
-</div>
-</div></a>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div>
 </section>
-<section id="recent-publications" class="level2">
-<h2 class="anchored" data-anchor-id="recent-publications">Recent publications</h2>
-<div class="publications">
-<div class="publication">
-<p><strong>2024</strong></p>
-<p><a href="https://doi.org/10.1016/j.jinf.2024.106293">Protection of vaccine boosters and prior infection against mild/asymptomatic and moderate COVID-19 infection in the UK SIREN healthcare worker cohort: October 2023 to March 2024</a>. <em>Journal of Infection</em>.</p>
-</div>
-<div class="publication">
-<p><strong>2024</strong></p>
-<p><a href="https://doi.org/10.1016/j.lanepe.2023.100809">Effect of second booster vaccinations and prior infection against SARS-CoV-2 in the UK SIREN healthcare worker cohort</a>. <em>The Lancet Regional Health - Europe</em>.</p>
-</div>
-<div class="publication">
-<p><strong>2022</strong></p>
-<p><a href="https://doi.org/10.1111/hiv.13394">Re-assessing the late HIV diagnosis surveillance definition in the era of increased and frequent testing</a>. <em>HIV Medicine</em>.</p>
-</div>
-<div class="publication">
-<p><strong>2022</strong></p>
-<p><a href="https://doi.org/10.1038/s41467-022-32458-y">Trends in COVID-19 hospital outcomes in England before and after vaccine introduction, a cohort study</a>. <em>Nature Communications</em>.</p>
-</div>
-</div>
-<p><a href="https://scholar.google.co.uk/citations?user=pxDDqncAAAAJ">Full list of publications</a> (via Google Scholar).</p>
+<section id="coming-next" class="level2">
+<h2 class="anchored" data-anchor-id="coming-next">Coming next</h2>
+<p>In the next post I’ll provide an introduction to survival analysis, time-to-event data, and how we handle censored observations in epidemiological research.</p>
 </section>
-<section id="talks" class="level2">
-<h2 class="anchored" data-anchor-id="talks">Recorded talks</h2>
-<div class="publication">
-<p><strong>2024</strong></p>
-<p><a href="https://www.youtube.com/watch?v=361Cmi9Zb7I">Multi-state modelling to estimate infectious disease burden</a>. <em>University of Cambridge, UK</em>.</p>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li>Accorsi EK, Qiu X, Rumpler E, <em>et al</em>. <a href="https://link.springer.com/article/10.1007/s10654-021-00727-7">How to detect and reduce potential sources of biases in studies of SARS-CoV-2 and COVID-19</a>. <em>Eur J Epidemiol.</em> 2021;36(2):179-96.</li>
+<li>De Angelis D, Presanis AM, Birrell PJ, <em>et al</em>. <a href="http://dx.doi.org/10.1016/j.epidem.2014.09.004">Four key challenges in infectious disease modelling using data from multiple sources</a>. <em>Epidemics</em>. 2015;10:83-7.</li>
+<li>Lipsitch M, Cohen T, Cooper B, <em>et al</em>. <a href="https://www.science.org/doi/10.1126/science.1086616">Transmission dynamics and control of severe acute respiratory syndrome</a>. <em>Science</em>. 2003;300(5627):1966-70.</li>
+<li>Perez-Guzman PN, Knock E, Imai N, <em>et al</em>. <a href="http://dx.doi.org/10.1038/s41467-023-39661-5">Epidemiological drivers of transmissibility and severity of SARS-CoV-2 in England</a>. <em>Nat Commun</em>. 2023;14(1):4279.</li>
+<li>Steward K. <a href="http://www.technologynetworks.com/immunology/articles/incidence-vs-prevalence-329073">Incidence vs Prevalence</a>. Immunology &amp; Microbiology from Technology Networks. Technology Networks; 2020.</li>
+<li>Westreich D. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3237868/">Berkson’s bias, selection bias, and missing data</a>. <em>Epidemiology</em>. 2012;23(1):159-64.</li>
+<li>World Health Organization. <a href="https://www.who.int/news-room/commentaries/detail/estimating-mortality-from-covid-19">Estimating mortality from COVID-19 (Scientific Brief)</a>. World Health Organization; 2020.</li>
+</ul>
+<p>For more details about key concepts in epidemiology and infectious disease research, see:</p>
+<ul>
+<li><a href="https://www.taylorfrancis.com/books/mono/10.1201/b16343/epidemiology-mark-woodward-mark-woodward">Epidemiology: Study design and data analysis</a> by Mark Woodward.</li>
+</ul>
+<div class="post-navigation">
+<p><a href="../../index.html#blog">← Back to all posts</a></p>
+<p><a href="../../blog/survival-analysis/index.html">Next post →</a></p>
 </div>
-</section>
-<section id="contact" class="level2">
-<h2 class="anchored" data-anchor-id="contact">Contact</h2>
-<div class="contact-container">
-<div class="contact-info">
-<p>Feel free to reach out about research collaborations, speaking opportunities, or general enquiries:</p>
-<p>📧 pdk29 [at] cam [dot] ac [dot] uk</p>
-<p>🐘 <a href="https://fediscience.org/@pkirwan"><span class="citation" data-cites="pkirwan">@pkirwan</span><span class="citation" data-cites="fediscience.org">@fediscience.org</span></a></p>
-</div>
-</div>
-
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{kirwan2025,
+  author = {Kirwan, Peter},
+  title = {Part {I:} {Key} Concepts in Infectious Disease Research},
+  date = {2025-03-20},
+  url = {https://www.pkirwan.com/blog/key-concepts-infectious-disease/},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-kirwan2025" class="csl-entry quarto-appendix-citeas" role="listitem">
+Kirwan, Peter. 2025. <span>“Part I: Key Concepts in Infectious Disease
+Research.”</span> March 20, 2025. <a href="https://www.pkirwan.com/blog/key-concepts-infectious-disease/">https://www.pkirwan.com/blog/key-concepts-infectious-disease/</a>.
+</div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right

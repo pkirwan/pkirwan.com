@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Peter Kirwan">
+<meta name="dcterms.date" content="2025-04-03">
+<meta name="description" content="Exploring two fundamental approaches to analysing survival data: non-parametric Kaplan-Meier estimation and semi-parametric Cox proportional hazards models.">
 
-<title>Peter Kirwan</title>
+<title>Part III: Classical survival methods – Peter Kirwan</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,25 +26,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6aa7beace821ed751f58dfe60cd888a9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-1dcf8f7c4b5e194aeb69a94b63b10692.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-6aa7beace821ed751f58dfe60cd888a9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6aa7beace821ed751f58dfe60cd888a9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-1dcf8f7c4b5e194aeb69a94b63b10692.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-6aa7beace821ed751f58dfe60cd888a9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -57,36 +58,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-blog-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-image','listing-reading-time','listing-title','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-blog-listing'] = new List('listing-blog-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-<link rel="stylesheet" href="./font/inter.css">
+<link rel="stylesheet" href="../../font/inter.css">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -118,11 +90,13 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="common/style.css">
-<meta property="og:title" content="– Peter Kirwan">
-<meta property="og:description" content="Research Associate at MRC Biostatistics Unit, Cambridge">
-<meta property="og:image" content="https://www.pkirwan.com/common/profile-photo.jpg">
+<link rel="stylesheet" href="../../common/style.css">
+<meta property="og:title" content="Part III: Classical survival methods – Peter Kirwan">
+<meta property="og:description" content="Exploring two fundamental approaches to analysing survival data: non-parametric Kaplan-Meier estimation and semi-parametric Cox proportional hazards models.">
+<meta property="og:image" content="https://www.pkirwan.com/blog/classical-survival-methods/survival-methods-banner.png">
 <meta property="og:site_name" content="Peter Kirwan">
+<meta property="og:image:height" content="535">
+<meta property="og:image:width" content="1110">
 </head>
 
 <body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -299,13 +273,13 @@ window.Quarto = {
   </script>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Peter Kirwan</span>
     </a>
   </div>
@@ -315,27 +289,27 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./index.html#about"> 
+    <a class="nav-link" href="../../index.html#about"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./index.html#blog"> 
+    <a class="nav-link" href="../../index.html#blog"> 
 <span class="menu-text">Survival data posts</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./index.html#recent-publications"> 
+    <a class="nav-link" href="../../index.html#recent-publications"> 
 <span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./index.html#talks"> 
+    <a class="nav-link" href="../../index.html#talks"> 
 <span class="menu-text">Talks</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./index.html#contact"> 
+    <a class="nav-link" href="../../index.html#contact"> 
 <span class="menu-text">Contact</span></a>
   </li>  
 </ul>
@@ -347,276 +321,187 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Part III: Classical survival methods</h1>
+                  <div>
+        <div class="description">
+          Exploring two fundamental approaches to analysing survival data: non-parametric Kaplan-Meier estimation and semi-parametric Cox proportional hazards models.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Likelihood</div>
+                <div class="quarto-category">Survival models</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p><a href="https://www.pkirwan.com">Peter Kirwan</a> <a href="https://orcid.org/0000-0001-6904-0500" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 3, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#statistical-inference" id="toc-statistical-inference" class="nav-link active" data-scroll-target="#statistical-inference">Statistical inference</a></li>
+  <li><a href="#likelihood-estimation" id="toc-likelihood-estimation" class="nav-link" data-scroll-target="#likelihood-estimation">Likelihood estimation</a>
+  <ul class="collapse">
+  <li><a href="#frequentist-bayesian" id="toc-frequentist-bayesian" class="nav-link" data-scroll-target="#frequentist-bayesian">Frequentist vs Bayesian</a></li>
+  <li><a href="#censored-truncated" id="toc-censored-truncated" class="nav-link" data-scroll-target="#censored-truncated">Censored and truncated data</a></li>
+  </ul></li>
+  <li><a href="#parametric-non-parametric" id="toc-parametric-non-parametric" class="nav-link" data-scroll-target="#parametric-non-parametric">Parametric and non-parametric models</a></li>
+  <li><a href="#kaplan-meier" id="toc-kaplan-meier" class="nav-link" data-scroll-target="#kaplan-meier">The Kaplan-Meier estimator</a></li>
+  <li><a href="#cox-proportional-hazards" id="toc-cox-proportional-hazards" class="nav-link" data-scroll-target="#cox-proportional-hazards">The Cox proportional hazards model</a></li>
+  <li><a href="#coming-next" id="toc-coming-next" class="nav-link" data-scroll-target="#coming-next">Coming next</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
 
 
-<section id="about" class="level2">
-<h2 class="anchored" data-anchor-id="about">About</h2>
-<div class="about-container">
-<div class="about-text">
-<p>I’m a Research Associate at the <a href="https://www.mrc-bsu.cam.ac.uk">MRC Biostatistics Unit</a> in Cambridge. My PhD focussed on <a href="https://doi.org/10.17863/CAM.112581">applications of multi-state models to estimate infectious disease burden</a>, specifically HIV and COVID-19. My current research involves the development of multi-state “back-calculation” models to estimate HIV incidence and undiagnosed HIV prevalence.</p>
-<p><a href="https://github.com/pkirwan">GitHub</a> · <a href="https://orcid.org/0000-0001-6904-0500">ORCiD</a> · <a href="https://fediscience.org/@pkirwan">Mastodon</a></p>
+
+<p>This is part three of a series on statistical methods for analysing time-to-event, or “survival” data.</p>
+<section id="statistical-inference" class="level2">
+<h2 class="anchored" data-anchor-id="statistical-inference">Statistical inference</h2>
+<p>Statistical inference is the process of using data to infer the properties of an underlying probability distribution. In the context of survival analysis, we want to estimate the distribution of time-to-event data, which is often incomplete due to censoring or truncation. This is a key challenge in survival analysis, as we need to account for the fact that we may not observe the event of interest for all individuals in our study. For more details about censored and truncated data see the <a href="../../blog/survival-analysis/index.html">previous post</a> in this series.</p>
+</section>
+<section id="likelihood-estimation" class="level2">
+<h2 class="anchored" data-anchor-id="likelihood-estimation">Likelihood estimation</h2>
+<p>The likelihood function, often termed <span class="math inline">\(L\)</span>, is used to connect statistical models to observed data in both the frequentist and Bayesian frameworks. The likelihood is the probability of observing the data, <span class="math inline">\(D\)</span>, given the parameters, <span class="math inline">\(\theta\)</span>, of the model and formally expressed as:</p>
+<p><span class="math display">\[L(\theta \mid D) = f(D \mid \theta) = \prod_i f(X_i \mid \theta)\]</span></p>
+<p>where <span class="math inline">\(f\)</span> is the probability density function, and <span class="math inline">\(X_i\)</span> are assumed to be i.i.d observations in the data.</p>
+<section id="frequentist-bayesian" class="level3">
+<h3 class="anchored" data-anchor-id="frequentist-bayesian">Frequentist vs Bayesian</h3>
+<p>In the ‘frequentist’ framework the parameters of a statistical model are considered to have a fixed ‘true’ unknown value to be estimated, and the data are realisations of random variables. The parameters of the model are estimated by maximising the likelihood to obtain the maximum likelihood estimate (MLE), denoted <span class="math inline">\(\hat{\theta}\)</span>.</p>
+<p>Bayesian methods are an alternative to maximum likelihood estimation, used to estimate the probability distribution of the parameters of the model given the data, known as the ‘posterior distribution’. In the Bayesian framework, all quantities (both observable quantities and parameters) are considered as random variables, with observed data being realisations of these random variables. The posterior distribution, <span class="math inline">\(f(\theta \mid D)\)</span>, is related to the likelihood function, <span class="math inline">\(f(D \mid \theta)\)</span>, via Bayes formula:</p>
+<p><span class="math display">\[ f(\theta \mid D) = \frac{f(D \mid \theta)f(\theta)}{f(D)}\]</span></p>
+</section>
+<section id="censored-truncated" class="level3">
+<h3 class="anchored" data-anchor-id="censored-truncated">Censored and truncated data</h3>
+<p>Constructing likelihoods for censored or truncated data requires careful consideration of the information provided by each observation. The <a href="../../blog/survival-analysis/index.html">previous post</a> in this series provided a definition of censoring and truncation, and the right and left censoring and truncation times.</p>
+<p>The likelihood components provided by censored observations are:</p>
+<ul>
+<li>for exactly observed data: information on the probability of the event occurring at this time, i.e.&nbsp;<span class="math inline">\(f(X)\)</span></li>
+<li>for right-censored observations: information on the survivor function up to a certain time, i.e.&nbsp;<span class="math inline">\(S(C_r)\)</span></li>
+<li>for left-censored observations: information on the cumulative incidence up to a certain time, i.e.&nbsp;<span class="math inline">\(F(C_l)\)</span></li>
+<li>for interval-censored observations: information on the probability that the event is within this interval, i.e.&nbsp;<span class="math inline">\(S(L) - S(R)\)</span>.</li>
+</ul>
+<p>As data may be observed with different levels of censoring or truncation, the likelihood function is constructed from the joint product of each component for each observation <span class="math inline">\(i\)</span>:</p>
+<p><span class="math display">\[L \propto \prod_{i} f(X_i) \prod_{i} S(C_{r,i}) \prod_{i} F(C_{l,i}) \prod_i (S(L_i) - S(R_i))\]</span></p>
+<p>The equivalent likelihood components for truncated data provide information on conditional probabilities of events, i.e.&nbsp;<span class="math inline">\(f(X)/F(Y_r)\)</span> for right-truncated observations, where observation is conditional on the event of interest having occurred by truncation time <span class="math inline">\(Y_r\)</span>.</p>
+</section>
+</section>
+<section id="parametric-non-parametric" class="level2">
+<h2 class="anchored" data-anchor-id="parametric-non-parametric">Parametric and non-parametric models</h2>
+<p>The statistical models used for estimating model parameters may be parametric or non-parametric. In general, parametric models rely on assumptions about the distribution of the underlying survival times (e.g.&nbsp;Weibull, Gamma, etc.), so careful selection of this distribution is needed for valid inference.</p>
+<p>In contrast, non-parametric models require fewer assumptions about the survival distribution, so can be applied when the functional form of the distribution is not known, but may require more data and not allow for extrapolation beyond the time period of the observed data. Comparisons to non-parametric estimates can be made to assess the fit of a parametric model.</p>
+</section>
+<section id="kaplan-meier" class="level2">
+<h2 class="anchored" data-anchor-id="kaplan-meier">The Kaplan-Meier estimator</h2>
+<p>The Kaplan-Meier estimator is a widely-used, non-parametric method to estimate the survivor function, <span class="math inline">\(S(t)\)</span>, from censored data, and defined as:</p>
+<p><span class="math display">\[\hat{S}(t) = \prod_{t_k \leq t}\left(\frac{n(t_k) - d(t_k)}{n(t_k)}\right)\]</span></p>
+<p>where <span class="math inline">\(d(t_k)\)</span> is the number of events, and <span class="math inline">\(n(t_k)\)</span> is the number of individuals at risk at time <span class="math inline">\(t_k \leq t\)</span>.</p>
+<p>The Kaplan-Meier estimator is a step function, with jumps at each observed event time, and the size of the jump is the proportion of individuals who experience the event at that time. The Kaplan-Meier estimator is often plotted as a survival curve, with time on the x-axis and the estimated survival probability on the y-axis.</p>
+<div id="km-figure" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./survival-methods-banner.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>Example of a Kaplan-Meier survival plot where time is on the x-axis and the estimated survival probability is on the y-axis.</figcaption>
+</figure>
 </div>
-<div class="profile-image">
-<p><img src="./common/profile-photo.jpg" class="img-fluid" width="200"></p>
+</section>
+<section id="cox-proportional-hazards" class="level2">
+<h2 class="anchored" data-anchor-id="cox-proportional-hazards">The Cox proportional hazards model</h2>
+<p>The Cox proportional hazards model assumes that the hazards of death for any two individuals are <em>proportional</em> over time, expressed by writing the hazard function conditional on a given set of <span class="math inline">\(M\)</span> constant or time-varying covariates <span class="math inline">\(\boldsymbol{z} = \{z_{1}\ldots, z_{M}\}\)</span> as:</p>
+<p><span class="math display">\[h(t \mid \boldsymbol{z}) = h^{(0)}(t)\exp\left(\sum_{m=1}^{M}\beta_{m}z_{m}\right) \equiv h^{(0)}(t)\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z})\]</span></p>
+<p>where <span class="math inline">\(h^{(0)}(t)\)</span> is the baseline hazard function, and <span class="math inline">\(\beta_{m}\)</span> are the regression coefficients. Notably, the ‘hazard ratio’ for the <span class="math inline">\(m\)</span>th covariate is a constant:</p>
+<p><span class="math display">\[\frac{h(t \mid z_m = 1)}{h(t \mid z_m = 0)} = \frac{h^{(0)}(t)\exp(\beta_m 1)}{h^{(0)}(t)\exp(\beta_m 0)} = \exp(\beta_{m})\]</span></p>
+<p>The regression coefficients <span class="math inline">\(\beta_{m}\)</span> are estimated by maximising the partial likelihood <span class="math inline">\(L(\boldsymbol{\beta})\)</span>:</p>
+<p><span class="math display">\[L(\boldsymbol{\beta}) = \prod_{i \in D}\frac{\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_{d_i})}{\sum_{j \in R_i}\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_j)}\]</span></p>
+<p>where <span class="math inline">\(D = \{T_1, T_2, \ldots, T_n\}\)</span> are the set of distinct failure times, <span class="math inline">\(R_i\)</span> is the set of all individuals who are at risk of failure immediately before time <span class="math inline">\(T_i\)</span>, <span class="math inline">\(\boldsymbol{z}_{d_i}\)</span> is the covariate vector for an individual who failed at time <span class="math inline">\(T_i\)</span>, and <span class="math inline">\(\boldsymbol{z}_j\)</span> is the covariate vector for the <span class="math inline">\(j\)</span>th individual at risk at time <span class="math inline">\(T_i\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key takeaways
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Statistical inference allows us to estimate survival distributions despite incomplete data from censoring or truncation.</li>
+<li>Likelihood functions connect our statistical models to observed data, with special adaptations for censored and truncated observations.</li>
+<li>Parametric models assume a specific distribution for survival times, while non-parametric approaches make fewer assumptions.</li>
+<li>The Kaplan-Meier estimator is a non-parametric method to estimate the survivor function from censored data.</li>
+<li>The Cox proportional hazards model relates survival times to explanatory variables through a semi-parametric approach.</li>
+<li>The proportional hazards assumption means that the ratio of hazards between different groups remains constant over time.</li>
+</ul>
 </div>
 </div>
 </section>
-<section id="blog" class="level2">
-<h2 class="anchored" data-anchor-id="blog">Statistical methods for survival data</h2>
-<p>This series of blog posts provides an introduction to statistical methods for survival data, with applications for infectious disease modelling and epidemiology. Topics include: classical survival methods, competing risks analysis, and causal inference from observational data.</p>
-<div id="listing-blog-listing" class="quarto-listing quarto-listing-container-grid">
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="SW5jaWRlbmNlJTJDUHJldmFsZW5jZSUyQ1NldmVyaXR5" data-listing-date-sort="1742428800000" data-listing-file-modified-sort="1761669315202" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1227">
-<a href="./blog/key-concepts-infectious-disease/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./blog/key-concepts-infectious-disease/infectious-disease-banner.webp" class="thumbnail-image card-img" style="height: 200px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Part I: Key concepts in infectious disease research
-</h5>
-<div class="listing-reading-time card-text text-muted">7 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('SW5jaWRlbmNl'); return false;">Incidence</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('UHJldmFsZW5jZQ=='); return false;">Prevalence</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('U2V2ZXJpdHk='); return false;">Severity</div>
-
-</div>
-<div class="card-text listing-description delink">
-<p>An overview of key concepts, introducing some of the challenges in estimating the burden of infectious disease.</p>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="1" data-categories="Q2Vuc29yaW5nJTJDVHJ1bmNhdGlvbg==" data-listing-date-sort="1743033600000" data-listing-file-modified-sort="1761669315202" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3412">
-<a href="./blog/survival-analysis/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./blog/survival-analysis/survival-analysis-banner.jpg" class="thumbnail-image card-img" style="height: 200px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Part II: Survival analysis
-</h5>
-<div class="listing-reading-time card-text text-muted">18 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q2Vuc29yaW5n'); return false;">Censoring</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('VHJ1bmNhdGlvbg=='); return false;">Truncation</div>
-
-</div>
-<div class="card-text listing-description delink">
-<p>An introduction to survival analysis, time-to-event data, and how we handle censored observations in epidemiological research.</p>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="2" data-categories="TGlrZWxpaG9vZCUyQ1N1cnZpdmFsJTIwbW9kZWxz" data-listing-date-sort="1743634800000" data-listing-file-modified-sort="1761669315199" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1121">
-<a href="./blog/classical-survival-methods/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./blog/classical-survival-methods/survival-methods-banner.png" class="thumbnail-image card-img" style="height: 200px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Part III: Classical survival methods
-</h5>
-<div class="listing-reading-time card-text text-muted">6 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TGlrZWxpaG9vZA=='); return false;">Likelihood</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('U3Vydml2YWwlMjBtb2RlbHM='); return false;">Survival models</div>
-
-</div>
-<div class="card-text listing-description delink">
-<p>Exploring two fundamental approaches to analysing survival data: non-parametric Kaplan-Meier estimation and semi-parametric Cox proportional hazards models.</p>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="3" data-categories="Q29tcGV0aW5nJTIwcmlza3MlMkNTdHJhdGlmaWNhdGlvbg==" data-listing-date-sort="1744239600000" data-listing-file-modified-sort="1761669315199" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1136">
-<a href="./blog/competing-risks-methods/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./blog/competing-risks-methods/competing-risks-banner.png" class="thumbnail-image card-img" style="height: 200px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Part IV: Competing risks survival methods
-</h5>
-<div class="listing-reading-time card-text text-muted">6 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q29tcGV0aW5nJTIwcmlza3M='); return false;">Competing risks</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('U3RyYXRpZmljYXRpb24='); return false;">Stratification</div>
-
-</div>
-<div class="card-text listing-description delink">
-<p>How to handle scenarios where multiple possible events can occur, and the challenges this presents for traditional survival methods.</p>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="4" data-categories="VHJhbnNpdGlvbiUyMGludGVuc2l0eSUyQ01hcmtvdiUyMHByb3BlcnR5" data-listing-date-sort="1744844400000" data-listing-file-modified-sort="1761669315199" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2621">
-<a href="./blog/multi-state-models/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./blog/multi-state-models/multi-state-models-banner.png" class="thumbnail-image card-img" style="height: 200px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Part V: Multi-state models
-</h5>
-<div class="listing-reading-time card-text text-muted">14 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('VHJhbnNpdGlvbiUyMGludGVuc2l0eQ=='); return false;">Transition intensity</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TWFya292JTIwcHJvcGVydHk='); return false;">Markov property</div>
-
-</div>
-<div class="card-text listing-description delink">
-<p>Some theory of multi-state models and their applications in epidemiology, including estimating transition intensities and the time spent in a state.</p>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="5" data-categories="TXVsdGktc3RhdGUlMjBtb2RlbHMlMkNTdGF0aXN0aWNhbCUyMGluZmVyZW5jZQ==" data-listing-date-sort="1745449200000" data-listing-file-modified-sort="1761669315201" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1912">
-<a href="./blog/statistical-inference-msms/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./blog/statistical-inference-msms/statistical-inference-banner.png" class="thumbnail-image card-img" style="height: 200px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Part VI: Statistical inference for multi-state models
-</h5>
-<div class="listing-reading-time card-text text-muted">10 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TXVsdGktc3RhdGUlMjBtb2RlbHM='); return false;">Multi-state models</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('U3RhdGlzdGljYWwlMjBpbmZlcmVuY2U='); return false;">Statistical inference</div>
-
-</div>
-<div class="card-text listing-description delink">
-<p>Details of two statistical inference methods for multi-state models and how these are well-suited to the investigation of intermittently-observed data.</p>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="6" data-categories="Q2F1c2FsJTIwaW5mZXJlbmNlJTJDREFHcw==" data-listing-date-sort="1746054000000" data-listing-file-modified-sort="1761669315199" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1686">
-<a href="./blog/causal-inference/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./blog/causal-inference/causal-inference-banner.png" class="thumbnail-image card-img" style="height: 200px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Part VII: Key concepts in causal inference
-</h5>
-<div class="listing-reading-time card-text text-muted">9 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q2F1c2FsJTIwaW5mZXJlbmNl'); return false;">Causal inference</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('REFHcw=='); return false;">DAGs</div>
-
-</div>
-<div class="card-text listing-description delink">
-<p>Challenges and methods for inferring causal relationships from observational data, including propensity score matching and instrumental variables.</p>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="7" data-categories="QmlhcyUyQ0NvbmZvdW5kaW5n" data-listing-date-sort="1746658800000" data-listing-file-modified-sort="1761669315201" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1740">
-<a href="./blog/study-designs/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./blog/study-designs/study-designs-banner.png" class="thumbnail-image card-img" style="height: 200px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Part VIII: Study designs and biases
-</h5>
-<div class="listing-reading-time card-text text-muted">9 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Qmlhcw=='); return false;">Bias</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q29uZm91bmRpbmc='); return false;">Confounding</div>
-
-</div>
-<div class="card-text listing-description delink">
-<p>An overview of different observational study designs and the potential biases that can arise, including selection bias and confounding.</p>
-</div>
-</div>
-</div></a>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div>
+<section id="coming-next" class="level2">
+<h2 class="anchored" data-anchor-id="coming-next">Coming next</h2>
+<p>In the next post, I’ll explain how to handle scenarios where multiple possible events can occur, and the challenges this presents for traditional survival methods. I’ll introduce two methods for competing risks data, analogous to the Kaplan-Meier and Cox models described above:</p>
+<ul>
+<li>The Aalen-Johansen estimator - a non-parametric method for estimating the cumulative incidence function.</li>
+<li>The Fine-Gray model - a regression model for estimating the effect of covariates on the subdistribution hazard.</li>
+</ul>
 </section>
-<section id="recent-publications" class="level2">
-<h2 class="anchored" data-anchor-id="recent-publications">Recent publications</h2>
-<div class="publications">
-<div class="publication">
-<p><strong>2024</strong></p>
-<p><a href="https://doi.org/10.1016/j.jinf.2024.106293">Protection of vaccine boosters and prior infection against mild/asymptomatic and moderate COVID-19 infection in the UK SIREN healthcare worker cohort: October 2023 to March 2024</a>. <em>Journal of Infection</em>.</p>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li>Austin PC. <a href="http://dx.doi.org/10.1111/insr.12214">A Tutorial on Multilevel Survival Analysis: Methods, Models and Applications</a>. <em>Int Stat Rev</em>. 2017;85(2):185-203.</li>
+<li>Collett D. <a href="https://www.taylorfrancis.com/books/mono/10.1201/9781003282525/modelling-survival-data-medical-research-david-collett">Modelling Survival Data in Medical Research</a>. <em>Chapman &amp; Hall/CRC Texts in Statistical Science</em> 2023.</li>
+<li>Klein JP, Moeschberger ML. <a href="https://play.google.com/store/books/details?id=KSq0e-6VFJ0C">Survival Analysis: Techniques for Censored and Truncated Data</a>.</li>
+<li>Wasserman LA. <a href="https://books.google.com/books?hl=en&amp;lr=&amp;id=th3fbFI1DaMC&amp;oi=fnd&amp;pg=PA1&amp;dq=All+Statistics+Concise+Course+Statistical+Inference+Wasserman&amp;ots=eRiUBZMis9&amp;sig=o9uqf2nz1ytzCEOVbRS2oXprG8w">All of statistics</a>. <em>Springer</em>. 2004.</li>
+</ul>
+<div class="post-navigation">
+<p><a href="../../blog/survival-analysis/index.html">← Previous post</a></p>
+<p><a href="../../blog/competing-risks-methods/index.html">Next post →</a></p>
 </div>
-<div class="publication">
-<p><strong>2024</strong></p>
-<p><a href="https://doi.org/10.1016/j.lanepe.2023.100809">Effect of second booster vaccinations and prior infection against SARS-CoV-2 in the UK SIREN healthcare worker cohort</a>. <em>The Lancet Regional Health - Europe</em>.</p>
-</div>
-<div class="publication">
-<p><strong>2022</strong></p>
-<p><a href="https://doi.org/10.1111/hiv.13394">Re-assessing the late HIV diagnosis surveillance definition in the era of increased and frequent testing</a>. <em>HIV Medicine</em>.</p>
-</div>
-<div class="publication">
-<p><strong>2022</strong></p>
-<p><a href="https://doi.org/10.1038/s41467-022-32458-y">Trends in COVID-19 hospital outcomes in England before and after vaccine introduction, a cohort study</a>. <em>Nature Communications</em>.</p>
-</div>
-</div>
-<p><a href="https://scholar.google.co.uk/citations?user=pxDDqncAAAAJ">Full list of publications</a> (via Google Scholar).</p>
-</section>
-<section id="talks" class="level2">
-<h2 class="anchored" data-anchor-id="talks">Recorded talks</h2>
-<div class="publication">
-<p><strong>2024</strong></p>
-<p><a href="https://www.youtube.com/watch?v=361Cmi9Zb7I">Multi-state modelling to estimate infectious disease burden</a>. <em>University of Cambridge, UK</em>.</p>
-</div>
-</section>
-<section id="contact" class="level2">
-<h2 class="anchored" data-anchor-id="contact">Contact</h2>
-<div class="contact-container">
-<div class="contact-info">
-<p>Feel free to reach out about research collaborations, speaking opportunities, or general enquiries:</p>
-<p>📧 pdk29 [at] cam [dot] ac [dot] uk</p>
-<p>🐘 <a href="https://fediscience.org/@pkirwan"><span class="citation" data-cites="pkirwan">@pkirwan</span><span class="citation" data-cites="fediscience.org">@fediscience.org</span></a></p>
-</div>
-</div>
-
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{kirwan2025,
+  author = {Kirwan, Peter},
+  title = {Part {III:} {Classical} Survival Methods},
+  date = {2025-04-03},
+  url = {https://www.pkirwan.com/blog/classical-survival-methods/},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-kirwan2025" class="csl-entry quarto-appendix-citeas" role="listitem">
+Kirwan, Peter. 2025. <span>“Part III: Classical Survival
+Methods.”</span> April 3, 2025. <a href="https://www.pkirwan.com/blog/classical-survival-methods/">https://www.pkirwan.com/blog/classical-survival-methods/</a>.
+</div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right

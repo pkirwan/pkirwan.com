@@ -25,7 +25,7 @@ I'm a Research Associate at the [MRC Biostatistics Unit](https://www.mrc-bsu.cam
 :::
 
 ::: {.profile-image}
-![](./images/profile-photo.jpg){width=200}
+![](./common/profile-photo.jpg){width=200}
 :::
 :::
 

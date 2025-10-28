@@ -2,14 +2,14 @@
   {
     "listing": "/index.html",
     "items": [
-      "/blog/key-concepts-infectious-disease.html",
-      "/blog/survival-analysis.html",
-      "/blog/classical-survival-methods.html",
-      "/blog/competing-risks-methods.html",
-      "/blog/multi-state-models.html",
-      "/blog/statistical-inference-msms.html",
-      "/blog/causal-inference.html",
-      "/blog/study-designs.html"
+      "/blog/key-concepts-infectious-disease/index.html",
+      "/blog/survival-analysis/index.html",
+      "/blog/classical-survival-methods/index.html",
+      "/blog/competing-risks-methods/index.html",
+      "/blog/multi-state-models/index.html",
+      "/blog/statistical-inference-msms/index.html",
+      "/blog/causal-inference/index.html",
+      "/blog/study-designs/index.html"
     ]
   }
 ]

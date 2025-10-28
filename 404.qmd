@@ -8,7 +8,7 @@ title: "404 - Page not found"
 
 # 404
 
-![](./images/404.png)
+![](./common/404.png)
 
 Page not found
 

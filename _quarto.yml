@@ -33,11 +33,11 @@ website:
 format:
   html:
     theme: 
-      light: [cosmo, light_style.scss]
-      dark: [cosmo, dark_style.scss]
-    css: style.css
+      light: [cosmo, common/light_style.scss]
+      dark: [cosmo, common/dark_style.scss]
+    css: common/style.css
     page-layout: full
-    header-includes: <link rel="stylesheet" href="../font/inter.css">
+    header-includes: <link rel="stylesheet" href="/font/inter.css">
     mainfont: "Inter"
     fontsize: 1em
     respect-user-color-scheme: true
