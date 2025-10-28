@@ -23,6 +23,6 @@ execute:
 # Default fields for citation
 citation: true
 author:
-  - name: Peter D. Kirwan
+  - name: Peter Kirwan
     url: https://www.pkirwan.com
     orcid: 0000-0001-6904-0500
