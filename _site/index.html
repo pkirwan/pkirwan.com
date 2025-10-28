@@ -24,6 +24,8 @@ ul.task-list li input[type="checkbox"] {
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -55,8 +57,66 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-blog-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-image','listing-reading-time','listing-title','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-blog-listing'] = new List('listing-blog-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
 <link rel="stylesheet" href="../font/inter.css">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 <meta property="og:title" content="– Peter Kirwan">
@@ -313,87 +373,204 @@ ul.task-list li input[type="checkbox"] {
 <section id="blog" class="level2">
 <h2 class="anchored" data-anchor-id="blog">Statistical methods for survival data</h2>
 <p>This series of blog posts provides an introduction to statistical methods for survival data, with applications for infectious disease modelling and epidemiology. Topics include: classical survival methods, competing risks analysis, and causal inference from observational data.</p>
-<div class="blog-posts">
-<div class="blog-post">
-<p><a href="./blog/key-concepts-infectious-disease.html"><img src="./images/infectious-disease-banner.webp" class="img-fluid"></a></p>
-<section id="i-key-concepts-in-infectious-disease-research" class="level3">
-<h3 class="anchored" data-anchor-id="i-key-concepts-in-infectious-disease-research"><a href="./blog/key-concepts-infectious-disease.html">I: Key concepts in infectious disease research</a></h3>
+<div id="listing-blog-listing" class="quarto-listing quarto-listing-container-grid">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="SW5jaWRlbmNlJTJDUHJldmFsZW5jZSUyQ1NldmVyaXR5" data-listing-date-sort="1742428800000" data-listing-file-modified-sort="1761410121288" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1203">
+<a href="./blog/key-concepts-infectious-disease.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" src="./images/infectious-disease-banner.webp" class="thumbnail-image card-img" style="height: 200px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Part I: Key concepts in infectious disease research
+</h5>
+<div class="listing-reading-time card-text text-muted">7 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('SW5jaWRlbmNl'); return false;">Incidence</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('UHJldmFsZW5jZQ=='); return false;">Prevalence</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2V2ZXJpdHk='); return false;">Severity</div>
+
+</div>
+<div class="card-text listing-description delink">
 <p>An overview of key concepts, introducing some of the challenges in estimating the burden of infectious disease.</p>
-<div class="tags">
-<p><span class="tag">Incidence</span> <span class="tag">Prevalence</span> <span class="tag">Severity</span></p>
 </div>
-</section>
 </div>
-<div class="blog-post">
-<p><a href="./blog/survival-analysis.html"><img src="./images/survival-analysis-banner.jpg" class="img-fluid"></a></p>
-<section id="ii-survival-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="ii-survival-analysis"><a href="./blog/survival-analysis.html">II: Survival analysis</a></h3>
+</div></a>
+</div>
+<div class="g-col-1" data-index="1" data-categories="Q2Vuc29yaW5nJTJDVHJ1bmNhdGlvbg==" data-listing-date-sort="1743033600000" data-listing-file-modified-sort="1761410254471" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3412">
+<a href="./blog/survival-analysis.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" src="./images/survival-analysis-banner.jpg" class="thumbnail-image card-img" style="height: 200px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Part II: Survival analysis
+</h5>
+<div class="listing-reading-time card-text text-muted">18 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q2Vuc29yaW5n'); return false;">Censoring</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('VHJ1bmNhdGlvbg=='); return false;">Truncation</div>
+
+</div>
+<div class="card-text listing-description delink">
 <p>An introduction to survival analysis, time-to-event data, and how we handle censored observations in epidemiological research.</p>
-<div class="tags">
-<p><span class="tag">Censoring</span> <span class="tag">Truncation</span></p>
 </div>
-</section>
 </div>
-<div class="blog-post">
-<p><a href="./blog/classical-survival-methods.html"><img src="./images/survival-methods-banner.png" class="img-fluid"></a></p>
-<section id="iii-classical-survival-methods" class="level3">
-<h3 class="anchored" data-anchor-id="iii-classical-survival-methods"><a href="./blog/classical-survival-methods.html">III: Classical survival methods</a></h3>
+</div></a>
+</div>
+<div class="g-col-1" data-index="2" data-categories="TGlrZWxpaG9vZCUyQ1N1cnZpdmFsJTIwbW9kZWxz" data-listing-date-sort="1743634800000" data-listing-file-modified-sort="1761410230448" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1121">
+<a href="./blog/classical-survival-methods.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" src="./images/survival-methods-banner.png" class="thumbnail-image card-img" style="height: 200px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Part III: Classical survival methods
+</h5>
+<div class="listing-reading-time card-text text-muted">6 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('TGlrZWxpaG9vZA=='); return false;">Likelihood</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3Vydml2YWwlMjBtb2RlbHM='); return false;">Survival models</div>
+
+</div>
+<div class="card-text listing-description delink">
 <p>Exploring two fundamental approaches to analysing survival data: non-parametric Kaplan-Meier estimation and semi-parametric Cox proportional hazards models.</p>
-<div class="tags">
-<p><span class="tag">Likelihood</span> <span class="tag">Survival models</span></p>
 </div>
-</section>
 </div>
-<div class="blog-post">
-<p><a href="./blog/competing-risks-methods.html"><img src="./images/competing-risks-banner.png" class="img-fluid"></a></p>
-<section id="iv-competing-risks-in-survival-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="iv-competing-risks-in-survival-analysis"><a href="./blog/competing-risks-methods.html">IV: Competing risks in survival analysis</a></h3>
+</div></a>
+</div>
+<div class="g-col-1" data-index="3" data-categories="Q29tcGV0aW5nJTIwcmlza3MlMkNTdHJhdGlmaWNhdGlvbg==" data-listing-date-sort="1744239600000" data-listing-file-modified-sort="1761408812896" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1136">
+<a href="./blog/competing-risks-methods.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" src="./images/competing-risks-banner.png" class="thumbnail-image card-img" style="height: 200px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Part IV: Competing risks survival methods
+</h5>
+<div class="listing-reading-time card-text text-muted">6 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q29tcGV0aW5nJTIwcmlza3M='); return false;">Competing risks</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3RyYXRpZmljYXRpb24='); return false;">Stratification</div>
+
+</div>
+<div class="card-text listing-description delink">
 <p>How to handle scenarios where multiple possible events can occur, and the challenges this presents for traditional survival methods.</p>
-<div class="tags">
-<p><span class="tag">Competing risks</span> <span class="tag">Stratification</span></p>
 </div>
-</section>
 </div>
-<div class="blog-post">
-<p><a href="./blog/multi-state-models.html"><img src="./images/multi-state-models-banner.png" class="img-fluid"></a></p>
-<section id="v-multi-state-models" class="level3">
-<h3 class="anchored" data-anchor-id="v-multi-state-models"><a href="./blog/multi-state-models.html">V: Multi-state models</a></h3>
+</div></a>
+</div>
+<div class="g-col-1" data-index="4" data-categories="VHJhbnNpdGlvbiUyMGludGVuc2l0eSUyQ01hcmtvdiUyMHByb3BlcnR5" data-listing-date-sort="1744844400000" data-listing-file-modified-sort="1761650335453" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2621">
+<a href="./blog/multi-state-models.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" src="./images/multi-state-models-banner.png" class="thumbnail-image card-img" style="height: 200px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Part V: Multi-state models
+</h5>
+<div class="listing-reading-time card-text text-muted">14 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('VHJhbnNpdGlvbiUyMGludGVuc2l0eQ=='); return false;">Transition intensity</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('TWFya292JTIwcHJvcGVydHk='); return false;">Markov property</div>
+
+</div>
+<div class="card-text listing-description delink">
 <p>Some theory of multi-state models and their applications in epidemiology, including estimating transition intensities and the time spent in a state.</p>
-<div class="tags">
-<p><span class="tag">Transition intensity</span> <span class="tag">Markov property</span></p>
 </div>
-</section>
 </div>
-<div class="blog-post">
-<p><a href="./blog/statistical-inference-msms.html"><img src="./images/statistical-inference-banner.png" class="img-fluid"></a></p>
-<section id="vi-statistical-inference-for-multi-state-models" class="level3">
-<h3 class="anchored" data-anchor-id="vi-statistical-inference-for-multi-state-models"><a href="./blog/statistical-inference-msms.html">VI: Statistical inference for multi-state models</a></h3>
+</div></a>
+</div>
+<div class="g-col-1" data-index="5" data-categories="TXVsdGktc3RhdGUlMjBtb2RlbHMlMkNTdGF0aXN0aWNhbCUyMGluZmVyZW5jZQ==" data-listing-date-sort="1745449200000" data-listing-file-modified-sort="1761408844276" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1912">
+<a href="./blog/statistical-inference-msms.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" src="./images/statistical-inference-banner.png" class="thumbnail-image card-img" style="height: 200px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Part VI: Statistical inference for multi-state models
+</h5>
+<div class="listing-reading-time card-text text-muted">10 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('TXVsdGktc3RhdGUlMjBtb2RlbHM='); return false;">Multi-state models</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U3RhdGlzdGljYWwlMjBpbmZlcmVuY2U='); return false;">Statistical inference</div>
+
+</div>
+<div class="card-text listing-description delink">
 <p>Details of two statistical inference methods for multi-state models and how these are well-suited to the investigation of intermittently-observed data.</p>
-<div class="tags">
-<p><span class="tag">Multi-state models</span> <span class="tag">Statistical inference</span></p>
 </div>
-</section>
 </div>
-<div class="blog-post">
-<p><a href="./blog/causal-inference.html"><img src="./images/causal-inference-banner.png" class="img-fluid"></a></p>
-<section id="vii-key-concepts-in-causal-inference" class="level3">
-<h3 class="anchored" data-anchor-id="vii-key-concepts-in-causal-inference"><a href="./blog/causal-inference.html">VII: Key concepts in causal inference</a></h3>
+</div></a>
+</div>
+<div class="g-col-1" data-index="6" data-categories="Q2F1c2FsJTIwaW5mZXJlbmNlJTJDREFHcw==" data-listing-date-sort="1746054000000" data-listing-file-modified-sort="1761408865898" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1679">
+<a href="./blog/causal-inference.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" src="./images/causal-inference-banner.png" class="thumbnail-image card-img" style="height: 200px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Part VII: Key concepts in causal inference
+</h5>
+<div class="listing-reading-time card-text text-muted">9 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q2F1c2FsJTIwaW5mZXJlbmNl'); return false;">Causal inference</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('REFHcw=='); return false;">DAGs</div>
+
+</div>
+<div class="card-text listing-description delink">
 <p>Challenges and methods for inferring causal relationships from observational data, including propensity score matching and instrumental variables.</p>
-<div class="tags">
-<p><span class="tag">Causal inference</span> <span class="tag">DAGs</span></p>
 </div>
-</section>
 </div>
-<div class="blog-post">
-<p><a href="./blog/study-designs.html"><img src="./images/study-designs-banner.png" class="img-fluid"></a></p>
-<section id="viii-study-designs-and-biases" class="level3">
-<h3 class="anchored" data-anchor-id="viii-study-designs-and-biases"><a href="./blog/study-designs.html">VIII: Study designs and biases</a></h3>
+</div></a>
+</div>
+<div class="g-col-1" data-index="7" data-categories="QmlhcyUyQ0NvbmZvdW5kaW5n" data-listing-date-sort="1746658800000" data-listing-file-modified-sort="1761409088163" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1740">
+<a href="./blog/study-designs.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" src="./images/study-designs-banner.png" class="thumbnail-image card-img" style="height: 200px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Part VIII: Study designs and biases
+</h5>
+<div class="listing-reading-time card-text text-muted">9 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('Qmlhcw=='); return false;">Bias</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Q29uZm91bmRpbmc='); return false;">Confounding</div>
+
+</div>
+<div class="card-text listing-description delink">
 <p>An overview of different observational study designs and the potential biases that can arise, including selection bias and confounding.</p>
-<div class="tags">
-<p><span class="tag">Bias</span> <span class="tag">Confounding</span></p>
 </div>
-</section>
 </div>
+</div></a>
+</div>
+</div>
+<div class="listing-no-matching d-none">No matching items</div>
 </div>
 </section>
 <section id="recent-publications" class="level2">
@@ -434,6 +611,7 @@ ul.task-list li input[type="checkbox"] {
 <p>🐘 <a href="https://fediscience.org/@pkirwan"><span class="citation" data-cites="pkirwan">@pkirwan</span><span class="citation" data-cites="fediscience.org">@fediscience.org</span></a></p>
 </div>
 </div>
+
 
 
 </section>
