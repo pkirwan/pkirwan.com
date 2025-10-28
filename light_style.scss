@@ -2,3 +2,8 @@
 
 // light mode overrides
 $navbar-bg:            #fff !default;
+
+/*-- scss:rules --*/
+.quarto-title-block .quarto-title-banner {
+  background-color: #eee !important;
+}

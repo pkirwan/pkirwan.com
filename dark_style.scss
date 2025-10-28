@@ -1,8 +1,18 @@
 /*-- scss:defaults --*/
 
 // Dark mode overrides
-$body-bg:             #2f2f2f;
-$body-color:          #ccc;
-$navbar-bg:           #2f2f2f !default;
+$body-bg:             #222;
+$body-color:          #bbb;
+$navbar-bg:           #222 !default;
 $code-block-bg-alpha: -.9;
 $navbar-hl:            var(--bs-nav-link-color) !default;
+
+/*-- scss:rules --*/
+.quarto-title-block .quarto-title-banner {
+  background-color: #333 !important;
+}
+
+pre {
+  background: #222;
+  color: #bbb;
+}

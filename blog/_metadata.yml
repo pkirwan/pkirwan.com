@@ -1,0 +1,28 @@
+# options specified here will apply to all posts in this folder
+
+# Freeze computed outputs
+freeze: true
+
+# Enable banner style title blocks
+title-block-banner: true
+
+# Enable CC licence appendix
+license: "CC BY"
+
+# Default table of contents
+toc: true
+toc-title: Table of contents
+toc-location: right
+
+# Default knitr options
+execute:
+  echo: false
+  message: false
+  warning: false
+
+# Default fields for citation
+citation: true
+author:
+  - name: Peter Kirwan
+    url: https://www.pkirwan.com
+    orcid: 0000-0001-6904-0500
