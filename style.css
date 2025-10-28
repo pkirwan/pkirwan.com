@@ -54,7 +54,7 @@ a {
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   position: relative;
-  min-height: 440px;
+  min-height: 400px;
 }
 
 .blog-post:hover {
