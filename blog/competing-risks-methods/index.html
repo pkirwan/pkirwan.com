@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Peter Kirwan">
-<meta name="dcterms.date" content="2025-04-24">
-<meta name="description" content="Details of two statistical inference methods for multi-state models and how these are well-suited to the investigation of intermittently-observed data.">
+<meta name="dcterms.date" content="2025-04-10">
+<meta name="description" content="How to handle scenarios where multiple possible events can occur, and the challenges this presents for traditional survival methods.">
 
-<title>Part VI: Statistical inference for multi-state models – Peter Kirwan</title>
+<title>Part IV: Competing risks survival methods – Peter Kirwan</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -26,23 +26,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-7b46b0119f60f3878847c70192f1ed52.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-0bc08c1d40222ed58722d128348a3f58.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-7b46b0119f60f3878847c70192f1ed52.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-7b46b0119f60f3878847c70192f1ed52.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-0bc08c1d40222ed58722d128348a3f58.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-7b46b0119f60f3878847c70192f1ed52.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -58,7 +58,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<link rel="stylesheet" href="../font/inter.css">
+<link rel="stylesheet" href="../../font/inter.css">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -90,13 +90,13 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="../style.css">
-<meta property="og:title" content="Part VI: Statistical inference for multi-state models – Peter Kirwan">
-<meta property="og:description" content="Details of two statistical inference methods for multi-state models and how these are well-suited to the investigation of intermittently-observed data.">
-<meta property="og:image" content="https://www.pkirwan.com/images/statistical-inference-banner.png">
+<link rel="stylesheet" href="../../common/style.css">
+<meta property="og:title" content="Part IV: Competing risks survival methods – Peter Kirwan">
+<meta property="og:description" content="How to handle scenarios where multiple possible events can occur, and the challenges this presents for traditional survival methods.">
+<meta property="og:image" content="https://www.pkirwan.com/blog/competing-risks-methods/competing-risks-banner.png">
 <meta property="og:site_name" content="Peter Kirwan">
-<meta property="og:image:height" content="664">
-<meta property="og:image:width" content="1396">
+<meta property="og:image:height" content="1200">
+<meta property="og:image:width" content="2400">
 </head>
 
 <body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -277,9 +277,9 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     </a>
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Peter Kirwan</span>
     </a>
   </div>
@@ -289,27 +289,27 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../index.html#about"> 
+    <a class="nav-link" href="../../index.html#about"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../index.html#blog"> 
+    <a class="nav-link" href="../../index.html#blog"> 
 <span class="menu-text">Survival data posts</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../index.html#recent-publications"> 
+    <a class="nav-link" href="../../index.html#recent-publications"> 
 <span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../index.html#talks"> 
+    <a class="nav-link" href="../../index.html#talks"> 
 <span class="menu-text">Talks</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../index.html#contact"> 
+    <a class="nav-link" href="../../index.html#contact"> 
 <span class="menu-text">Contact</span></a>
   </li>  
 </ul>
@@ -324,15 +324,15 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Part VI: Statistical inference for multi-state models</h1>
+      <h1 class="title">Part IV: Competing risks survival methods</h1>
                   <div>
         <div class="description">
-          Details of two statistical inference methods for multi-state models and how these are well-suited to the investigation of intermittently-observed data.
+          How to handle scenarios where multiple possible events can occur, and the challenges this presents for traditional survival methods.
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">Multi-state models</div>
-                <div class="quarto-category">Statistical inference</div>
+                <div class="quarto-category">Competing risks</div>
+                <div class="quarto-category">Stratification</div>
               </div>
                   </div>
   </div>
@@ -350,7 +350,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 24, 2025</p>
+        <p class="date">April 10, 2025</p>
       </div>
     </div>
     
@@ -366,14 +366,19 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#aalen-johansen" id="toc-aalen-johansen" class="nav-link active" data-scroll-target="#aalen-johansen">Aalen-Johansen estimator</a></li>
-  <li><a href="#multi-state-mixture-models" id="toc-multi-state-mixture-models" class="nav-link" data-scroll-target="#multi-state-mixture-models">Multi-state mixture models</a>
+  <li><a href="#competing-risks" id="toc-competing-risks" class="nav-link active" data-scroll-target="#competing-risks">Competing risks</a></li>
+  <li><a href="#cause-specific-functions" id="toc-cause-specific-functions" class="nav-link" data-scroll-target="#cause-specific-functions">Cause-specific survival functions</a>
   <ul class="collapse">
-  <li><a href="#transition-probabilities" id="toc-transition-probabilities" class="nav-link" data-scroll-target="#transition-probabilities">Transition probabilities</a></li>
-  <li><a href="#likelihood-contributions" id="toc-likelihood-contributions" class="nav-link" data-scroll-target="#likelihood-contributions">Likelihood contributions</a></li>
+  <li><a href="#cause-specific-hazards" id="toc-cause-specific-hazards" class="nav-link" data-scroll-target="#cause-specific-hazards">Cause-specific hazard function</a></li>
+  <li><a href="#cause-specific-cumulative-incidence" id="toc-cause-specific-cumulative-incidence" class="nav-link" data-scroll-target="#cause-specific-cumulative-incidence">Cause-specific cumulative incidence</a></li>
   </ul></li>
-  <li><a href="#accounting-for-censoring" id="toc-accounting-for-censoring" class="nav-link" data-scroll-target="#accounting-for-censoring">Accounting for censoring</a></li>
-  <li><a href="#implementing-multi-state-models" id="toc-implementing-multi-state-models" class="nav-link" data-scroll-target="#implementing-multi-state-models">Implementing multi-state models</a></li>
+  <li><a href="#aalen-johansen" id="toc-aalen-johansen" class="nav-link" data-scroll-target="#aalen-johansen">Aalen-Johansen estimator</a></li>
+  <li><a href="#fine-gray" id="toc-fine-gray" class="nav-link" data-scroll-target="#fine-gray">Fine-Gray proportional hazards model</a>
+  <ul class="collapse">
+  <li><a href="#sub-distribution-hazard" id="toc-sub-distribution-hazard" class="nav-link" data-scroll-target="#sub-distribution-hazard">Sub-distribution hazard</a></li>
+  <li><a href="#fine-gray-regression-model" id="toc-fine-gray-regression-model" class="nav-link" data-scroll-target="#fine-gray-regression-model">Fine-Gray regression model</a></li>
+  </ul></li>
+  <li><a href="#stratification" id="toc-stratification" class="nav-link" data-scroll-target="#stratification">Stratification</a></li>
   <li><a href="#coming-next" id="toc-coming-next" class="nav-link" data-scroll-target="#coming-next">Coming next</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
@@ -387,119 +392,100 @@ window.Quarto = {
 
 
 
-<p>This is part six of a series on statistical methods for analysing time-to-event, or “survival” data.</p>
-<p>In this post I’ll describe two statistical inference methods (non-parametric and parametric multi-state survival models). I discuss how these multi-state methods are well-suited to the investigation of intermittently-observed data.</p>
-<section id="aalen-johansen" class="level2">
-<h2 class="anchored" data-anchor-id="aalen-johansen">Aalen-Johansen estimator</h2>
-<p>The non-parametric Aalen-Johansen estimator can be used to estimate the transition probability matrix, <span class="math inline">\(\mathbf{P}(t)\)</span> for a Markov process with a finite number of states. Firstly, let <span class="math inline">\(\mathbf{A}(t)\)</span> be the matrix of cumulative transition intensities from state <span class="math inline">\(r\)</span> to state <span class="math inline">\(s\)</span>:</p>
-<p><span class="math display">\[
-\mathbf{A}(t) = A_{r,s}(t) =
-\begin{cases}
-\int_{0}^{t}{q_{r,s}(u) du} &amp; \text{if } r\neq s \\
--\sum_{r \neq s}{A_{r,s}(t)} &amp; \text{if } r = s
-\end{cases}
-\]</span></p>
-<p>The transition probability matrix for this process can be represented as:</p>
-<p><span class="math display">\[
-\mathbf{P} = \prod_{k = 1}^{K}{\left(\mathbb{I}+\Delta\mathbf{A}(t_k)\right)}
-\]</span></p>
-<p>where <span class="math inline">\(\mathbb{I}\)</span> is the identity matrix, <span class="math inline">\(\Delta\mathbf{A}(t_k) = \mathbf{A}(t_k) - \mathbf{A}(t_k \mbox{-})\)</span>, and <span class="math inline">\(t_k \mbox{-}\)</span> represents the instant before time <span class="math inline">\(t_k\)</span>. Substituting the Nelson-Aalen estimator for <span class="math inline">\(\mathbf{A}(t)\)</span>, then the Aalen-Johansen estimate of the transition probability matrix is:</p>
-<p><span class="math display">\[
-\mathbf{{\hat{P}}}(t) = \hat{P}_{r,s}(t) = \prod_{k =
-1}^{K}{\left(\mathbb{I}_{r,s}+\Delta\hat{A}_{r,s}(t_k)\right)}
-\]</span></p>
-<p>with:</p>
-<p><span class="math display">\[
-\Delta\hat{A}_{r,s}(t_k) =
-\begin{cases}
-\frac{\Delta N_{r,s}(t_k)}{Y_{r}(t_k \mbox{-})} &amp; \text{if } r\neq s \\
-\frac{-\Delta N_{s}(t_k)}{Y_{s}(t_k \mbox{-})} &amp; \text{if } r = s
-\end{cases}
-\]</span></p>
-<p>where <span class="math inline">\(\Delta N_{r,s}(t_k)\)</span> is the number of transitions from state <span class="math inline">\(r\)</span> to state <span class="math inline">\(s\)</span> at time <span class="math inline">\(t_k\)</span>, <span class="math inline">\(\Delta N_{s}(t_k)\)</span> is the number of transitions away from state <span class="math inline">\(s\)</span> at time <span class="math inline">\(t_k\)</span>, and <span class="math inline">\(Y_{r}(t_k \mbox{-})\)</span> is the number of individuals in state <span class="math inline">\(r\)</span> just before time <span class="math inline">\(t_k\)</span>.</p>
-</section>
-<section id="multi-state-mixture-models" class="level2">
-<h2 class="anchored" data-anchor-id="multi-state-mixture-models">Multi-state mixture models</h2>
-<p>For a general multi-state competing risks mixture model, assume that an individual <span class="math inline">\(i\)</span> who begins in state <span class="math inline">\(r\)</span> makes a transition to a (pre-assigned) destination state <span class="math inline">\(s\)</span>. Let <span class="math inline">\(I_{i,r}\)</span> be the indicator variable which determines which transition will occur, the transition intensity at time <span class="math inline">\(t\)</span> is:</p>
-<p><span class="math display">\[
-q_{i,r,s}(t) =
-\begin{cases}
-q^{*}_{i,r,s}(t) &amp; \text{if } I_{i,r} = s \\
-0 &amp; \text{otherwise}
-\end{cases}
-\]</span></p>
-<p>where <span class="math inline">\(q^{*}_{i,r,s}(t)\)</span> is the transition intensity for the transition which occurs. The probability of transition to state <span class="math inline">\(s\)</span> is defined as:</p>
-<p><span class="math display">\[
-\begin{align*}
-\pi_{r,s} &amp; = \Pr(I_{i,r} = s)
-\end{align*}
-\]</span></p>
-<p>Let <span class="math inline">\(T_{r,s}\)</span> be the the time from entering state <span class="math inline">\(r\)</span> to moving to state <span class="math inline">\(s\)</span>, given that this transition occurs (i.e.&nbsp;the conditional sojourn time). A parametric distribution with parameters <span class="math inline">\(\theta_{r,s}\)</span> and conditional density <span class="math inline">\(f_{r,s}(. \mid \theta_{r,s})\)</span> may be used to model <span class="math inline">\(T_{r,s}\)</span>.</p>
-<section id="transition-probabilities" class="level3">
-<h3 class="anchored" data-anchor-id="transition-probabilities">Transition probabilities</h3>
-<p>The probabilities of competing events <span class="math inline">\(\pi_{r,s}\)</span> can be related to a set of <span class="math inline">\(m\)</span> covariates <span class="math inline">\(\boldsymbol{z} = \{z_1, \ldots, z_m\}\)</span> via multinomial logistic regression. Define as <span class="math inline">\(S_r\)</span> the set of all competing states after <span class="math inline">\(r\)</span>, then the logit of transition to a given state <span class="math inline">\(j \in S_r\)</span> vs.&nbsp;transition to a baseline state <span class="math inline">\(0 \in S_r\)</span> is:</p>
-<p><span class="math display">\[
-\ln\left(\frac{\pi_{r,j}(\boldsymbol{z})}{\pi_{r,0}(\boldsymbol{z})}\right) = \alpha_{r,j} +
-\boldsymbol{\beta}_{r,j}^\mathsf{T} \boldsymbol{z}
-\]</span></p>
-<p>with <span class="math inline">\(\alpha_{r,j}\)</span> and <span class="math inline">\(\boldsymbol{\beta}_{r,j} = \{\beta_{r,j,k};\; k = 1, \ldots m\}\)</span> being regression coefficients for the probability of transition to state <span class="math inline">\(j\)</span>.</p>
-<p>Meanwhile, parameters <span class="math inline">\(\theta_{r,s}\)</span> of the time to transition distribution can be related to a different (or identical) set of <span class="math inline">\(l\)</span> covariates <span class="math inline">\(\boldsymbol{z} = \{z_1, \ldots, z_l\}\)</span> via a log-linear model with coefficients <span class="math inline">\(\gamma_{r,s}\)</span> and <span class="math inline">\(\boldsymbol{\omega}_{r,s} = \{\omega_{r,s,k};\; k = 1, \ldots, l\}\)</span>:</p>
-<p><span class="math display">\[
-\log(\theta_{r,s}(\boldsymbol{z}))=\gamma_{r,s} + \boldsymbol{\omega}_{r,s}^\mathsf{T} \boldsymbol{z}
-\]</span></p>
-<p>For most parametric time to transition distributions `accelerated failure time’ models are considered, where the covariates affect the rate of progression of time, i.e.&nbsp;the survival function <span class="math inline">\(S(t \mid \boldsymbol{z})\)</span> for an individual at time <span class="math inline">\(t\)</span> with covariates <span class="math inline">\(\boldsymbol{z}\)</span> is related to the baseline survival <span class="math inline">\(S^{(0)}\)</span> via:</p>
-<p><span class="math display">\[
-S(t\mid \boldsymbol{z}) = S^{(0)}\left(\exp(\boldsymbol{\theta}^\mathsf{T}\boldsymbol{z})t\right)
-\]</span></p>
-<p>where <span class="math inline">\(\boldsymbol{\theta}\)</span> is a vector of regression coefficients.</p>
-</section>
-<section id="likelihood-contributions" class="level3">
-<h3 class="anchored" data-anchor-id="likelihood-contributions">Likelihood contributions</h3>
-<p>The likelihood contributions are as follows:</p>
-<ul>
-<li><p>For an individual who reaches state <span class="math inline">\(s\)</span> at time <span class="math inline">\(t\)</span>: <span class="math display">\[
-l_i = \pi_i f(t\mid i=s)
-\]</span></p></li>
-<li><p>For an individual who does not reach a state (e.g.&nbsp;remains in hospital) at time <span class="math inline">\(t\)</span>: <span class="math display">\[
-l_c = \sum_{i=1}^k\pi_i(1-F(t\mid i))
-\]</span></p></li>
-</ul>
-<p>where <span class="math inline">\(F(t\mid i) = \int_0^t f(x\mid i)dx\)</span> is the conditional cumulative distribution.</p>
-</section>
-</section>
-<section id="accounting-for-censoring" class="level2">
-<h2 class="anchored" data-anchor-id="accounting-for-censoring">Accounting for censoring</h2>
-<p>As described in <a href="classical-survival-methods.html#likelihood-estimation">part III of this series</a>, survival models may be specified to account for censoring and truncation in observed data by careful consideration and construction of the likelihood function. Multi-state survival models, in particular, are well-suited to investigating interval-censored, or <em>intermittently-observed</em> data.</p>
-<p>In Figure 2 from <a href="survival-analysis.html#interval-censoring">part II of this series</a>, changes in an underlying process were detected with an intermittent observation scheme. Depending on the nature of the underlying process, less frequent and/or irregular observation may result in transitions being undetected, as shown in <a href="#fig-intermittent-observation" class="quarto-xref">Figure&nbsp;1</a> below. This could be an issue for survival models, particularly when there is a dependency between the observation times and the underlying process.</p>
-<div id="fig-intermittent-observation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<p>This is part four of a series on statistical methods for analysing time-to-event, or “survival” data.</p>
+<section id="competing-risks" class="level2">
+<h2 class="anchored" data-anchor-id="competing-risks">Competing risks</h2>
+<p>In medical cohort studies, multiple study end-points are common (e.g.&nbsp;death, intensive care admission, and discharge). These multiple end-points are known as <em>competing risks</em> and may hinder the event of interest, or modify the chance that this event occurs. Kaplan-Meier and Cox proportional hazards models treat competing risks as censored observations, and do not account for dependencies between events. Hence the assumption of independent times-to-events in these conventional survival analyses is violated in the presence of competing risks.</p>
+<div id="fig-competing-risks" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-intermittent-observation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="statistical-inference-msms_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div aria-describedby="fig-competing-risks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./competing-risks.png" class="img-fluid figure-img" style="width:60.0%">
 </div>
-</div>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intermittent-observation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Example of intermittently-observed data with missed observations for an underlying process.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-competing-risks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: An example of competing risks in survival data. In this scenario, patients can experience one of three outcomes: death, discharge, or intensive care admission. Each outcome “competes” with the others, and experiencing one prevents the observation of others.
 </figcaption>
 </figure>
 </div>
-<p>An observation scheme is said to be <em>non-informative</em> if the likelihood is proportional to a scenario where observation times were fixed in advance and chosen independently of the underlying process. With a non-informative observation scheme then multi-state models can correctly account for intermittently-observed data.</p>
+<p>To correctly address competing risks, “competing risks survival models” are available. In these models an individual is observed over time, with several possible events ‘competing’ until one takes place and the individual transitions to the corresponding state. Importantly there is no assumption of independence for the distribution of the time to competing events and censoring can still be appropriately accounted for.</p>
 </section>
-<section id="implementing-multi-state-models" class="level2">
-<h2 class="anchored" data-anchor-id="implementing-multi-state-models">Implementing multi-state models</h2>
-<p>A number of sophisticated statistical software packages exist to implement frequentist and Bayesian survival and multi-state models using the <code>R</code> programming language. Frequentist maximum likelihood estimation tends to be less computationally intensive than Bayesian inference, and the latter may require integrating over a vast number of parameters, which is usually impracticable for higher dimensions. Instead, algorithms which simulate from the posterior distribution are often used to evaluate features of these integrals. Markov Chain Monte Carlo (MCMC) algorithms have been widely used for this application.</p>
-<p>There are several specialised modelling packages available to fit multi-state models, including: <a href="https://github.com/therneau/survival"><code>survival</code></a>, <a href="https://chjackson.github.io/msm/"><code>msm</code></a>, <a href="https://chjackson.github.io/flexsurv/index.html"><code>flexsurv</code></a> which fit models using maximum likelihood, and <a href="https://mcmc-jags.sourceforge.io/"><code>JAGS</code></a> and <a href="https://mc-stan.org/"><code>STAN</code></a> which fit Bayesian models using MCMC.</p>
-<p>Two useful online tutorials for running statistical inference for survival and multi-state models are:</p>
-<ul>
-<li><p><a href="https://www.emilyzabor.com/survival-analysis-in-r.html">Survival analysis in R</a>” by Emily C. Zabor</p></li>
-<li><p><a href="https://chjackson.github.io/msm/msmcourse/">Multi-state modelling with msm: a practical course</a> by Christopher Jackson</p></li>
-</ul>
+<section id="cause-specific-functions" class="level2">
+<h2 class="anchored" data-anchor-id="cause-specific-functions">Cause-specific survival functions</h2>
+<p>We’ll start by defining the cause-specific hazard and cause-specific cumulative incidence functions, which are the key components of competing risks survival analysis.</p>
+<section id="cause-specific-hazards" class="level3">
+<h3 class="anchored" data-anchor-id="cause-specific-hazards">Cause-specific hazard function</h3>
+<p>Let <span class="math inline">\(T\)</span> be a random variable for the survival time and <span class="math inline">\(C\)</span> be a random variable for the cause of failure. The <em>cause-specific</em> hazard function for the <span class="math inline">\(j\)</span>th cause, <span class="math inline">\(j = \{1, 2, \ldots, m\}\)</span> is defined by:</p>
+<p><span class="math display">\[
+h_j(t) = \lim_{\delta t \downarrow 0} \frac{\Pr(t \leq T &lt; t + \delta t, C=j \mid T \geq t)}{\delta t}
+\]</span></p>
+<p>Defining <span class="math inline">\(f_j(t)\)</span> as the <em>cause-specific</em> density function, and <span class="math inline">\(S(t)=\Pr(T \geq t)\)</span> as the overall survivor function, the relationship shown in <a href="survival-analysis.html#hazard-function">part II of this series</a> still holds in the presence of competing risks:</p>
+<p><span class="math display">\[
+h_j(t)=\frac{f_j(t)}{S(t)}
+\]</span></p>
+</section>
+<section id="cause-specific-cumulative-incidence" class="level3">
+<h3 class="anchored" data-anchor-id="cause-specific-cumulative-incidence">Cause-specific cumulative incidence</h3>
+<p>The <em>cause-specific</em> cumulative incidence function, i.e.&nbsp;the probability of surviving until time <span class="math inline">\(t\)</span> and failure from cause <span class="math inline">\(j\)</span>, in the presence of all other risks, is given by:</p>
+<p><span class="math display">\[
+F_j(t) = \Pr(T &lt; t, C=j)
+\]</span></p>
+<p>for <span class="math inline">\(j=\{1, 2, \dots, m\}\)</span>, with <span class="math inline">\(\Pr(C=j)\)</span> often written as <span class="math inline">\(\pi_j\)</span>.</p>
+<p>An expression for <span class="math inline">\(F_j(t)\)</span> in terms of the cause-specific hazard function may be derived using the equation above:</p>
+<p><span class="math display">\[
+\begin{aligned}
+h_j(t) &amp;=\frac{f_j(t)}{S(t)} \\
+f_j(t) &amp;=S(t)h_j(t) \\
+F_j(t) &amp;=\int_0^t S(u)h_j(u) du
+\end{aligned}
+\]</span></p>
+</section>
+</section>
+<section id="aalen-johansen" class="level2">
+<h2 class="anchored" data-anchor-id="aalen-johansen">Aalen-Johansen estimator</h2>
+<p>The standard non-parametric estimator of the cause-specific incidence function is the Aalen-Johansen estimator, also described as the ‘multi-state version’ of the Kaplan-Meier estimator.</p>
+<p>Firstly, by the non-parametric Nelson-Aalen estimator of the cause-specific hazard function for cause <span class="math inline">\(j\)</span>:</p>
+<p><span class="math display">\[
+\hat{h}_j(t) = \frac{d_{j}(t)}{n(t\mbox{-})}
+\]</span></p>
+where <span class="math inline">\(d_{j}(t)\)</span> is the number of deaths due to cause <span class="math inline">\(j\)</span> at time <span class="math inline">\(t\)</span>, and <span class="math inline">\(n(t\mbox{-})\)</span> is the number of individuals at risk just prior to <span class="math inline">\(t\)</span>.
+<p></p>
+<p>With the Kaplan-Meier estimate of the survivor function defined in <a href="classical-survival-methods.html#kaplan-meier">part III of this series</a>, <span class="math inline">\(\hat{S}(t)\)</span>, the Aalen-Johansen estimator for the cause-specific cumulative incidence function then follows from the equation above:</p>
+<p><span class="math display">\[
+\hat{F}_j(t) = \sum_{t_k &lt; t} \hat{S}(t_{k-1})\frac{d_{j}(t_k)}{n(t_k\mbox{-})}
+\]</span></p>
+<p>for all times <span class="math inline">\(t_k &lt; t\)</span> where transition events are observed to occur.</p>
+</section>
+<section id="fine-gray" class="level2">
+<h2 class="anchored" data-anchor-id="fine-gray">Fine-Gray proportional hazards model</h2>
+<p>Analogous to the Cox proportional hazards model described in <a href="classical-survival-methods.html">the last post</a>, the Fine-Gray proportional hazards model may be used estimate the hazard of a competing event (termed the sub-distribution hazard) among those yet to experience an event by time <span class="math inline">\(t\)</span>. The risk set for the sub-distribution hazard consists of both those who have yet to experience any event, and those who have yet to experience the event of interest, but who have experienced a competing event.</p>
+<section id="sub-distribution-hazard" class="level3">
+<h3 class="anchored" data-anchor-id="sub-distribution-hazard">Sub-distribution hazard</h3>
+<p>The sub-distribution hazard is therefore defined as the instantaneous risk of experiencing a competing event <span class="math inline">\(j\)</span> given that the individual has not already experienced this event:</p>
+<p><span class="math display">\[
+\lambda_j(t)=\lim_{\delta t \downarrow 0}{\left\{\frac{\Pr\left(\left[t \leq T &lt; t + \delta t, C=j \mid (T&gt;t)\right] \cup \left[(T \le t \cap C \neq j)\right]\right)}{\delta t}\right\}}
+\]</span></p>
+<p>where, as before, <span class="math inline">\(C\)</span> is the random variable for the event that occurs.</p>
+</section>
+<section id="fine-gray-regression-model" class="level3">
+<h3 class="anchored" data-anchor-id="fine-gray-regression-model">Fine-Gray regression model</h3>
+<p>Fine-Gray regression links the sub-distribution hazard, <span class="math inline">\(\lambda_{j}\)</span>, to the cause-specific cumulative incidence function, <span class="math inline">\(F_{j}\)</span>, through the relationship:</p>
+<p><span class="math display">\[ \lambda_{j}(t) = - \frac{d}{dt} \log{(1-F_{j}(t))} \]</span></p>
+<p>As with the Cox proportional hazards model, a proportional hazards regression model is assumed, where the hazard of cause <span class="math inline">\(j\)</span> at time <span class="math inline">\(t\)</span> for individual <span class="math inline">\(i\)</span> is:</p>
+<p><span class="math display">\[
+\lambda_{i,j}(t) = \exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_i)\lambda^{(0)}_{j}(t)
+\]</span></p>
+<p>with <span class="math inline">\(\lambda^{(0)}_{j}(t)\)</span> being the baseline sub-distribution hazard for cause <span class="math inline">\(j\)</span>. Covariate coefficients are estimated by maximising the weighted partial likelihood <span class="math inline">\(L(\boldsymbol{\beta})\)</span>:</p>
+<p><span class="math display">\[
+L(\boldsymbol{\beta}) = \prod_{i \in
+D}\frac{\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_{d_i})}{\sum_{j \in
+R_i}w_{i,j}\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_j)}
+\]</span></p>
+<p>where <span class="math inline">\(w_{i,j}\)</span> are weights which account for the increasing probability of censoring with increasing follow-up time, <span class="math inline">\(D = \{T_1, T_2, \ldots, T_n\}\)</span> are the set of distinct failure times, <span class="math inline">\(R_i\)</span> is the set of all individuals who are at risk of failure immediately before time <span class="math inline">\(T_i\)</span>, <span class="math inline">\(\boldsymbol{z}_{d_i}\)</span> is the covariate vector for an individual who failed at time <span class="math inline">\(T_i\)</span>, and <span class="math inline">\(\boldsymbol{z}_j\)</span> is the covariate vector for the <span class="math inline">\(j\)</span>th individual at risk at time <span class="math inline">\(T_i\)</span>. Covariate effects on the sub-distribution hazard may be interpreted as covariate effects on the cumulative incidence of a competing event.</p>
+</section>
+</section>
+<section id="stratification" class="level2">
+<h2 class="anchored" data-anchor-id="stratification">Stratification</h2>
+<p>Whilst proportional hazards models are a common method for incorporating covariates in survival analyses, a more straightforward approach is through stratification. In a stratified model the population is subdivided according to covariate group (or strata), the survival is compared within each stratum, and the differences within stratum are combined to give an overall comparison.</p>
+<p>As stratification allows the baseline hazard to vary across strata it is sometimes used to accommodate non-proportional hazards in Cox and Fine-Gray proportional hazards.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -511,34 +497,33 @@ Figure&nbsp;1: Example of intermittently-observed data with missed observations 
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>The Aalen-Johansen estimator extends the Kaplan-Meier approach to provide non-parametric estimates of transition probabilities in multi-state models</li>
-<li>Multi-state mixture models allow for different transition types with their own probability distributions and covariate effects</li>
-<li>Intermittently-observed data with interval censoring can be properly handled by multi-state models when observation schemes are non-informative</li>
-<li>Covariates can influence both the probability of transitions between states and the timing of those transitions</li>
-<li>Both frequentist (maximum likelihood) and Bayesian (MCMC) approaches are available for fitting multi-state models, with several specialised <code>R</code> packages providing implementation</li>
+<li>Competing risks occur when individuals can experience multiple possible events that prevent the observation of other events.</li>
+<li>Standard survival methods (Kaplan-Meier, Cox) can produce biased estimates when competing risks are present.</li>
+<li>The cause-specific hazard function measures the instantaneous risk of a specific event type.</li>
+<li>The cause-specific cumulative incidence function gives the probability of experiencing a specific event type over time.</li>
+<li>The Aalen-Johansen estimator is the non-parametric method for estimating cumulative incidence in competing risks scenarios.</li>
+<li>The Fine-Gray model allows regression analysis for competing risks data by modelling the sub-distribution hazard.</li>
+<li>Stratification can accommodate non-proportional hazards in both Cox and Fine-Gray models.</li>
 </ul>
 </div>
 </div>
 </section>
 <section id="coming-next" class="level2">
 <h2 class="anchored" data-anchor-id="coming-next">Coming next</h2>
-<p>In the next post I’ll introduce the concept of causal inference from observational data and provide an outline of three common methods to compute the average causal effect.</p>
+<p>The competing risks models shown in this post are a special case of <em>multi-state models</em>. In the next post, I’ll provide some of the theory of multi-state models and their applications in epidemiology, including estimating transition intensities and future states.</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
 <ul>
-<li>Andersen PK, Borgan O, Gill RD, Keiding N. <a href="http://dx.doi.org/10.1007/978-1-4612-4348-9">Statistical models based on counting processes</a>. <em>Springer</em>; 1996. 784 p.</li>
-<li>Fagerland MW, Hosmer DW, Bofin AM. <a href="http://dx.doi.org/10.1002/sim.3202">Multinomial goodness-of-fit tests for logistic regression models</a>. <em>Stat Med</em>. 2008 Sep 20 [cited 2024 Feb 17];27(21):4238-53.</li>
-<li>Ghani AC, Donnelly CA, Cox DR, <em>et al</em>. <a href="http://dx.doi.org/10.1093/aje/kwi230">Methods for estimating the case fatality ratio for a novel, emerging infectious disease</a>. <em>Am J Epidemiol</em>. 2005 Sep 1;162(5):479-86.</li>
-<li>Grüger J, Kay R, Schumacher M. <a href="https://www.ncbi.nlm.nih.gov/pubmed/1912263">The validity of inferences based on incomplete observations in disease state models</a>. <em>Biometrics</em>. 1991 Jun;47(2):595-605.</li>
-<li>Klein JP, Moeschberger ML. <a href="https://play.google.com/store/books/details?id=KSq0e-6VFJ0C">Survival Analysis: Techniques for Censored and Truncated Data</a>. <em>Springer Science &amp; Business Media</em>; 2005. 538 p.</li>
-<li>van den Hout A. <a href="https://doi.org/10.1201/9781315374321">Multi-State Survival Models for Interval-Censored Data</a>. <em>CRC Press</em>; 2016. 238 p.</li>
-<li>Young GA, Smith RL. <a href="http://dx.doi.org/10.1017/cbo9780511755392">Essentials of Statistical Inference</a>. <em>Cambridge University Press</em>; 2005.</li>
-<li>Zhao H, Li Y, Sun J. <a href="http://dx.doi.org/10.1002/cjs.11143">Analyzing panel count data with a dependent observation process and a terminal event</a>. <em>Can J Stat</em>. 2013 Mar;41(1):174-91.</li>
+<li>Aalen OO, Johansen S. <a href="http://www.jstor.org/stable/4615704">An Empirical Transition Matrix for Non-Homogeneous Markov Chains Based on Censored Observations</a>. <em>Scand Stat Theory Appl</em>. 1978;5(3):141-50.</li>
+<li>Borgan, Ø. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/9781118445112.stat06045%22">Nelson-Aalen Estimator</a>. <em>Wiley StatsRef: Statistics Reference Online</em>. 2014.</li>
+<li>Collett, D. <a href="https://www.taylorfrancis.com/books/mono/10.1201/9781003282525/modelling-survival-data-medical-research-david-collett">Modelling Survival Data in Medical Research</a>. <em>Chapman &amp; Hall/CRC Texts in Statistical Science</em>. 2023.</li>
+<li>Fine JP, Gray RJ. <a href="https://www.tandfonline.com/doi/abs/10.1080/01621459.1999.10474144%22">A proportional hazards model for the subdistribution of a competing risk</a>. <em>J Am Stat Assoc</em>. 1999;94(446):496-509.</li>
+<li>Hosmer DW, Lemeshow S. <a href="https://onlinelibrary.wiley.com/doi/book/10.1002/9780470258019">Applied survival analysis: Regression modeling of time to event data</a>. <em>Wiley</em>. 1999.</li>
 </ul>
 <div class="post-navigation">
-<p><a href="../blog/multi-state-models.html">← Previous post</a></p>
-<p><a href="../blog/causal-inference.html">Next post →</a></p>
+<p><a href="../../blog/classical-survival-methods/index.html">← Previous post</a></p>
+<p><a href="../../blog/multi-state-models/index.html">Next post →</a></p>
 </div>
 
 
@@ -546,14 +531,14 @@ Figure&nbsp;1: Example of intermittently-observed data with missed observations 
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{kirwan2025,
   author = {Kirwan, Peter},
-  title = {Part {VI:} {Statistical} Inference for Multi-State Models},
-  date = {2025-04-24},
-  url = {https://www.pkirwan.com/blog/statistical-inference-msms.html},
+  title = {Part {IV:} {Competing} Risks Survival Methods},
+  date = {2025-04-10},
+  url = {https://www.pkirwan.com/blog/competing-risks-methods/},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-kirwan2025" class="csl-entry quarto-appendix-citeas" role="listitem">
-Kirwan, Peter. 2025. <span>“Part VI: Statistical Inference for
-Multi-State Models.”</span> April 24, 2025. <a href="https://www.pkirwan.com/blog/statistical-inference-msms.html">https://www.pkirwan.com/blog/statistical-inference-msms.html</a>.
+Kirwan, Peter. 2025. <span>“Part IV: Competing Risks Survival
+Methods.”</span> April 10, 2025. <a href="https://www.pkirwan.com/blog/competing-risks-methods/">https://www.pkirwan.com/blog/competing-risks-methods/</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

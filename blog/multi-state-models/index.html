@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Peter Kirwan">
-<meta name="dcterms.date" content="2025-03-27">
-<meta name="description" content="An introduction to survival analysis, time-to-event data, and how we handle censored observations in epidemiological research.">
+<meta name="dcterms.date" content="2025-04-17">
+<meta name="description" content="Some theory of multi-state models and their applications in epidemiology, including estimating transition intensities and the time spent in a state.">
 
-<title>Part II: Survival analysis – Peter Kirwan</title>
+<title>Part V: Multi-state models – Peter Kirwan</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -26,23 +26,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-7b46b0119f60f3878847c70192f1ed52.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-0bc08c1d40222ed58722d128348a3f58.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-7b46b0119f60f3878847c70192f1ed52.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-7b46b0119f60f3878847c70192f1ed52.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-0bc08c1d40222ed58722d128348a3f58.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-7b46b0119f60f3878847c70192f1ed52.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -58,7 +58,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<link rel="stylesheet" href="../font/inter.css">
+<link rel="stylesheet" href="../../font/inter.css">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -90,11 +90,13 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="../style.css">
-<meta property="og:title" content="Part II: Survival analysis – Peter Kirwan">
-<meta property="og:description" content="An introduction to survival analysis, time-to-event data, and how we handle censored observations in epidemiological research.">
-<meta property="og:image" content="https://www.pkirwan.com/images/survival-analysis-banner.jpg">
+<link rel="stylesheet" href="../../common/style.css">
+<meta property="og:title" content="Part V: Multi-state models – Peter Kirwan">
+<meta property="og:description" content="Some theory of multi-state models and their applications in epidemiology, including estimating transition intensities and the time spent in a state.">
+<meta property="og:image" content="https://www.pkirwan.com/blog/multi-state-models/multi-state-models-banner.png">
 <meta property="og:site_name" content="Peter Kirwan">
+<meta property="og:image:height" content="1140">
+<meta property="og:image:width" content="2040">
 </head>
 
 <body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -275,9 +277,9 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     </a>
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Peter Kirwan</span>
     </a>
   </div>
@@ -287,27 +289,27 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../index.html#about"> 
+    <a class="nav-link" href="../../index.html#about"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../index.html#blog"> 
+    <a class="nav-link" href="../../index.html#blog"> 
 <span class="menu-text">Survival data posts</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../index.html#recent-publications"> 
+    <a class="nav-link" href="../../index.html#recent-publications"> 
 <span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../index.html#talks"> 
+    <a class="nav-link" href="../../index.html#talks"> 
 <span class="menu-text">Talks</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../index.html#contact"> 
+    <a class="nav-link" href="../../index.html#contact"> 
 <span class="menu-text">Contact</span></a>
   </li>  
 </ul>
@@ -322,15 +324,15 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Part II: Survival analysis</h1>
+      <h1 class="title">Part V: Multi-state models</h1>
                   <div>
         <div class="description">
-          An introduction to survival analysis, time-to-event data, and how we handle censored observations in epidemiological research.
+          Some theory of multi-state models and their applications in epidemiology, including estimating transition intensities and the time spent in a state.
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">Censoring</div>
-                <div class="quarto-category">Truncation</div>
+                <div class="quarto-category">Transition intensity</div>
+                <div class="quarto-category">Markov property</div>
               </div>
                   </div>
   </div>
@@ -348,7 +350,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 27, 2025</p>
+        <p class="date">April 17, 2025</p>
       </div>
     </div>
     
@@ -364,18 +366,23 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#what-is-survival-analysis" id="toc-what-is-survival-analysis" class="nav-link active" data-scroll-target="#what-is-survival-analysis">What is survival analysis?</a></li>
-  <li><a href="#incomplete-information" id="toc-incomplete-information" class="nav-link" data-scroll-target="#incomplete-information">Incomplete information</a>
+  <li><a href="#multi-state-survival-models" id="toc-multi-state-survival-models" class="nav-link active" data-scroll-target="#multi-state-survival-models">Multi-state survival models</a></li>
+  <li><a href="#stochastic-processes" id="toc-stochastic-processes" class="nav-link" data-scroll-target="#stochastic-processes">Stochastic processes underlying multi-state models</a>
   <ul class="collapse">
-  <li><a href="#censoring" id="toc-censoring" class="nav-link" data-scroll-target="#censoring">Censoring</a></li>
-  <li><a href="#truncation" id="toc-truncation" class="nav-link" data-scroll-target="#truncation">Truncation</a></li>
+  <li><a href="#parameter-processes" id="toc-parameter-processes" class="nav-link" data-scroll-target="#parameter-processes">Discrete and continuous parameter processes</a></li>
+  <li><a href="#counting-processes" id="toc-counting-processes" class="nav-link" data-scroll-target="#counting-processes">Counting processes</a></li>
+  <li><a href="#markov-process" id="toc-markov-process" class="nav-link" data-scroll-target="#markov-process">Markov process</a></li>
+  <li><a href="#time-homogeneous-markov-processes" id="toc-time-homogeneous-markov-processes" class="nav-link" data-scroll-target="#time-homogeneous-markov-processes">Time-homogeneous Markov processes</a></li>
+  <li><a href="#multi-state-processes" id="toc-multi-state-processes" class="nav-link" data-scroll-target="#multi-state-processes">Multi-state processes</a></li>
   </ul></li>
-  <li><a href="#key-concepts" id="toc-key-concepts" class="nav-link" data-scroll-target="#key-concepts">When standard statistics aren’t enough</a>
+  <li><a href="#multi-state-models" id="toc-multi-state-models" class="nav-link" data-scroll-target="#multi-state-models">Multi-state models</a></li>
+  <li><a href="#continuous-time-msms" id="toc-continuous-time-msms" class="nav-link" data-scroll-target="#continuous-time-msms">Continuous-time multi-state models</a>
   <ul class="collapse">
-  <li><a href="#cumulative-incidence" id="toc-cumulative-incidence" class="nav-link" data-scroll-target="#cumulative-incidence">The cumulative incidence function</a></li>
-  <li><a href="#survivor-function" id="toc-survivor-function" class="nav-link" data-scroll-target="#survivor-function">The survivor function</a></li>
-  <li><a href="#hazard-function" id="toc-hazard-function" class="nav-link" data-scroll-target="#hazard-function">The hazard function</a></li>
+  <li><a href="#covariates" id="toc-covariates" class="nav-link" data-scroll-target="#covariates">Covariates</a></li>
+  <li><a href="#sojourn-time" id="toc-sojourn-time" class="nav-link" data-scroll-target="#sojourn-time">Sojourn time</a></li>
   </ul></li>
+  <li><a href="#discrete-time-msms" id="toc-discrete-time-msms" class="nav-link" data-scroll-target="#discrete-time-msms">Discrete-time multi-state models</a></li>
+  <li><a href="#semi-hidden" id="toc-semi-hidden" class="nav-link" data-scroll-target="#semi-hidden">Semi-Markov and hidden Markov models</a></li>
   <li><a href="#coming-next" id="toc-coming-next" class="nav-link" data-scroll-target="#coming-next">Coming next</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
@@ -389,137 +396,118 @@ window.Quarto = {
 
 
 
-<p>This is part two of a series on statistical methods for analysing time-to-event, or “survival” data.</p>
-<section id="what-is-survival-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-survival-analysis">What is survival analysis?</h2>
-<p>Survival analysis involves studying “time-to-event” data, also termed “survival data” - a powerful statistical framework that helps us answer questions about <em>when</em> events occur. It applies to any scenario where we’re interested in the time from a given origin to the occurrence of an event (the endpoint).</p>
-<p>In infectious disease research, survival data are commonly used to describe clinical origins and endpoints, for example:</p>
-<ul>
-<li>Time from study recruitment to infection</li>
-<li>Duration from hospitalisation to discharge</li>
-<li>Period from infection until recovery or death</li>
-</ul>
-<p>These data may be combined with information on patient characteristics (age, gender, socioeconomic status) and clinical variables (vaccination status, treatments). Survival analysis techniques help us to understand how these factors influence outcomes.</p>
+<p>This is part five of a series on statistical methods for analysing time-to-event, or “survival” data.</p>
+<section id="multi-state-survival-models" class="level2">
+<h2 class="anchored" data-anchor-id="multi-state-survival-models">Multi-state survival models</h2>
+<p>When disease processes are more complex, or when intermediate events may influence the final outcome, the <a href="../../blog/classical-survival-methods/index.html">standard survival methods</a> <a href="../../blog/competing-risks-methods/index.html">described so far</a> may be insufficient to explore the effects of treatment on these outcomes. In these cases, multi-state models, which are more flexible and hence better able to investigate the different pathways that patients may experience, can be applied. These models allow for joint estimation of features of the underlying process and the associated hazards of transition for a set of given covariates, and implicitly account for competing risks.</p>
+<p>This section provides an introduction to the theory of multi-state processes and describes how these relate to continuous-time and discrete-time multi-state models.</p>
 </section>
-<section id="incomplete-information" class="level2">
-<h2 class="anchored" data-anchor-id="incomplete-information">Incomplete information</h2>
-<p>One of the most distinctive aspects of survival analysis is how it handles incomplete information. In real-world studies, we often don’t observe the complete “story” for each participant. This incompleteness comes in several forms:</p>
-<section id="censoring" class="level3">
-<h3 class="anchored" data-anchor-id="censoring">Censoring</h3>
-<p>Censoring occurs when information about an individual is only known within certain intervals or “censoring times”.</p>
-<section id="right-censoring" class="level4">
-<h4 class="anchored" data-anchor-id="right-censoring">Right-censoring</h4>
-<p>The most common type of censoring occurs when our study ends before we observe the event of interest. For example, if we’re studying time to COVID-19 infection, and a participant remains uninfected when our study concludes, they’re “right-censored” - we know they remained infection-free for at least the duration of the study, but we don’t know what happens afterward.</p>
-<p>More formally, we lack information to the “right” (or future) of the right-censoring time, <span class="math inline">\(C_r\)</span>. In this scenario we say an individual is right-censored at time <span class="math inline">\(C_r &lt; X\)</span>, where <span class="math inline">\(X\)</span> is the time that the event of interest takes place.</p>
+<section id="stochastic-processes" class="level2">
+<h2 class="anchored" data-anchor-id="stochastic-processes">Stochastic processes underlying multi-state models</h2>
+<p>Multi-state models combine statistical inference with the theory of stochastic processes.</p>
+<section id="parameter-processes" class="level3">
+<h3 class="anchored" data-anchor-id="parameter-processes">Discrete and continuous parameter processes</h3>
+<p>A stochastic process is formally defined as a collection of random variables <span class="math inline">\(\{X(t),\; t \in T\}\)</span>, indexed by a parameter <span class="math inline">\(t\)</span> which varies in a mathematical index set <span class="math inline">\(T\)</span>. The variable <span class="math inline">\(X(t)\)</span> is the state of the process at time <span class="math inline">\(t\)</span>, and the set <span class="math inline">\(\mathcal{S}\)</span> of all possible values of <span class="math inline">\(X(t)\)</span> is termed the <em>state space</em>.</p>
+<p>Two important cases of stochastic processes are discrete parameter processes, when <span class="math inline">\(T = \{\pm1, \pm2, \pm3, \dots\}\)</span>, and continuous parameter processes, when <span class="math inline">\(T = \{t:-\infty &lt; t &lt; \infty\}\)</span>. Both may be restricted to the positive domain, in which case the parameter <span class="math inline">\(t\)</span> may be used to represent time, and these processes are termed ‘discrete-time’ and ‘continuous-time’ processes.</p>
 </section>
-<section id="left-censoring" class="level4">
-<h4 class="anchored" data-anchor-id="left-censoring">Left-censoring</h4>
-<p>If, on the other hand, the event of interest occurs at an unknown time, <span class="math inline">\(X\)</span>, before we started observing the participant at time <span class="math inline">\(C_l\)</span> this is known as “left-censoring”. For instance, if we’re studying HIV infection, and a participant tests positive at their first visit, we know they acquired HIV at some point before joining the study, but we don’t know exactly when. In this scenario we say the individual is left-censored at time <span class="math inline">\(C_l &gt; X\)</span>.</p>
+<section id="counting-processes" class="level3">
+<h3 class="anchored" data-anchor-id="counting-processes">Counting processes</h3>
+<p>In survival analyses, the focus is typically on observing events as they occur over time, forming a class of stochastic process known as a <em>point process</em>. If the number of events that occur over time are counted, then the stochastic process is instead known as a <em>counting process</em>. Counting processes form the basis for multi-state models, and linkage to the theory of martingales (not discussed here) provides a theoretical framework for these models.</p>
 </section>
-<section id="administrative-censoring" class="level4">
-<h4 class="anchored" data-anchor-id="administrative-censoring">Administrative censoring</h4>
-<p>Sometimes we impose censoring on our dataset, limiting the time-to-event data for each individual to a pre-specified cut-off, with any events beyond this period not considered, e.g.&nbsp;mortality within 30 days of hospital admission. This is known as administrative censoring.</p>
-<div id="fig-censoring" class="quarto-float quarto-figure quarto-figure-center anchored">
+<section id="markov-process" class="level3">
+<h3 class="anchored" data-anchor-id="markov-process">Markov process</h3>
+<p>A stochastic process is called a ‘Markov process’ if the future state of a process depends only on the present state, and not on the sequence of events that preceded it. Equivalently, for a Markov process the conditional probability of a future state <span class="math inline">\(X(t_{i+j})\)</span> given <span class="math inline">\(X(t_i)\)</span> is independent of previous states <span class="math inline">\(X(t_0), X(t_1), \dots, X(t_{i-1})\)</span>.</p>
+</section>
+<section id="time-homogeneous-markov-processes" class="level3">
+<h3 class="anchored" data-anchor-id="time-homogeneous-markov-processes">Time-homogeneous Markov processes</h3>
+<p>Markov processes are said to be ‘time-homogeneous’ if the probability of transition from one state to the next (termed the <em>transition probability</em>) is independent of the time parameter <span class="math inline">\(t\)</span>. Equivalently, for <span class="math inline">\(\Pr(X(t + u) = s \mid X(t) = r)\)</span> denoting the conditional probability of a process <span class="math inline">\(X(\cdot)\)</span> being in state <span class="math inline">\(s\)</span> at time <span class="math inline">\(t + u\)</span>, given the process was in state <span class="math inline">\(r\)</span> at time <span class="math inline">\(t\)</span>, a Markov process is time-homogeneous if:</p>
+<p><span class="math display">\[
+\Pr(X(t+u) = s \mid X(t) = r) = \Pr(X(u) = s \mid X(0) = r)
+\]</span></p>
+<p>A well-known time-homogeneous Markov counting process is the Poisson process, where events occur randomly and independently of each other. A homogeneous Poisson process is described by its constant intensity parameter <span class="math inline">\(\lambda &gt; 0\)</span>, which represents the average rate of events that occur per unit time. For any infinitesimal time interval <span class="math inline">\([t, t+\delta]\)</span>, as <span class="math inline">\(\delta \rightarrow 0\)</span>, the probability of exactly one event occurring in this interval is asymptotically <span class="math inline">\(\lambda\delta\)</span>.</p>
+</section>
+<section id="multi-state-processes" class="level3">
+<h3 class="anchored" data-anchor-id="multi-state-processes">Multi-state processes</h3>
+<p>Multi-state processes are discrete-state stochastic processes with a finite state space <span class="math inline">\(\mathcal{S} = \{1, 2, \ldots, m\}\)</span>. In these processes, an individual begins in one state and spends a random, continuously-distributed time in that state before moving to a random next state. Multi-state processes are defined by the initial distribution of the states <span class="math inline">\(\Pr(X(0) = r)\)</span>, and the transition probabilities <span class="math inline">\(\Pr(X(t + u) = s \mid X(t) = r, \mathcal{X}_t)\)</span> from state <span class="math inline">\(r\)</span> to state <span class="math inline">\(s\)</span> during the interval <span class="math inline">\((t, t + u]\)</span>, with <span class="math inline">\(r,s \in \mathcal{S}\)</span>, and where <span class="math inline">\(\mathcal{X}_t\)</span> represents the history of the process <span class="math inline">\(X(\cdot)\)</span> up to time <span class="math inline">\(t\)</span>.</p>
+<p><a href="#fig-counting-process" class="quarto-xref">Figure&nbsp;1</a> shows how a counting process may be built on top of a multi-state process: panel A shows a multi-state process with transitions between two states, and the corresponding counting process for the transition event from State 1 <span class="math inline">\(\rightarrow\)</span> State 2 is shown in panel B.</p>
+<div id="fig-counting-process" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-censoring-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="fig-counting-process-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="survival-analysis_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-censoring-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Examples of right, left, and administrative censoring for patients in time-to-event data with origin and outcome information reported. <span class="math inline">\(C_l\)</span>: left-censoring time, <span class="math inline">\(C_r\)</span>: right-censoring time, <span class="math inline">\(\bullet\)</span>: reported origin, outcome, or intermediate event.
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="interval-censoring" class="level4">
-<h4 class="anchored" data-anchor-id="interval-censoring">Interval censoring</h4>
-<p>Often, we only know that an event happened between two observation points, i.e.&nbsp;within a censoring interval <span class="math inline">\((L, R],\ L &lt; X &lt; R\)</span>. An example is the infection time for an individual which is typically not directly observed, but we can assume it occurs in-between a negative and positive test. Interval censoring is a feature of “intermittently-observed” data, where individuals are tested for the presence of infection at several time-points. Such interval-censored data can still be used to detect changes in an individual’s infection status when testing is sufficiently frequent, as shown in <a href="#fig-interval-censoring" class="quarto-xref">Figure&nbsp;2</a>.</p>
-<div id="fig-interval-censoring" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-interval-censoring-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="survival-analysis_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-interval-censoring-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Example of interval censoring with intermittently-observed data for an underlying process.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-counting-process-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Example of transitions between two states in a multi-state process (panel A), and the corresponding counting process for the State 1 → State 2 transition (panel B).
 </figcaption>
 </figure>
 </div>
 </section>
 </section>
-<section id="truncation" class="level3">
-<h3 class="anchored" data-anchor-id="truncation">Truncation</h3>
-<p>While censoring gives us partial information, truncation occurs when information about an individual is completely unobserved, and unavailable at the time of data collection or analysis. This is different from censoring because censored individuals are at least partially observed, while truncated individuals never enter our dataset. As with censoring, both left, right, and interval-truncation are possible.</p>
-<ul>
-<li><strong>Left truncation</strong>: occurs when only event-times which take place after the left-truncation time, <span class="math inline">\(Y_l\)</span>, are available. For example, if individuals whose infection occurs prior to the study, <span class="math inline">\(X &lt; Y_l\)</span>, are not included in our dataset.</li>
-<li><strong>Right-truncation</strong>: occurs when only event-times which take place before the right-truncation time, <span class="math inline">\(Y_r\)</span>, are available. For example, when we have no knowledge of individuals who are at risk but whose event of interest takes place after the study endpoint, <span class="math inline">\(X &gt; Y_r\)</span>.</li>
-<li><strong>Interval-truncation</strong>: occurs when only event-times which take place within a specific truncation interval <span class="math inline">\([Y_l, Y_r]\)</span> are available for observation. The key difference from left- and right-truncation is that in interval-truncation, both the left and right boundaries of the observation window play a role in determining which event-times are observed.</li>
-</ul>
-<div id="fig-truncation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<section id="multi-state-models" class="level2">
+<h2 class="anchored" data-anchor-id="multi-state-models">Multi-state models</h2>
+<p>In a multi-state model, each state represents a different stage or condition that an individual may experience. The transitions between these states are modelled as a multi-state process, with the time spent in each state and the transitions between states being random variables that can be estimated from data.</p>
+<p>Multi-state models are particularly useful in the context of disease progression, as each state in the model can be used to represent a different level of disease severity, with transitions between states representing progression. This may allow for a more nuanced understanding of disease processes, capturing the different pathways that patients may experience.</p>
+</section>
+<section id="continuous-time-msms" class="level2">
+<h2 class="anchored" data-anchor-id="continuous-time-msms">Continuous-time multi-state models</h2>
+<div id="fig-msm" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-truncation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="survival-analysis_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div aria-describedby="fig-msm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./multi-state-model.png" class="img-fluid figure-img" style="width:60.0%">
 </div>
-</div>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-truncation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Examples of left and right-truncation for patients in time-to-event data, assuming only information within the truncation interval (<span class="math inline">\(Y_l\)</span> ,<span class="math inline">\(Y_r\)</span>) is observed. <span class="math inline">\(Y_l\)</span>: left-truncation time, <span class="math inline">\(Y_r\)</span>: right-truncation time, <span class="math inline">\(\bullet\)</span>: outcome time.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-msm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Example of a three-state model with transitions between states according to transition intensities <span class="math inline">\(\{q_{r,s} : r,s \in (1,2,3)\}\)</span>
 </figcaption>
 </figure>
 </div>
+<p>Continuous-time multi-state models are defined by transition intensities, <span class="math inline">\(q_{r,s}(t,
+\boldsymbol{z}(t))\)</span>, which represent the instantaneous hazard of moving from state <span class="math inline">\(r\)</span> to state <span class="math inline">\(s\)</span> at time <span class="math inline">\(t\)</span>, dependent on a set of explanatory, potentially time-varying, covariates <span class="math inline">\(\boldsymbol{z}(t)\)</span>. Defining an individual’s state at time <span class="math inline">\(t\)</span> as <span class="math inline">\(X(t)\)</span> then:</p>
+<p><span class="math display">\[
+q_{r,s}(t, \boldsymbol{z}(t)) = \lim_{\delta t\downarrow 0}\frac{\Pr(X(t+\delta t)=s \mid X(t)=r)}{\delta t}
+\]</span></p>
+<p>From <a href="survival-analysis.html#hazard-function">the definition of the hazard function</a>, this transition intensity is equivalent to the hazard of transition from one state to another. These transition intensities form a <em>transition intensity matrix</em> <span class="math inline">\(\mathbf{Q}\)</span>, whose rows sum to zero, with diagonal entries defined by:</p>
+<p><span class="math display">\[q_{r,r}(t, \boldsymbol{z}(t)) = - \sum_{s \neq r} q_{r,s}(t, \boldsymbol{z}(t))\]</span></p>
+<p>For the example three-state model shown in <a href="#fig-msm" class="quarto-xref">Figure&nbsp;2</a> this matrix would be:</p>
+<p><span class="math display">\[
+\mathbf{Q} = \begin{bmatrix}
+-q_{1,2}-q_{1,3} &amp; q_{1,2} &amp; q_{1,3} \\
+q_{2,1} &amp; -q_{2,1}-q_{2,3} &amp; q_{2,3} \\
+0 &amp; 0 &amp; 0 \\
+\end{bmatrix}
+\]</span></p>
+<p>Here, state 3 is known as an ‘absorbing’ state, as individuals do not leave the state after arrival, while states 1 and 2 are `transient’ states. The <em>transition probability matrix</em>, which contains the probabilities of moving between states within a time-interval of length <span class="math inline">\(t\)</span> is derived from the transition intensity matrix by the matrix exponential:</p>
+<p><span class="math display">\[\mathbf{P}(t) = \exp(t\mathbf{Q}) = \sum_{n=0}^{\infty}\frac{t^n}{n!}\mathbf{Q}^n\]</span></p>
+<section id="covariates" class="level3">
+<h3 class="anchored" data-anchor-id="covariates">Covariates</h3>
+<p>The (potentially time-varying) effect of a given set of <span class="math inline">\(M\)</span> covariates, <span class="math inline">\(\boldsymbol{z}(t) = \{z_1(t), \ldots, z_M(t)\}\)</span>, on the transition intensities <span class="math inline">\(q_{r,s}(t, \boldsymbol{z}(t))\)</span> can be expressed via a proportional hazards regression model. Typically these combine a parametric baseline hazard, <span class="math inline">\(q^{(0)}_{r,s}(t)\)</span>, with log-linear regression:</p>
+<p><span class="math display">\[\begin{align*}
+q_{r,s}(t, \boldsymbol{z}(t)) &amp; = q^{(0)}_{r,s}(t)\exp\left(\sum_{m=1}^{M}\beta_{r,s,m}z_{m}(t)\right) \\
+&amp; = q^{(0)}_{r,s}(t)\exp\left(\boldsymbol{\beta}_{r,s}^\mathsf{T}\boldsymbol{z}(t)\right)
+\end{align*}\]</span></p>
+<p>where <span class="math inline">\(\exp(\beta_{r,s,m})\)</span> is the hazard ratio for the <span class="math inline">\(m\)</span>th covariate on the <span class="math inline">\(r \rightarrow s\)</span> transition.</p>
+</section>
+<section id="sojourn-time" class="level3">
+<h3 class="anchored" data-anchor-id="sojourn-time">Sojourn time</h3>
+<p>The time spent in a state prior to transition is termed the <em>sojourn time</em>, with its mean given by the inverse of the transition intensity for remaining in the state:</p>
+<p><span class="math display">\[E(T_r) = -\frac{1}{q_{r,r}}\]</span></p>
 </section>
 </section>
-<section id="key-concepts" class="level2">
-<h2 class="anchored" data-anchor-id="key-concepts">When standard statistics aren’t enough</h2>
-<p>Why can’t we just use regular statistical methods like t-tests or linear regression for time-to-event data? The key challenge is that censoring and truncation create a form of missing data that’s not random. If we removed all censored observations or treated censoring times as event times, we’d introduce severe bias.</p>
-<p>Survival analysis methods are specifically designed for valid statistical estimation of incomplete data while avoiding these biases. We’ll start off by defining several fundamental functions for survival analysis:</p>
-<section id="cumulative-incidence" class="level3">
-<h3 class="anchored" data-anchor-id="cumulative-incidence">The cumulative incidence function</h3>
-<p>Let <span class="math inline">\(T\)</span> be the independent and identically distributed (i.i.d) random variable representing the survival time, <span class="math inline">\(T = t &gt; 0\)</span>, for an individual, and assume this random variable has a probability distribution with probability density function <span class="math inline">\(f(t)\)</span>.</p>
-<p>The distribution function of <span class="math inline">\(T\)</span>, also known as the cumulative incidence function, is the probability of “failure” before time <span class="math inline">\(t\)</span>, defined as:</p>
-<p><span class="math display">\[F(t) = \Pr(T &lt; t)=\int_0^t f(u) du\]</span></p>
+<section id="discrete-time-msms" class="level2">
+<h2 class="anchored" data-anchor-id="discrete-time-msms">Discrete-time multi-state models</h2>
+<p>For population studies which measure duration in discrete time, discrete-time multi-state models may be applied. Since the concept of instantaneous risk does not apply in discrete time, transition probabilities are instead defined which represent the probability of transition from state <span class="math inline">\(r\)</span> to state <span class="math inline">\(s\)</span> in the time interval <span class="math inline">\((t_i,t_j]\)</span>, <span class="math inline">\(t_j&gt;t_i\)</span>:</p>
+<p><span class="math display">\[p_{r,s}(t_i, t_j) = \Pr(X(t_j) = s \mid X(t_i) = r)\]</span></p>
 </section>
-<section id="survivor-function" class="level3">
-<h3 class="anchored" data-anchor-id="survivor-function">The survivor function</h3>
-<p>The survivor function <span class="math inline">\(S(t)\)</span> gives the probability of surviving (not experiencing the event) beyond time <span class="math inline">\(t\)</span>. This is the cornerstone of survival analysis and is defined as:</p>
-<p><span class="math display">\[S(t) = \Pr(T \geq t) = 1 - F(t)\]</span></p>
-<p>where <span class="math inline">\(T\)</span> is the random variable representing the time until the event occurs.</p>
-<p>The survivor function starts at 1 (everyone is “alive” at time 0) and decreases toward 0 as time progresses. It has an intuitive interpretation: <span class="math inline">\(S(6 \text{ months}) = 0.8\)</span> means 80% of individuals remain event-free after 6 months.</p>
-</section>
-<section id="hazard-function" class="level3">
-<h3 class="anchored" data-anchor-id="hazard-function">The hazard function</h3>
-<p>The hazard function <span class="math inline">\(h(t)\)</span> represents the instantaneous rate of experiencing the event at time <span class="math inline">\(t\)</span>, given survival up to that point. Think of it as the “risk” at each moment, conditional on having survived so far:</p>
-<p><span class="math display">\[h(t) = \lim_{\delta t \to 0} \frac{\Pr(t \leq T &lt; t+\delta t | T \geq t)}{\delta t}\]</span></p>
-<p>By conditional probability, <span class="math inline">\(\Pr(A \mid B) = \Pr(AB)/\Pr(B)\)</span>, so the hazard function can also be expressed as:</p>
-<p><span class="math display">\[\begin{aligned}
-h(t) &amp;= \lim_{\delta t \downarrow 0} \left\{\frac{\Pr(t \leq T &lt; t + \delta t)}{\delta t \Pr(T \geq t)}\right\} \\
-&amp;=\lim_{\delta t \downarrow 0} \left\{\frac{F(t + \delta t) - F(t)}{\delta t S(t)}\right\} \\
-&amp;=\lim_{\delta t \downarrow 0} \left\{\frac{F(t + \delta t) - F(t)}{\delta t}\right\}\frac{1}{S(t)}
-\end{aligned}\]</span></p>
-<p>This limit is the definition of the derivative of <span class="math inline">\(F(t)\)</span> with respect to <span class="math inline">\(t\)</span>, and therefore equal to <span class="math inline">\(f(t)\)</span>:</p>
-<p><span class="math display">\[\lim_{\delta t \downarrow 0} \left\{\frac{F(t + \delta t) - F(t)}{\delta t}\right\} = \frac{d}{dt}F(t) = f(t)\]</span></p>
-<p>Hence the hazard function is related to the survivor function through the relationship:</p>
-<p><span class="math display">\[h(t) = \frac{f(t)}{S(t)}\]</span></p>
+<section id="semi-hidden" class="level2">
+<h2 class="anchored" data-anchor-id="semi-hidden">Semi-Markov and hidden Markov models</h2>
+<p>Multi-state models are typically specified to be Markov, i.e.&nbsp;<span class="math inline">\(q_{r,s}(t; \mathcal{X}_t) = q_{r,s}(t)\)</span>, where <span class="math inline">\(\mathcal{X}_t\)</span> is the observation history of the process up to time <span class="math inline">\(t\)</span>. Semi-Markov models relax the Markov assumption, allowing dependence on the time of entry into the current state, i.e.&nbsp;<span class="math inline">\(q_{r,s}(t;\mathcal{X}_t)=q_{r,s}(t-t_r)\)</span>, where <span class="math inline">\(t_r\)</span> is the time of entry into the current state <span class="math inline">\(r\)</span>.</p>
+<p>Hidden Markov models may also be specified to allow for unobserved, or ‘latent’, states to be included in the model. These can be particularly useful for modelling complex disease processes, where progression of the disease is influenced by unobserved factors and the time to event depends on the current state of the disease (for instance in models of HIV progression); as well as when the disease state is imperfectly observed (for instance to incorporate measurement error).</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -531,33 +519,32 @@ h(t) &amp;= \lim_{\delta t \downarrow 0} \left\{\frac{\Pr(t \leq T &lt; t + \del
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Survival analysis deals with “time-to-event” data, helping us understand <em>when</em> events happen, not just <em>if</em> they happen</li>
-<li>This approach handles incomplete information through concepts like censoring (when we have partial information) and truncation (when some subjects are never observed)</li>
-<li>Standard statistical methods can’t properly handle censored data, which is why specialised survival analysis techniques are essential</li>
-<li>The survivor function <span class="math inline">\(S(t)\)</span> gives the probability of not experiencing the event beyond time <span class="math inline">\(t\)</span></li>
-<li>The hazard function <span class="math inline">\(h(t)\)</span> represents the instantaneous risk of the event at time <span class="math inline">\(t\)</span>, given survival up to that point</li>
+<li>Multi-state models extend standard survival methods by allowing individuals to move between multiple states over time, not just from “alive” to “dead”.</li>
+<li>These models are built on stochastic processes theory, particularly Markov processes, where future states depend only on the present state.</li>
+<li>Transition intensities (analogous to hazard rates) describe the instantaneous risk of moving from one state to another.</li>
+<li>Multi-state models can incorporate covariates to identify factors that influence transition rates between states.</li>
+<li>Different model variations (time-homogeneous, semi-Markov, hidden Markov) provide flexibility to model complex disease processes with various assumptions.</li>
 </ul>
 </div>
 </div>
-</section>
 </section>
 <section id="coming-next" class="level2">
 <h2 class="anchored" data-anchor-id="coming-next">Coming next</h2>
-<p>In the next post, I’ll introduce the likelihood function and explore two classical methods for analysing survival data:</p>
-<ul>
-<li>The Kaplan-Meier estimator: a non-parametric approach to estimate survival probabilities;</li>
-<li>The Cox proportional hazards model: a semi-parametric regression technique for examining covariate effects.</li>
-</ul>
+<p>In the next post, I’ll discuss statistical inference methods for multi-state models, including non-parametric estimation with the Aalen-Johansen estimator and parametric approaches using maximum likelihood.</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
 <ul>
-<li>Collett D. <a href="https://www.taylorfrancis.com/books/mono/10.1201/9781003282525/modelling-survival-data-medical-research-david-collett">Modelling Survival Data in Medical Research</a>. <em>Chapman &amp; Hall/CRC Texts in Statistical Science</em> 2023.</li>
-<li>Klein JP, Moeschberger ML. <a href="https://play.google.com/store/books/details?id=KSq0e-6VFJ0C">Survival Analysis: Techniques for Censored and Truncated Data</a>.</li>
+<li>Aalen O, Borgan O, Gjessing H. <a href="https://play.google.com/store/books/details?id=2toprArSUMAC">Survival and Event History Analysis: A Process Point of View</a>. <em>Springer</em>; 2008. 540 p.</li>
+<li>Andersen PK, Borgan O, Gill RD, Keiding N. <a href="http://dx.doi.org/10.1007/978-1-4612-4348-9">Statistical models based on counting processes</a>. <em>Springer</em>; 1996. 784 p.</li>
+<li>Andersen PK, Keiding N. <a href="http://dx.doi.org/10.1191/0962280202SM276ra">Multi-state models for event history analysis</a>. <em>Stat Methods Med Res</em>. 2002;11(2):91-115.</li>
+<li>Chiang CL. An introduction to stochastic processes and their applications. <em>RE Krieger</em>; 1980.</li>
+<li>Putter H, Fiocco M, Geskus RB. <a href="http://dx.doi.org/10.1002/sim.2712">Tutorial in biostatistics: competing risks and multi-state models</a>. <em>Stat Med</em>. 2007;26(11):2389-430.</li>
+<li>van den Hout A. <a href="https://doi.org/10.1201/9781315374321">Multi-State Survival Models for Interval-Censored Data</a>. <em>CRC Press</em>; 2016. 238 p.</li>
 </ul>
 <div class="post-navigation">
-<p><a href="../blog/key-concepts-infectious-disease.html">← Previous post</a></p>
-<p><a href="../blog/classical-survival-methods.html">Next post →</a></p>
+<p><a href="../../blog/competing-risks-methods/index.html">← Previous post</a></p>
+<p><a href="../../blog/statistical-inference-msms/index.html">Next post →</a></p>
 </div>
 
 
@@ -565,14 +552,14 @@ h(t) &amp;= \lim_{\delta t \downarrow 0} \left\{\frac{\Pr(t \leq T &lt; t + \del
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{kirwan2025,
   author = {Kirwan, Peter},
-  title = {Part {II:} {Survival} Analysis},
-  date = {2025-03-27},
-  url = {https://www.pkirwan.com/blog/survival-analysis.html},
+  title = {Part {V:} {Multi-state} Models},
+  date = {2025-04-17},
+  url = {https://www.pkirwan.com/blog/multi-state-models/},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-kirwan2025" class="csl-entry quarto-appendix-citeas" role="listitem">
-Kirwan, Peter. 2025. <span>“Part II: Survival Analysis.”</span> March
-27, 2025. <a href="https://www.pkirwan.com/blog/survival-analysis.html">https://www.pkirwan.com/blog/survival-analysis.html</a>.
+Kirwan, Peter. 2025. <span>“Part V: Multi-State Models.”</span> April
+17, 2025. <a href="https://www.pkirwan.com/blog/multi-state-models/">https://www.pkirwan.com/blog/multi-state-models/</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
