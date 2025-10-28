@@ -513,7 +513,7 @@ The survivor function starts at 1 (everyone is "alive" at time 0) and decreases 
 
 The hazard function $h(t)$ represents the instantaneous rate of experiencing the event at time $t$, given survival up to that point. Think of it as the "risk" at each moment, conditional on having survived so far:
 
-$$h(t) = \lim_{\delta t \to 0} \frac{\Pr(t \leq T < t+\delta t | T \geq t)}{\delta t}$$
+$$h(t) = \lim_{\delta t \downarrow 0} \frac{\Pr(t \leq T < t+\delta t | T \geq t)}{\delta t}$$
 
 By conditional probability, $\Pr(A \mid B) = \Pr(AB)/\Pr(B)$, so the hazard function can also be expressed as:
 

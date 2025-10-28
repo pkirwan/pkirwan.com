@@ -89,7 +89,7 @@ In the next post I'll provide an introduction to survival analysis, time-to-even
 
 For more details about key concepts in epidemiology and infectious disease research, see:
 
-- [Epidemiology: Study design and data analysis](https://www.taylorfrancis.com/books/mono/10.1201/b16343/epidemiology-mark-woodward-mark-woodward) by Mark Woodward
+- [Epidemiology: Study design and data analysis](https://www.taylorfrancis.com/books/mono/10.1201/b16343/epidemiology-mark-woodward-mark-woodward) by Mark Woodward.
 
 
 ::: {.post-navigation}

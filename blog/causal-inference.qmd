@@ -130,7 +130,7 @@ $$
 \Pr(Y^a = 1 \mid A = 1, Z = z) = \Pr(Y^a = 1 \mid A = 0, Z = z)
 $$
 
-or equivalently, $Y^a \mathrel{\perp\!\!\!\!\perp} A \mid Z = z$, the counterfactual outcome and the observed treatment are independent within the covariate levels $Z = z$.
+or equivalently, $Y^a \mathrel{\perp\!\!\!\!\perp} A \mid Z = z$, the counterfactual outcome and the observed treatment are independent within the covariate levels $Z = z$. Here, $\mathrel{\perp\!\!\!\!\perp}$ is the notation for independence.
 
 3. **Positivity**: the probability of receiving every value of treatment $a$ conditional on $Z = z$ is positive, i.e.
 
