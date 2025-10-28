@@ -1,0 +1,15 @@
+[
+  {
+    "listing": "/index.html",
+    "items": [
+      "/blog/key-concepts-infectious-disease.html",
+      "/blog/survival-analysis.html",
+      "/blog/classical-survival-methods.html",
+      "/blog/competing-risks-methods.html",
+      "/blog/multi-state-models.html",
+      "/blog/statistical-inference-msms.html",
+      "/blog/causal-inference.html",
+      "/blog/study-designs.html"
+    ]
+  }
+]
