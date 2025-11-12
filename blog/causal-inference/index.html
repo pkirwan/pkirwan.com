@@ -27,6 +27,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<link href="../../common/apple-touch-icon.png" rel="icon" type="image/png">
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -452,18 +453,16 @@ Figure&nbsp;2: Example of a local independence graph representing continuous pro
 <p>Three <em>identifiability conditions</em> are required for an observational study to be treated as a conditionally randomised experiment:</p>
 <ol type="1">
 <li><p><strong>Consistency</strong>: the values of treatment under comparison correspond to well-defined interventions that, in turn, correspond to the versions of treatment in the data, i.e.&nbsp;<span class="math inline">\(Y^a = Y\)</span> for individuals with <span class="math inline">\(A = a\)</span>.</p></li>
-<li><p><strong>Exchangeability</strong>: the conditional probability of receiving every value of treatment depends only on measured covariates <span class="math inline">\(Z\)</span>. This is alternatively phrased as: conditional on a set of measured covariates <span class="math inline">\(Z\)</span>, the untreated group, had they been treated, would experience the same average outcome as the treated group, i.e.</p></li>
-</ol>
+<li><p><strong>Exchangeability</strong>: the conditional probability of receiving every value of treatment depends only on measured covariates <span class="math inline">\(Z\)</span>. This is alternatively phrased as: conditional on a set of measured covariates <span class="math inline">\(Z\)</span>, the untreated group, had they been treated, would experience the same average outcome as the treated group, i.e.</p>
 <p><span class="math display">\[
 \Pr(Y^a = 1 \mid A = 1, Z = z) = \Pr(Y^a = 1 \mid A = 0, Z = z)
 \]</span></p>
-<p>or equivalently, <span class="math inline">\(Y^a \mathrel{\perp\!\!\!\!\perp} A \mid Z = z\)</span>, the counterfactual outcome and the observed treatment are independent within the covariate levels <span class="math inline">\(Z = z\)</span>. Here, <span class="math inline">\(\mathrel{\perp\!\!\!\!\perp}\)</span> is the notation for independence.</p>
-<ol start="3" type="1">
-<li><strong>Positivity</strong>: the probability of receiving every value of treatment <span class="math inline">\(a\)</span> conditional on <span class="math inline">\(Z = z\)</span> is positive, i.e.</li>
-</ol>
+<p>or equivalently, <span class="math inline">\(Y^a \mathrel{\perp\!\!\!\!\perp} A \mid Z = z\)</span>, the counterfactual outcome and the observed treatment are independent within the covariate levels <span class="math inline">\(Z = z\)</span>. Here, <span class="math inline">\(\mathrel{\perp\!\!\!\!\perp}\)</span> is the notation for independence.</p></li>
+<li><p><strong>Positivity</strong>: the probability of receiving every value of treatment <span class="math inline">\(a\)</span> conditional on <span class="math inline">\(Z = z\)</span> is positive, i.e.</p>
 <p><span class="math display">\[
 \Pr(A = a \mid Z = z) &gt; 0 \quad\text{for all } z \text{ where } \Pr(Z = z) \neq 0
-\]</span></p>
+\]</span></p></li>
+</ol>
 <p>Among these conditions, consistency and positivity are usually straightforward to check in observational studies whilst exchangeability relies on the assumption that all predictors of an outcome have been measured. It is usually impossible to guarantee exchangeability, but understanding the potential for biases such as confounding and collider bias (defined below) can inform which covariates to include such that the assumption will be approximately true.</p>
 <p>If the three identifiability conditions are fulfilled, a (hypothetical) randomised experiment, known as a <em>target trial</em>, may be emulated using causal inference from observational data, with the average causal effect quantified as <span class="math inline">\(E(Y^{a = 1}) - E(Y^{a = 0})\)</span>.</p>
 </section>
