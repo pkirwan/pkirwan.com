@@ -4,6 +4,7 @@ project:
 website:
   title: "Peter Kirwan"
   description: "Research Associate at MRC Biostatistics Unit, Cambridge"
+  favicon: common/apple-touch-icon.png
   site-url: https://www.pkirwan.com
   repo-url: https://github.com/pkirwan/pkirwan.com
   open-graph: true

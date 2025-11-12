@@ -27,6 +27,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<link href="../../common/apple-touch-icon.png" rel="icon" type="image/png">
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -462,9 +463,9 @@ l_i = \pi_i f(t\mid i=s)
 \]</span></p></li>
 <li><p>For an individual who does not reach a state (e.g.&nbsp;remains in hospital) at time <span class="math inline">\(t\)</span>: <span class="math display">\[
 l_c = \sum_{i=1}^k\pi_i(1-F(t\mid i))
-\]</span></p></li>
+\]</span></p>
+<p>where <span class="math inline">\(F(t\mid i) = \int_0^t f(x\mid i)dx\)</span> is the conditional cumulative distribution.</p></li>
 </ul>
-<p>where <span class="math inline">\(F(t\mid i) = \int_0^t f(x\mid i)dx\)</span> is the conditional cumulative distribution.</p>
 </section>
 </section>
 <section id="accounting-for-censoring" class="level2">

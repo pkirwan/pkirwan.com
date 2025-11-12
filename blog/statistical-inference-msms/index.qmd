@@ -110,11 +110,11 @@ l_i = \pi_i f(t\mid i=s)
 $$
 
 - For an individual who does not reach a state (e.g. remains in hospital) at time $t$:
-$$
-l_c = \sum_{i=1}^k\pi_i(1-F(t\mid i))
-$$
+  $$
+  l_c = \sum_{i=1}^k\pi_i(1-F(t\mid i))
+  $$
 
-where $F(t\mid i) = \int_0^t f(x\mid i)dx$ is the conditional cumulative distribution.
+  where $F(t\mid i) = \int_0^t f(x\mid i)dx$ is the conditional cumulative distribution.
 
 ## Accounting for censoring {#accounting-for-censoring}
 
