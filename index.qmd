@@ -19,7 +19,7 @@ listing:
 
 ::: {.about-container}
 ::: {.about-text}
-I'm a Research Associate at the [MRC Biostatistics Unit](https://www.mrc-bsu.cam.ac.uk) in Cambridge. My PhD focussed on [applications of multi-state models to estimate infectious disease burden](https://doi.org/10.17863/CAM.112581), specifically HIV and COVID-19. My current research involves the development of multi-state "back-calculation" models to estimate HIV incidence and undiagnosed HIV prevalence.
+I'm a postdoctoral research fellow at the [Barcelona Institute for Global Health](https://www.isglobal.org) and a visiting researcher at the [MRC Biostatistics Unit](https://www.mrc-bsu.cam.ac.uk) in Cambridge. My current research focuses on the development of statistical microsimulation and forecasting models to project the health effects of changes in Official Development Assistance (ODA) in low- and middle-income countries. My other research interests include the development of statistical models to estimate infectious disease burden, specifically for HIV.
 
 [GitHub](https://github.com/pkirwan) · [ORCiD](https://orcid.org/0000-0001-6904-0500) · [Mastodon](https://fediscience.org/@pkirwan)
 :::
