@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.pkirwan.com/blog/statistical-inference-msms/index.html</loc>
-    <lastmod>2025-11-12T10:48:03.187Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.pkirwan.com/blog/survival-analysis/index.html</loc>
-    <lastmod>2025-11-12T10:48:03.189Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.pkirwan.com/blog/causal-inference/index.html</loc>
-    <lastmod>2025-11-12T10:48:03.185Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.pkirwan.com/blog/competing-risks-methods/index.html</loc>
-    <lastmod>2025-11-12T10:48:03.186Z</lastmod>
-  </url>
-  <url>
     <loc>https://www.pkirwan.com/index.html</loc>
-    <lastmod>2025-11-12T10:48:03.200Z</lastmod>
+    <lastmod>2026-04-07T09:27:07.098Z</lastmod>
   </url>
   <url>
     <loc>https://www.pkirwan.com/blog/classical-survival-methods/index.html</loc>
-    <lastmod>2025-11-12T10:48:03.185Z</lastmod>
+    <lastmod>2026-04-07T09:27:07.084Z</lastmod>
   </url>
   <url>
     <loc>https://www.pkirwan.com/blog/multi-state-models/index.html</loc>
-    <lastmod>2025-11-12T10:48:03.187Z</lastmod>
+    <lastmod>2026-04-07T09:27:07.085Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pkirwan.com/blog/statistical-inference-msms/index.html</loc>
+    <lastmod>2026-04-07T09:27:07.086Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pkirwan.com/blog/causal-inference/index.html</loc>
+    <lastmod>2026-04-07T09:27:07.084Z</lastmod>
   </url>
   <url>
     <loc>https://www.pkirwan.com/blog/key-concepts-infectious-disease/index.html</loc>
-    <lastmod>2025-11-12T10:48:03.186Z</lastmod>
+    <lastmod>2026-04-07T09:27:07.085Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pkirwan.com/blog/survival-analysis/index.html</loc>
+    <lastmod>2026-04-07T09:27:07.088Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pkirwan.com/blog/competing-risks-methods/index.html</loc>
+    <lastmod>2026-04-07T09:27:07.085Z</lastmod>
   </url>
   <url>
     <loc>https://www.pkirwan.com/blog/study-designs/index.html</loc>
-    <lastmod>2025-11-12T10:48:03.188Z</lastmod>
+    <lastmod>2026-04-07T09:27:07.087Z</lastmod>
   </url>
 </urlset>
