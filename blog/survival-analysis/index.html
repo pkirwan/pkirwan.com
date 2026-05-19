@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -38,14 +38,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-f418161beb48e0141c760e455f12af2c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-1ee434999950609f57b7ab376c77fcf1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-3293f4f3626cf27f80e0e9171545938a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-1ee434999950609f57b7ab376c77fcf1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-46d0ca1acc81c62bd952dc240fab245a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-c37f7bf5fb3173725d257a82e877fa51.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-46d0ca1acc81c62bd952dc240fab245a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -434,14 +434,14 @@ window.Quarto = {
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-censoring-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Examples of right, left, and administrative censoring for patients in time-to-event data with origin and outcome information reported. <span class="math inline">\(C_l\)</span>: left-censoring time, <span class="math inline">\(C_r\)</span>: right-censoring time, <span class="math inline">\(\bullet\)</span>: reported origin, outcome, or intermediate event.
+Figure&nbsp;1: Examples of right, left, and administrative censoring for patients in time-to-event data. <span class="math inline">\(C_l\)</span>: left-censoring time, <span class="math inline">\(C_r\)</span>: right-censoring time, <span class="math inline">\(\bullet\)</span>: reported origin, outcome, or intermediate event.
 </figcaption>
 </figure>
 </div>
 </section>
 <section id="interval-censoring" class="level4">
 <h4 class="anchored" data-anchor-id="interval-censoring">Interval censoring</h4>
-<p>Often, we only know that an event happened between two observation points, i.e.&nbsp;within a censoring interval <span class="math inline">\((L, R],\ L &lt; X &lt; R\)</span>. An example is the infection time for an individual which is typically not directly observed, but we can assume it occurs in-between a negative and positive test. Interval censoring is a feature of “intermittently-observed” data, where individuals are tested for the presence of infection at several time-points. Such interval-censored data can still be used to detect changes in an individual’s infection status when testing is sufficiently frequent, as shown in <a href="#fig-interval-censoring" class="quarto-xref">Figure&nbsp;2</a>.</p>
+<p>Often, we only know that an event happened between two observation points, i.e.&nbsp;within a censoring interval <span class="math inline">\((L, R],\ L &lt; X \leq R\)</span>. An example is the infection time for an individual which is typically not directly observed, but we can assume it occurs in-between a negative and positive test. Interval censoring is a feature of “intermittently-observed” data, where individuals are tested for the presence of infection at several time-points. Such interval-censored data can still be used to detect changes in an individual’s infection status when testing is sufficiently frequent, as shown in <a href="#fig-interval-censoring" class="quarto-xref">Figure&nbsp;2</a>.</p>
 <div id="fig-interval-censoring" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-interval-censoring-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">

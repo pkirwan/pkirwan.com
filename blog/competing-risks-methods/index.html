@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -38,14 +38,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-f418161beb48e0141c760e455f12af2c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-1ee434999950609f57b7ab376c77fcf1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-3293f4f3626cf27f80e0e9171545938a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-1ee434999950609f57b7ab376c77fcf1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-46d0ca1acc81c62bd952dc240fab245a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-c37f7bf5fb3173725d257a82e877fa51.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-46d0ca1acc81c62bd952dc240fab245a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -396,7 +396,7 @@ window.Quarto = {
 <p>This is part four of a series on statistical methods for analysing time-to-event, or “survival” data.</p>
 <section id="competing-risks" class="level2">
 <h2 class="anchored" data-anchor-id="competing-risks">Competing risks</h2>
-<p>In medical cohort studies, multiple study end-points are common (e.g.&nbsp;death, intensive care admission, and discharge). These multiple end-points are known as <em>competing risks</em> and may hinder the event of interest, or modify the chance that this event occurs. Kaplan-Meier and Cox proportional hazards models treat competing risks as censored observations, and do not account for dependencies between events. Hence the assumption of independent times-to-events in these conventional survival analyses is violated in the presence of competing risks.</p>
+<p>In medical cohort studies, multiple study end-points are common (e.g.&nbsp;death, intensive care admission, and discharge). These multiple end-points are known as <em>competing risks</em> and may hinder the event of interest, or modify the chance that this event occurs. Treating competing events as ordinary censoring can be problematic when the aim is to estimate the probability of a specific event over time. In particular, the Kaplan-Meier estimator will typically overestimate this probability. Cause-specific Cox models remain useful for modelling cause-specific hazards, but they do not directly estimate the cumulative incidence function in the presence of competing risks.</p>
 <div id="fig-competing-risks" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-competing-risks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -451,9 +451,10 @@ where <span class="math inline">\(d_{j}(t)\)</span> is the number of deaths due 
 <p></p>
 <p>With the Kaplan-Meier estimate of the survivor function defined in <a href="classical-survival-methods.html#kaplan-meier">part III of this series</a>, <span class="math inline">\(\hat{S}(t)\)</span>, the Aalen-Johansen estimator for the cause-specific cumulative incidence function then follows from the equation above:</p>
 <p><span class="math display">\[
-\hat{F}_j(t) = \sum_{t_k &lt; t} \hat{S}(t_{k-1})\frac{d_{j}(t_k)}{n(t_k\mbox{-})}
+\hat{F}_j(t) = \sum_{t_k \leq t} \hat{S}(t_{k-1})\frac{d_{j}(t_k)}{n(t_k\mbox{-})}
 \]</span></p>
-<p>for all times <span class="math inline">\(t_k &lt; t\)</span> where transition events are observed to occur.</p>
+<p>for all times <span class="math inline">\(t_k \leq t\)</span> where transition events are observed to occur.</p>
+<p>The choice between cause-specific hazards and cumulative incidence depends on the research question. Cause-specific hazards are often preferred for <em>aetiological</em> questions about how a covariate affects the instantaneous rate of a given event. Cumulative incidence, and regression models such as Fine-Gray, are often preferred when the aim is to estimate or predict the <em>absolute risk</em> of a given event over time in the presence of competing risks.</p>
 </section>
 <section id="fine-gray" class="level2">
 <h2 class="anchored" data-anchor-id="fine-gray">Fine-Gray proportional hazards model</h2>
@@ -462,7 +463,7 @@ where <span class="math inline">\(d_{j}(t)\)</span> is the number of deaths due 
 <h3 class="anchored" data-anchor-id="sub-distribution-hazard">Sub-distribution hazard</h3>
 <p>The sub-distribution hazard is therefore defined as the instantaneous risk of experiencing a competing event <span class="math inline">\(j\)</span> given that the individual has not already experienced this event:</p>
 <p><span class="math display">\[
-\lambda_j(t)=\lim_{\delta t \downarrow 0}{\left\{\frac{\Pr\left(\left[t \leq T &lt; t + \delta t, C=j \mid (T&gt;t)\right] \cup \left[(T \le t \cap C \neq j)\right]\right)}{\delta t}\right\}}
+\lambda_j(t)=\lim_{\delta t \downarrow 0}{\frac{\Pr\left(t \leq T &lt; t + \delta t, C=j \mid T&gt;t \text{ or} \left(T \le t, C \neq j\right)\right)}{\delta t}}
 \]</span></p>
 <p>where, as before, <span class="math inline">\(C\)</span> is the random variable for the event that occurs.</p>
 </section>
@@ -499,7 +500,8 @@ R_i}w_{i,j}\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_j)}
 <div class="callout-body-container callout-body">
 <ul>
 <li>Competing risks occur when individuals can experience multiple possible events that prevent the observation of other events.</li>
-<li>Standard survival methods (Kaplan-Meier, Cox) can produce biased estimates when competing risks are present.</li>
+<li>Kaplan-Meier can overestimate the probability of an event of interest when competing risks are treated as ordinary censoring.</li>
+<li>Cause-specific Cox models remain useful for modelling cause-specific hazards, but do not directly estimate cumulative incidence.</li>
 <li>The cause-specific hazard function measures the instantaneous risk of a specific event type.</li>
 <li>The cause-specific cumulative incidence function gives the probability of experiencing a specific event type over time.</li>
 <li>The Aalen-Johansen estimator is the non-parametric method for estimating cumulative incidence in competing risks scenarios.</li>
