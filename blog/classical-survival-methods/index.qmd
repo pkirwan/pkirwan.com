@@ -81,6 +81,8 @@ $$L(\boldsymbol{\beta}) = \prod_{i \in D}\frac{\exp(\boldsymbol{\beta}^\mathsf{T
 
 where $D = \{T_1, T_2, \ldots, T_n\}$ are the set of distinct failure times, $R_i$ is the set of all individuals who are at risk of failure immediately before time $T_i$, $\boldsymbol{z}_{d_i}$ is the covariate vector for an individual who failed at time $T_i$, and $\boldsymbol{z}_j$ is the covariate vector for the $j$th individual at risk at time $T_i$.
 
+In practice, the proportional hazards assumption should be assessed before interpreting hazard ratios, for example using Schoenfeld residuals or by allowing covariate effects to vary over time.
+
 ::: {.callout-note}
 ## Key takeaways
 

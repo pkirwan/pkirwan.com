@@ -61,8 +61,8 @@ patients <- data.frame(
   end_x = c(7, 9, 4, 7.5),
   type = c(
     "No censoring",
-    "Left-censoring",
     "Right-censoring",
+    "Left-censoring",
     "Administrative"
   ),
   start_dot = c(TRUE, TRUE, FALSE, TRUE),
@@ -154,7 +154,7 @@ ggplot() +
     "text",
     x = 11,
     y = 2,
-    label = "Left-censoring (origin not reported)",
+    label = "Left-censoring (initial event time unobserved)",
     hjust = 0,
     size = 3.5
   ) +
@@ -192,13 +192,13 @@ ggplot() +
   )
 
 ```
-Examples of right, left, and administrative censoring for patients in time-to-event data with origin and outcome information reported. $C_l$: left-censoring time, $C_r$: right-censoring time, $\bullet$: reported origin, outcome, or intermediate event.
+Examples of right, left, and administrative censoring for patients in time-to-event data. $C_l$: left-censoring time, $C_r$: right-censoring time, $\bullet$: reported origin, outcome, or intermediate event.
 
 :::
 
 #### Interval censoring {#interval-censoring}
 
-Often, we only know that an event happened between two observation points, i.e. within a censoring interval $(L, R],\ L < X < R$. An example is the infection time for an individual which is typically not directly observed, but we can assume it occurs in-between a negative and positive test. Interval censoring is a feature of "intermittently-observed" data, where individuals are tested for the presence of infection at several time-points. Such interval-censored data can still be used to detect changes in an individual's infection status when testing is sufficiently frequent, as shown in @fig-interval-censoring.
+Often, we only know that an event happened between two observation points, i.e. within a censoring interval $(L, R],\ L < X \leq R$. An example is the infection time for an individual which is typically not directly observed, but we can assume it occurs in-between a negative and positive test. Interval censoring is a feature of "intermittently-observed" data, where individuals are tested for the presence of infection at several time-points. Such interval-censored data can still be used to detect changes in an individual's infection status when testing is sufficiently frequent, as shown in @fig-interval-censoring.
 
 ::: {#fig-interval-censoring}
 

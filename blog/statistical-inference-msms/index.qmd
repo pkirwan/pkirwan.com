@@ -104,17 +104,17 @@ where $\boldsymbol{\theta}$ is a vector of regression coefficients.
 
 The likelihood contributions are as follows:
 
-- For an individual who reaches state $s$ at time $t$: 
+- For an individual who enters state $r$ and reaches state $s \in S_r$ at time $t$: 
 $$
-l_i = \pi_i f(t\mid i=s)
+l = \pi_{r,s} f_{r,s}(t)
 $$
 
-- For an individual who does not reach a state (e.g. remains in hospital) at time $t$:
+- For an individual who is censored in state $r$ at time $t$:
   $$
-  l_c = \sum_{i=1}^k\pi_i(1-F(t\mid i))
+  l_c = \sum_{s \in S_r}\pi_{r,s}(1-F_{r,s}(t))
   $$
 
-  where $F(t\mid i) = \int_0^t f(x\mid i)dx$ is the conditional cumulative distribution.
+  where $F_{r,s}(t) = \int_0^t f_{r,s}(x)dx$ is the conditional cumulative distribution of the time to transition from state $r$ to state $s$, given that this transition occurs.
 
 ## Accounting for censoring {#accounting-for-censoring}
 
@@ -274,13 +274,15 @@ Example of intermittently-observed data with missed observations for an underlyi
 
 :::
 
-An observation scheme is said to be *non-informative* if the likelihood is proportional to a scenario where observation times were fixed in advance and chosen independently of the underlying process. With a non-informative observation scheme then multi-state models can correctly account for intermittently-observed data.
+An observation scheme is said to be *non-informative* if the likelihood is proportional to a scenario where observation times were fixed in advance and chosen independently of the underlying process. For example, a study with clinic visits scheduled every four weeks regardless of symptoms is closer to non-informative than a study where extra visits are triggered by clinical deterioration. With a non-informative observation scheme then multi-state models can correctly account for intermittently-observed data.
 
 ## Implementing multi-state models {#implementing-multi-state-models}
 
 A number of sophisticated statistical software packages exist to implement frequentist and Bayesian survival and multi-state models using the `R` programming language. Frequentist maximum likelihood estimation tends to be less computationally intensive than Bayesian inference, and the latter may require integrating over a vast number of parameters, which is usually impracticable for higher dimensions. Instead, algorithms which simulate from the posterior distribution are often used to evaluate features of these integrals. Markov Chain Monte Carlo (MCMC) algorithms have been widely used for this application.
 
 There are several specialised modelling packages available to fit multi-state models, including: [`survival`](https://github.com/therneau/survival), [`msm`](https://chjackson.github.io/msm/), [`flexsurv`](https://chjackson.github.io/flexsurv/index.html) which fit models using maximum likelihood, and [`JAGS`](https://mcmc-jags.sourceforge.io/) and [`STAN`](https://mc-stan.org/) which fit Bayesian models using MCMC.
+
+For HIV back-calculation specifically, the [`cd4backcalc`](https://pkirwan.github.io/cd4backcalc/) package implements Bayesian, discrete-time, multi-state CD4-staged back-calculation models in Stan.
 
 Two useful online tutorials for running statistical inference for survival and multi-state models are:
 

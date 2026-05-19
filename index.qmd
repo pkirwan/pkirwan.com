@@ -36,6 +36,24 @@ This series of blog posts provides an introduction to statistical methods for su
 ::: {#blog-listing}
 :::
 
+## Software {#software}
+
+::: {.about-container}
+
+::: {.profile-image}
+![](./common/hex_sticker.png){width=150}
+:::
+
+::: {.about-text}
+### cd4backcalc
+
+[cd4backcalc](https://pkirwan.github.io/cd4backcalc/) is an R package for Bayesian, discrete-time, multi-state modelling to estimate HIV incidence and undiagnosed HIV prevalence from diagnosis data. The package implements CD4-staged back-calculation models in Stan via `cmdstanr`, with tools to fit models, inspect diagnostics, and plot estimates.
+
+[Documentation](https://pkirwan.github.io/cd4backcalc/) · [Source code](https://github.com/pkirwan/cd4backcalc)
+:::
+
+:::
+
 ## Recent publications {#recent-publications}
 
 ::: {.publications}

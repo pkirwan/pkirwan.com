@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,6 +12,9 @@
 
 <title>Part VI: Statistical inference for multi-state models – Peter Kirwan</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -31,19 +34,18 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-6aa7beace821ed751f58dfe60cd888a9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-1dcf8f7c4b5e194aeb69a94b63b10692.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-6aa7beace821ed751f58dfe60cd888a9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-5a6fd220306746ed58b92886921b4687.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-c2ab28d18bdcba4395ffce89696a109b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-5a6fd220306746ed58b92886921b4687.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -62,7 +64,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="../../font/inter.css">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -278,8 +280,6 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Peter Kirwan</span>
     </a>
@@ -458,13 +458,13 @@ S(t\mid \boldsymbol{z}) = S^{(0)}\left(\exp(\boldsymbol{\theta}^\mathsf{T}\bolds
 <h3 class="anchored" data-anchor-id="likelihood-contributions">Likelihood contributions</h3>
 <p>The likelihood contributions are as follows:</p>
 <ul>
-<li><p>For an individual who reaches state <span class="math inline">\(s\)</span> at time <span class="math inline">\(t\)</span>: <span class="math display">\[
-l_i = \pi_i f(t\mid i=s)
+<li><p>For an individual who enters state <span class="math inline">\(r\)</span> and reaches state <span class="math inline">\(s \in S_r\)</span> at time <span class="math inline">\(t\)</span>: <span class="math display">\[
+l = \pi_{r,s} f_{r,s}(t)
 \]</span></p></li>
-<li><p>For an individual who does not reach a state (e.g.&nbsp;remains in hospital) at time <span class="math inline">\(t\)</span>: <span class="math display">\[
-l_c = \sum_{i=1}^k\pi_i(1-F(t\mid i))
+<li><p>For an individual who is censored in state <span class="math inline">\(r\)</span> at time <span class="math inline">\(t\)</span>: <span class="math display">\[
+l_c = \sum_{s \in S_r}\pi_{r,s}(1-F_{r,s}(t))
 \]</span></p>
-<p>where <span class="math inline">\(F(t\mid i) = \int_0^t f(x\mid i)dx\)</span> is the conditional cumulative distribution.</p></li>
+<p>where <span class="math inline">\(F_{r,s}(t) = \int_0^t f_{r,s}(x)dx\)</span> is the conditional cumulative distribution of the time to transition from state <span class="math inline">\(r\)</span> to state <span class="math inline">\(s\)</span>, given that this transition occurs.</p></li>
 </ul>
 </section>
 </section>
@@ -490,12 +490,13 @@ Figure&nbsp;1: Example of intermittently-observed data with missed observations 
 </figcaption>
 </figure>
 </div>
-<p>An observation scheme is said to be <em>non-informative</em> if the likelihood is proportional to a scenario where observation times were fixed in advance and chosen independently of the underlying process. With a non-informative observation scheme then multi-state models can correctly account for intermittently-observed data.</p>
+<p>An observation scheme is said to be <em>non-informative</em> if the likelihood is proportional to a scenario where observation times were fixed in advance and chosen independently of the underlying process. For example, a study with clinic visits scheduled every four weeks regardless of symptoms is closer to non-informative than a study where extra visits are triggered by clinical deterioration. With a non-informative observation scheme then multi-state models can correctly account for intermittently-observed data.</p>
 </section>
 <section id="implementing-multi-state-models" class="level2">
 <h2 class="anchored" data-anchor-id="implementing-multi-state-models">Implementing multi-state models</h2>
 <p>A number of sophisticated statistical software packages exist to implement frequentist and Bayesian survival and multi-state models using the <code>R</code> programming language. Frequentist maximum likelihood estimation tends to be less computationally intensive than Bayesian inference, and the latter may require integrating over a vast number of parameters, which is usually impracticable for higher dimensions. Instead, algorithms which simulate from the posterior distribution are often used to evaluate features of these integrals. Markov Chain Monte Carlo (MCMC) algorithms have been widely used for this application.</p>
 <p>There are several specialised modelling packages available to fit multi-state models, including: <a href="https://github.com/therneau/survival"><code>survival</code></a>, <a href="https://chjackson.github.io/msm/"><code>msm</code></a>, <a href="https://chjackson.github.io/flexsurv/index.html"><code>flexsurv</code></a> which fit models using maximum likelihood, and <a href="https://mcmc-jags.sourceforge.io/"><code>JAGS</code></a> and <a href="https://mc-stan.org/"><code>STAN</code></a> which fit Bayesian models using MCMC.</p>
+<p>For HIV back-calculation specifically, the <a href="https://pkirwan.github.io/cd4backcalc/"><code>cd4backcalc</code></a> package implements Bayesian, discrete-time, multi-state CD4-staged back-calculation models in Stan.</p>
 <p>Two useful online tutorials for running statistical inference for survival and multi-state models are:</p>
 <ul>
 <li><p><a href="https://www.emilyzabor.com/survival-analysis-in-r.html">Survival analysis in R</a>” by Emily C. Zabor</p></li>
@@ -554,7 +555,7 @@ Figure&nbsp;1: Example of intermittently-observed data with missed observations 
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-kirwan2025" class="csl-entry quarto-appendix-citeas" role="listitem">
 Kirwan, Peter. 2025. <span>“Part VI: Statistical Inference for
-Multi-State Models.”</span> April 24, 2025. <a href="https://www.pkirwan.com/blog/statistical-inference-msms/">https://www.pkirwan.com/blog/statistical-inference-msms/</a>.
+Multi-State Models.”</span> April 24. <a href="https://www.pkirwan.com/blog/statistical-inference-msms/">https://www.pkirwan.com/blog/statistical-inference-msms/</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

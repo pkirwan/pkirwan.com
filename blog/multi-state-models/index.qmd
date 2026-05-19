@@ -208,7 +208,7 @@ where $\exp(\beta_{r,s,m})$ is the hazard ratio for the $m$th covariate on the $
 
 ### Sojourn time {#sojourn-time}
 
-The time spent in a state prior to transition is termed the *sojourn time*, with its mean given by the inverse of the transition intensity for remaining in the state:
+The time spent in a state prior to transition is termed the *sojourn time*. In the case of a time-homogeneous Markov model, the mean sojourn time is the inverse of the transition intensity for remaining in the state:
 
 $$E(T_r) = -\frac{1}{q_{r,r}}$$
 

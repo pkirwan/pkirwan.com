@@ -12,7 +12,7 @@ This is part four of a series on statistical methods for analysing time-to-event
 
 ## Competing risks {#competing-risks}
 
-In medical cohort studies, multiple study end-points are common (e.g. death, intensive care admission, and discharge). These multiple end-points are known as *competing risks* and may hinder the event of interest, or modify the chance that this event occurs. Kaplan-Meier and Cox proportional hazards models treat competing risks as censored observations, and do not account for dependencies between events. Hence the assumption of independent times-to-events in these conventional survival analyses is violated in the presence of competing risks.
+In medical cohort studies, multiple study end-points are common (e.g. death, intensive care admission, and discharge). These multiple end-points are known as *competing risks* and may hinder the event of interest, or modify the chance that this event occurs. Treating competing events as ordinary censoring can be problematic when the aim is to estimate the probability of a specific event over time. In particular, the Kaplan-Meier estimator will typically overestimate this probability. Cause-specific Cox models remain useful for modelling cause-specific hazards, but they do not directly estimate the cumulative incidence function in the presence of competing risks.
 
 ![An example of competing risks in survival data. In this scenario, patients can experience one of three outcomes: death, discharge, or intensive care admission. Each outcome "competes" with the others, and experiencing one prevents the observation of others.](./competing-risks.png){#fig-competing-risks width=60%}
 
@@ -71,10 +71,12 @@ where $d_{j}(t)$ is the number of deaths due to cause $j$ at time $t$, and $n(t\
 With the Kaplan-Meier estimate of the survivor function defined in [part III of this series](classical-survival-methods.html#kaplan-meier), $\hat{S}(t)$, the Aalen-Johansen estimator for the cause-specific cumulative incidence function then follows from the equation above:
 
 $$
-\hat{F}_j(t) = \sum_{t_k < t} \hat{S}(t_{k-1})\frac{d_{j}(t_k)}{n(t_k\mbox{-})}
+\hat{F}_j(t) = \sum_{t_k \leq t} \hat{S}(t_{k-1})\frac{d_{j}(t_k)}{n(t_k\mbox{-})}
 $$
 
-for all times $t_k < t$ where transition events are observed to occur.
+for all times $t_k \leq t$ where transition events are observed to occur.
+
+The choice between cause-specific hazards and cumulative incidence depends on the research question. Cause-specific hazards are often preferred for *aetiological* questions about how a covariate affects the instantaneous rate of a given event. Cumulative incidence, and regression models such as Fine-Gray, are often preferred when the aim is to estimate or predict the *absolute risk* of a given event over time in the presence of competing risks.
 
 ## Fine-Gray proportional hazards model {#fine-gray}
 
@@ -85,7 +87,7 @@ Analogous to the Cox proportional hazards model described in [the last post](cla
 The sub-distribution hazard is therefore defined as the instantaneous risk of experiencing a competing event $j$ given that the individual has not already experienced this event:
 
 $$
-\lambda_j(t)=\lim_{\delta t \downarrow 0}{\left\{\frac{\Pr\left(\left[t \leq T < t + \delta t, C=j \mid (T>t)\right] \cup \left[(T \le t \cap C \neq j)\right]\right)}{\delta t}\right\}}
+\lambda_j(t)=\lim_{\delta t \downarrow 0}{\frac{\Pr\left(t \leq T < t + \delta t, C=j \mid T>t \text{ or} \left(T \le t, C \neq j\right)\right)}{\delta t}}
 $$
 
 where, as before, $C$ is the random variable for the event that occurs.
@@ -122,7 +124,8 @@ As stratification allows the baseline hazard to vary across strata it is sometim
 ## Key takeaways
 
 - Competing risks occur when individuals can experience multiple possible events that prevent the observation of other events.
-- Standard survival methods (Kaplan-Meier, Cox) can produce biased estimates when competing risks are present.
+- Kaplan-Meier can overestimate the probability of an event of interest when competing risks are treated as ordinary censoring.
+- Cause-specific Cox models remain useful for modelling cause-specific hazards, but do not directly estimate cumulative incidence.
 - The cause-specific hazard function measures the instantaneous risk of a specific event type.
 - The cause-specific cumulative incidence function gives the probability of experiencing a specific event type over time.
 - The Aalen-Johansen estimator is the non-parametric method for estimating cumulative incidence in competing risks scenarios.

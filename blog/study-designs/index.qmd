@@ -120,7 +120,7 @@ Collider bias is most easily avoided by not conditioning on the collider, but th
 
 ### Confounding {#confounding}
 
-Confounding is related to collider bias, but occurs by not conditioning on an explanatory variable. As a result confounding is sometimes termed *latent variable* bias. Confounding introduces a "backdoor path", an additional source of association between the explanatory variable and the outcome, so the measured association cannot be interpreted as a causal effect.
+Confounding is related to collider bias, but occurs by not conditioning on an explanatory variable. Confounding introduces a "backdoor path", an additional source of association between the explanatory variable and the outcome, so the measured association cannot be interpreted as a causal effect.
 
 An example of confounding is shown in the causal diagram in @fig-confounding: during vaccine roll-out older people were more likely to receive a COVID-19 vaccine, but also more likely to experience severe COVID-19. If age group is not adjusted for then a distorted association between vaccination and COVID-19 severity may be induced. Confounding can be avoided by ensuring that factors that might be associated with the outcome are measured and adjusted for.
 

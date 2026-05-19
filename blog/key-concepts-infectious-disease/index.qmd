@@ -41,7 +41,7 @@ To reconstruct the incidence and prevalence of infection from the available test
 
 ### Severity {#severity}
 
-Two common metrics used to understand the severity of infectious diseases and the factors associated with adverse outcomes are the infection fatality risk (IFR) and case fatality risk (CFR):
+Two common metrics used to understand the severity of infectious diseases and the factors associated with adverse outcomes are the infection fatality risk (IFR) and case fatality rate (CFR):
 
 - **Infection Fatality Risk (IFR)**: The percentage of *all infected people* who die from the disease (including those whose infections were never detected)
 - **Case Fatality Rate (CFR)**: The percentage of *confirmed cases* who die from the disease
