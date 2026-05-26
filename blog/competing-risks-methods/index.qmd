@@ -12,7 +12,7 @@ This is part four of a series on statistical methods for analysing time-to-event
 
 ## Competing risks {#competing-risks}
 
-In medical cohort studies, multiple study end-points are common (e.g. death, intensive care admission, and discharge). These multiple end-points are known as *competing risks* and may hinder the event of interest, or modify the chance that this event occurs. Treating competing events as ordinary censoring can be problematic when the aim is to estimate the probability of a specific event over time. In particular, the Kaplan-Meier estimator will typically overestimate this probability. Cause-specific Cox models remain useful for modelling cause-specific hazards, but they do not directly estimate the cumulative incidence function in the presence of competing risks.
+In medical cohort studies, multiple study end-points are common (e.g. death, intensive care admission, and discharge). These multiple end-points are known as *competing risks* and may prevent observation of the event of interest or alter its probability. Treating competing events as ordinary censoring can be problematic when the aim is to estimate the probability of a specific event over time. In particular, the Kaplan-Meier estimator will typically overestimate this probability. Cause-specific Cox models remain useful for modelling cause-specific hazards, but they do not directly estimate the cumulative incidence function in the presence of competing risks.
 
 ![An example of competing risks in survival data. In this scenario, patients can experience one of three outcomes: death, discharge, or intensive care admission. Each outcome "competes" with the others, and experiencing one prevents the observation of others.](./competing-risks.png){#fig-competing-risks width=60%}
 
@@ -77,6 +77,65 @@ $$
 for all times $t_k \leq t$ where transition events are observed to occur.
 
 The choice between cause-specific hazards and cumulative incidence depends on the research question. Cause-specific hazards are often preferred for *aetiological* questions about how a covariate affects the instantaneous rate of a given event. Cumulative incidence, and regression models such as Fine-Gray, are often preferred when the aim is to estimate or predict the *absolute risk* of a given event over time in the presence of competing risks.
+
+### R example {#r-example-aj}
+
+We can illustrate the difference between the naive Kaplan-Meier estimate and the Aalen-Johansen estimator for cumulative incidence in a simple example. Consider a dataset of 10 patients with follow-up times and event types (death, discharge, or censoring):
+
+```{r}
+#| label: lst-competing-risk-cif
+#| lst-cap: "Comparing naive and Aalen-Johansen cumulative incidence estimates in R."
+#| echo: true
+
+library(survival)
+library(ggplot2)
+
+cr_data <- data.frame(
+  time   = c( 2,    3,    4,      5,     6,
+              7,    8,    9,     10,    11),
+  status = c("death", "discharge", "censor", "death", "discharge",
+             "death", "censor",    "discharge", "death", "censor")
+)
+
+# Naive estimate: treat discharge as ordinary censoring
+km_fit  <- survfit(Surv(time, status == "death") ~ 1, data = cr_data)
+
+# Aalen-Johansen: F_j(t) = sum S(t_{k-1}) * d_j(t_k) / n(t_k)
+overall <- survfit(Surv(time, status != "censor") ~ 1, data = cr_data)
+S_prev  <- c(1, head(overall$surv, -1))
+d_death <- sapply(overall$time, function(t) {
+  sum(cr_data$time == t & cr_data$status == "death")
+})
+cif_aj  <- cumsum(S_prev * d_death / overall$n.risk)
+
+data.frame(
+  time    = overall$time,
+  n_risk  = overall$n.risk,
+  d_death = d_death,
+  cif_aj  = round(cif_aj, 2),
+  cif_km  = round(1 - km_fit$surv, 2)
+)
+
+cif_df <- data.frame(
+  time   = c(0, overall$time),
+  cif_aj = c(0, cif_aj),
+  cif_km = c(0, 1 - km_fit$surv)
+)
+
+ggplot(cif_df, aes(x = time)) +
+  geom_step(aes(y = cif_km, color = "Naive (1 - KM)"), linewidth = 1.1) +
+  geom_step(aes(y = cif_aj, color = "Aalen-Johansen"), linewidth = 1.1) +
+  scale_color_manual(
+    name = NULL,
+    values = c("Naive (1 - KM)" = "#2C3E50", "Aalen-Johansen" = "#E74C3C")
+  ) +
+  scale_y_continuous(limits = c(0, NA), name = "Cumulative incidence of death") +
+  scale_x_continuous(name = "Follow-up time") +
+  theme_minimal() +
+  theme(legend.position = "top")
+```
+
+The naive curve lies above the Aalen-Johansen estimate because discharge is handled as if it were non-informative censoring, even though it removes patients from ever experiencing the event of interest.
 
 ## Fine-Gray proportional hazards model {#fine-gray}
 

@@ -38,7 +38,7 @@ Censoring occurs when information about an individual is only known within certa
 
 The most common type of censoring occurs when our study ends before we observe the event of interest. For example, if we're studying time to COVID-19 infection, and a participant remains uninfected when our study concludes, they're "right-censored" - we know they remained infection-free for at least the duration of the study, but we don't know what happens afterward.
 
-More formally, we lack information to the "right" (or future) of the right-censoring time, $C_r$. In this scenario we say an individual is right-censored at time $C_r < X$, where $X$ is the time that the event of interest takes place.
+More formally, we lack information to the right (or future) of the right-censoring time, $C_r$. In this scenario we say an individual is right-censored at time $C_r < X$, where $X$ is the time that the event of interest takes place.
 
 #### Left-censoring
 
@@ -530,6 +530,51 @@ $$\lim_{\delta t \downarrow 0} \left\{\frac{F(t + \delta t) - F(t)}{\delta t}\ri
 Hence the hazard function is related to the survivor function through the relationship:
 
 $$h(t) = \frac{f(t)}{S(t)}$$
+
+## R implementation {#r-implementation}
+
+With all three functions defined, we can visualize how $F(t)$, $S(t)$, and $h(t)$ relate for a simple exponential model with a constant rate $\lambda = 0.15$:
+
+```{r}
+#| label: lst-survival-functions
+#| lst-cap: "Relating the cumulative incidence, survivor, and hazard functions in R."
+#| echo: true
+
+rate      <- 0.15
+time_grid <- c(0, 2, 4, 6, 8, 10, 12)
+
+data <- data.frame(
+  time = time_grid,
+  F_t  = round(pexp(time_grid, rate = rate), 2),
+  S_t  = round(pexp(time_grid, rate = rate, lower.tail = FALSE), 2),
+  h_t  = rate
+)
+
+print(data)
+
+ggplot(data) +
+  aes(x = time) +
+  geom_line(aes(y = F_t, color = "Cumulative Incidence"), linewidth = 1.2) +
+  geom_line(aes(y = S_t, color = "Survivor"), linewidth = 1.2) +
+  geom_line(aes(y = h_t, color = "Hazard"), linewidth = 1.2, linetype = "dashed") +
+  scale_color_manual(
+    name = "Function",
+    values = c(
+      "Cumulative Incidence" = "#E74C3C",
+      "Survivor" = "#3498DB",
+      "Hazard" = "#2ECC71"
+    )
+  ) +
+  labs(x = "Time", y = "Probability / Rate") +
+  theme_minimal() +
+  theme(
+    legend.position = "top",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 10)
+  )
+```
+
+Here, the constant hazard demonstrates the "memoryless" property of the exponential model since the instantaneous risk does not depend on how long the individual has already survived.
 
 ::: {.callout-note}
 ## Key takeaways

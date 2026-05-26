@@ -26,6 +26,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -373,6 +408,7 @@ window.Quarto = {
   <li><a href="#case-control-studies" id="toc-case-control-studies" class="nav-link" data-scroll-target="#case-control-studies">Case-control studies</a></li>
   <li><a href="#test-negative-case-control-studies" id="toc-test-negative-case-control-studies" class="nav-link" data-scroll-target="#test-negative-case-control-studies">Test-negative case-control studies</a></li>
   <li><a href="#cohort-studies" id="toc-cohort-studies" class="nav-link" data-scroll-target="#cohort-studies">Cohort studies</a></li>
+  <li><a href="#r-example-two" id="toc-r-example-two" class="nav-link" data-scroll-target="#r-example-two">R example</a></li>
   </ul></li>
   <li><a href="#biases-in-observational-studies" id="toc-biases-in-observational-studies" class="nav-link" data-scroll-target="#biases-in-observational-studies">Biases in observational studies</a>
   <ul class="collapse">
@@ -380,6 +416,7 @@ window.Quarto = {
   <li><a href="#collider-bias" id="toc-collider-bias" class="nav-link" data-scroll-target="#collider-bias">Collider bias</a></li>
   <li><a href="#confounding" id="toc-confounding" class="nav-link" data-scroll-target="#confounding">Confounding</a></li>
   <li><a href="#epidemic-phase-bias" id="toc-epidemic-phase-bias" class="nav-link" data-scroll-target="#epidemic-phase-bias">Epidemic phase bias</a></li>
+  <li><a href="#r-example-epidemic-phase-bias" id="toc-r-example-epidemic-phase-bias" class="nav-link" data-scroll-target="#r-example-epidemic-phase-bias">R example</a></li>
   </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
@@ -464,6 +501,48 @@ Figure&nbsp;1: A hierarchy of different types of study designs and the perceived
 \frac{A/(A+B)}{C/(C+D)}
 \]</span></p>
 </section>
+<section id="r-example-two" class="level3">
+<h3 class="anchored" data-anchor-id="r-example-two">R example</h3>
+<p>The same <span class="math inline">\(2 \times 2\)</span> table can therefore support different summaries depending on the study design. The code below shows how to compute the prevalence of the outcome and exposure, the odds ratio, and the relative risk from a <span class="math inline">\(2 \times 2\)</span> table in R.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-lst-cap="Computing common epidemiological measures from a 2 x 2 table in R."><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>study_table <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">42</span>, <span class="dv">158</span>, <span class="dv">28</span>, <span class="dv">272</span>),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">2</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">byrow =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">dimnames =</span> <span class="fu">list</span>(</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Exposure =</span> <span class="fu">c</span>(<span class="st">"Yes"</span>, <span class="st">"No"</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Outcome =</span> <span class="fu">c</span>(<span class="st">"Yes"</span>, <span class="st">"No"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> study_table[<span class="st">"Yes"</span>, <span class="st">"Yes"</span>]</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> study_table[<span class="st">"Yes"</span>, <span class="st">"No"</span>]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> study_table[<span class="st">"No"</span>, <span class="st">"Yes"</span>]</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> study_table[<span class="st">"No"</span>, <span class="st">"No"</span>]</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>study_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        Outcome
+Exposure Yes  No
+     Yes  42 158
+     No   28 272</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-lst-cap="Computing common epidemiological measures from a 2 x 2 table in R."><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">prevalence_outcome =</span> (A <span class="sc">+</span> C) <span class="sc">/</span> (A <span class="sc">+</span> B <span class="sc">+</span> C <span class="sc">+</span> D),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">prevalence_exposure =</span> (A <span class="sc">+</span> B) <span class="sc">/</span> (A <span class="sc">+</span> B <span class="sc">+</span> C <span class="sc">+</span> D),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">odds_ratio =</span> (A <span class="sc">*</span> D) <span class="sc">/</span> (B <span class="sc">*</span> C),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">relative_risk =</span> (A <span class="sc">/</span> (A <span class="sc">+</span> B)) <span class="sc">/</span> (C <span class="sc">/</span> (C <span class="sc">+</span> D))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> prevalence_outcome prevalence_exposure          odds_ratio       relative_risk 
+              0.140               0.400               2.582               2.250 </code></pre>
+</div>
+</div>
+<p>The same four cell counts therefore answer different questions: prevalence in cross-sectional studies, odds ratios in case-control studies, and risks or risk ratios in cohort studies.</p>
+</section>
 </section>
 <section id="biases-in-observational-studies" class="level2">
 <h2 class="anchored" data-anchor-id="biases-in-observational-studies">Biases in observational studies</h2>
@@ -523,6 +602,63 @@ Figure&nbsp;3: Causal diagram showing the effect of confounding, where not condi
 <h3 class="anchored" data-anchor-id="epidemic-phase-bias">Epidemic phase bias</h3>
 <p>Epidemic phase bias occurs in studies with time-varying incidence of infection. This bias is induced by a relationship between the time from infection to symptom onset and an individual’s eventual outcome, e.g.&nbsp;those who go on to die may experience a more rapid onset of symptoms following infection, an average of <span class="math inline">\(c\)</span> days sooner. Since estimates must be conditioned on the observed symptom onset date, rather than the unobserved infection date, this relationship can introduce bias into results when an epidemic is in a mode of growth or decline.</p>
 <p>Epidemic phase bias is corrected by “shifting” the symptom onset date among those who experience the more severe outcome to be <span class="math inline">\(c\)</span> days later, so that the time from infection to symptom onset is uncorrelated with the outcome (the time-to-event of interest remains the same for both outcomes.) As the true value of <span class="math inline">\(c\)</span> is typically unknown, sensitivity analysis with differing values of <span class="math inline">\(c\)</span> can be used to assess the susceptibility of results to this bias.</p>
+</section>
+<section id="r-example-epidemic-phase-bias" class="level3">
+<h3 class="anchored" data-anchor-id="r-example-epidemic-phase-bias">R example</h3>
+<p>The simple sensitivity analysis below shows the basic mechanism in a growing epidemic where severe outcomes are associated with faster symptom onset.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-lst-cap="Sensitivity analysis for epidemic phase bias in R."><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>n             <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Growing epidemic: infections concentrated on later days</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>infection_day <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>severe        <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.15</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Severe cases present 3 days faster than mild cases</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>onset_day     <span class="ot">&lt;-</span> infection_day <span class="sc">+</span> <span class="fu">ifelse</span>(severe <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">7</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Sensitivity analysis: shift the severe-case onset date by c days</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>cutoff <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>epb_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">shift_days     =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimated_risk =</span> <span class="fu">round</span>(<span class="fu">sapply</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(c) {</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mean</span>(severe[onset_day <span class="sc">+</span> c <span class="sc">*</span> severe <span class="sc">&lt;=</span> cutoff])</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  }), <span class="dv">3</span>),</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">true_risk =</span> <span class="fu">round</span>(<span class="fu">mean</span>(severe), <span class="dv">3</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>epb_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  shift_days estimated_risk true_risk
+1          0          0.183     0.149
+2          1          0.170     0.149
+3          2          0.160     0.149
+4          3          0.152     0.149</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" data-lst-cap="Sensitivity analysis for epidemic phase bias in R."><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(epb_df, <span class="fu">aes</span>(<span class="at">x =</span> shift_days, <span class="at">y =</span> estimated_risk)) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"#E74C3C"</span>, <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#E74C3C"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">yintercept =</span> epb_df<span class="sc">$</span>true_risk[<span class="dv">1</span>],</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"gray40"</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> epb_df<span class="sc">$</span>true_risk[<span class="dv">1</span>],</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"True risk"</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="fl">3.5</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Shift (days)"</span>, <span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Estimated severe risk"</span>) <span class="sc">+</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/lst-epidemic-phase-bias-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When no shift is applied, the estimated risk of severe outcomes is biased downwards due to the faster symptom onset among severe cases. As the shift increases, the estimated risk approaches the true risk.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

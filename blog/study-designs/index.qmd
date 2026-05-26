@@ -57,6 +57,44 @@ $$
 \frac{A/(A+B)}{C/(C+D)}
 $$
 
+### R example {#r-example-two}
+
+The same $2 \times 2$ table can therefore support different summaries depending on the study design. The code below shows how to compute the prevalence of the outcome and exposure, the odds ratio, and the relative risk from a $2 \times 2$ table in R.
+
+```{r}
+#| label: lst-two-by-two-measures
+#| lst-cap: "Computing common epidemiological measures from a 2 x 2 table in R."
+#| echo: true
+
+study_table <- matrix(
+  c(42, 158, 28, 272),
+  nrow = 2,
+  byrow = TRUE,
+  dimnames = list(
+    Exposure = c("Yes", "No"),
+    Outcome = c("Yes", "No")
+  )
+)
+
+A <- study_table["Yes", "Yes"]
+B <- study_table["Yes", "No"]
+C <- study_table["No", "Yes"]
+D <- study_table["No", "No"]
+
+study_table
+round(
+  c(
+    prevalence_outcome = (A + C) / (A + B + C + D),
+    prevalence_exposure = (A + B) / (A + B + C + D),
+    odds_ratio = (A * D) / (B * C),
+    relative_risk = (A / (A + B)) / (C / (C + D))
+  ),
+  3
+)
+```
+
+The same four cell counts therefore answer different questions: prevalence in cross-sectional studies, odds ratios in case-control studies, and risks or risk ratios in cohort studies.
+
 ## Biases in observational studies {#biases-in-observational-studies}
 
 Bias can be defined as: *any process at any stage of inference which tends to produce results or conclusions that differ systematically from the truth*. All of the observational study designs described above can include potential sources of bias, which are often grouped into three broad types: information bias, collider bias, and confounding.
@@ -174,6 +212,56 @@ Causal diagram showing the effect of confounding, where not conditioning on age 
 Epidemic phase bias occurs in studies with time-varying incidence of infection. This bias is induced by a relationship between the time from infection to symptom onset and an individual's eventual outcome, e.g. those who go on to die may experience a more rapid onset of symptoms following infection, an average of $c$ days sooner. Since estimates must be conditioned on the observed symptom onset date, rather than the unobserved infection date, this relationship can introduce bias into results when an epidemic is in a mode of growth or decline.
 
 Epidemic phase bias is corrected by "shifting" the symptom onset date among those who experience the more severe outcome to be $c$ days later, so that the time from infection to symptom onset is uncorrelated with the outcome (the time-to-event of interest remains the same for both outcomes.) As the true value of $c$ is typically unknown, sensitivity analysis with differing values of $c$ can be used to assess the susceptibility of results to this bias.
+
+### R example {#r-example-epidemic-phase-bias}
+
+The simple sensitivity analysis below shows the basic mechanism in a growing epidemic where severe outcomes are associated with faster symptom onset.
+
+```{r}
+#| label: lst-epidemic-phase-bias
+#| lst-cap: "Sensitivity analysis for epidemic phase bias in R."
+#| echo: true
+
+set.seed(2026)
+
+n             <- 1000
+# Growing epidemic: infections concentrated on later days
+infection_day <- sample(1:30, n, replace = TRUE, prob = 1:30)
+severe        <- rbinom(n, 1, 0.15)
+# Severe cases present 3 days faster than mild cases
+onset_day     <- infection_day + ifelse(severe == 1, 4, 7)
+
+# Sensitivity analysis: shift the severe-case onset date by c days
+cutoff <- 30
+epb_df <- data.frame(
+  shift_days     = 0:3,
+  estimated_risk = round(sapply(0:3, function(c) {
+    mean(severe[onset_day + c * severe <= cutoff])
+  }), 3),
+  true_risk = round(mean(severe), 3)
+)
+
+epb_df
+
+ggplot(epb_df, aes(x = shift_days, y = estimated_risk)) +
+  geom_line(color = "#E74C3C", linewidth = 1.1) +
+  geom_point(color = "#E74C3C", size = 3) +
+  geom_hline(
+    yintercept = epb_df$true_risk[1],
+    linetype = "dashed",
+    color = "gray40"
+  ) +
+  annotate(
+    "text",
+    x = 0, y = epb_df$true_risk[1],
+    label = "True risk", vjust = -0.5, hjust = 0, size = 3.5
+  ) +
+  scale_x_continuous(name = "Shift (days)", breaks = 0:3) +
+  scale_y_continuous(name = "Estimated severe risk") +
+  theme_minimal()
+```
+
+When no shift is applied, the estimated risk of severe outcomes is biased downwards due to the faster symptom onset among severe cases. As the shift increases, the estimated risk approaches the true risk.
 
 ::: {.callout-note}
 ## Key takeaways

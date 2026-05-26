@@ -14,7 +14,7 @@ execute:
 
 This is part six of a series on statistical methods for analysing time-to-event, or "survival" data.
 
-In this post I'll describe two statistical inference methods (non-parametric and parametric multi-state survival models). I discuss how these multi-state methods are well-suited to the investigation of intermittently-observed data.
+In this post I'll describe two statistical inference methods (non-parametric and parametric multi-state survival models) and how these multi-state methods are well-suited to the investigation of intermittently-observed data.
 
 ## Aalen-Johansen estimator {#aalen-johansen}
 

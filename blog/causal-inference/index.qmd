@@ -1,7 +1,7 @@
 ---
 title: "Part VII: Key concepts in causal inference"
 date: "2025-05-01"
-description: "Challenges and methods for inferring causal relationships from observational data, including propensity score matching and instrumental variables."
+description: "Challenges and methods for inferring causal relationships from observational data, including propensity score matching."
 image: "./causal-inference-banner.png"
 categories:
   - Causal inference
@@ -20,11 +20,11 @@ In this post I'll introduce the concept of causal inference from observational d
 
 In trial settings, well-designed randomised experiments, where the treated and untreated are theoretically exchangeable (or *exogenous*), provide a rigorous way to assess causal effects within a specific population. Under these ideal conditions, any observed association between the treatment and the outcome can be more confidently interpreted as causation, due to the minimisation of confounding and selection bias. However, even randomised trials have limitations, with potential issues including external validity or the *Hawthorne effect* - where participants modify their behaviour in response to being observed.
 
-In contrast, observational data typically present more challenges in establishing causality due to the potential for unmeasured confounding and selection bias. If an explicit causal question is defined (e.g. the effect of a well-specified hypothetical intervention), and certain stringent conditions fulfilled (such as no unmeasured confounding, positivity, and consistency) it becomes possible to make causal inferences from observational data. This approach, referred to as the *potential outcome framework*, requires careful consideration of the study design, choice of appropriate statistical methods, and transparent reporting of assumptions, with any causal claims depending on the plausibility of these assumptions.
+In contrast, observational data typically present more challenges in establishing causality due to the potential for unmeasured confounding and selection bias. If an explicit causal question is defined (e.g. the effect of a well-specified hypothetical intervention), and certain stringent conditions are fulfilled (such as no unmeasured confounding, positivity, and consistency) it becomes possible to make causal inferences from observational data. This approach, referred to as the *potential outcome framework*, requires careful consideration of the study design, choice of appropriate statistical methods, and transparent reporting of assumptions, with any causal claims depending on the plausibility of these assumptions.
 
 ## Causal diagrams and local independence {#causal-diagrams}
 
-Causal diagrams are a graphical tool used to visualise causal relationships. One class of causal diagrams are causal directed acyclic graphs (causal DAGs). In these graphs, nodes represent measurements or interventions at discrete times, and edges between nodes indicate causal effects, an example is shown in @fig-causal-dag. The lack of an edge between nodes can be interpreted as the absence of a direct effect.
+Causal diagrams are a graphical tool used to visualise causal relationships. One class of causal diagrams is causal directed acyclic graphs (causal DAGs). In these graphs, nodes represent measurements or interventions at discrete times, and edges between nodes indicate causal effects, an example is shown in @fig-causal-dag. The lack of an edge between nodes can be interpreted as the absence of a direct effect.
 
 :::{#fig-causal-dag}
 
@@ -142,6 +142,38 @@ Among these conditions, consistency and positivity are usually straightforward t
 
 If the three identifiability conditions are fulfilled, a (hypothetical) randomised experiment, known as a *target trial*, may be emulated using causal inference from observational data, with the average causal effect quantified as $E(Y^{a = 1}) - E(Y^{a = 0})$.
 
+### R example {#r-example-confounding}
+
+The simulated example below creates a simple confounded observational dataset where a baseline covariate, $Z$, affects both treatment assignment and outcome risk. The crude treated-vs-untreated comparison can then be contrasted with the true average causal effect built into the simulation.
+
+```{r}
+#| label: lst-causal-simulation
+#| lst-cap: "Simulating confounding in an observational study in R."
+#| echo: true
+
+set.seed(2026)
+
+n <- 600
+causal_data <- data.frame(z = rbinom(n, 1, 0.45))
+
+causal_data$y0 <- rbinom(n, 1, plogis(-2.2 + 1.2 * causal_data$z))
+causal_data$y1 <- rbinom(n, 1, plogis(-2.8 + 1.2 * causal_data$z))
+causal_data$a <- rbinom(n, 1, plogis(-1.1 + 1.4 * causal_data$z))
+causal_data$y <- ifelse(causal_data$a == 1, causal_data$y1, causal_data$y0)
+
+crude_rd <- mean(causal_data$y[causal_data$a == 1]) -
+            mean(causal_data$y[causal_data$a == 0])
+true_ace  <- mean(causal_data$y1 - causal_data$y0)
+
+c(
+  crude_risk_difference      = round(crude_rd, 3),
+  true_average_causal_effect = round(true_ace, 3)
+)
+
+```
+
+In this setup the crude comparison is biased because treated individuals are more likely to come from the higher-risk covariate stratum.
+
 ## Methods to compute the average causal effect {#causal-methods}
 
 Three commonly-used methods to compute the average causal effect are inverse probability weighting, matching, and standardisation.
@@ -152,9 +184,74 @@ The concept of inverse probability weighting is to assign weights to each indivi
 
 Conversely, an untreated individual, $A = 0$, with covariates $Z = z'$ would be assigned a weight of $1/\Pr(A = 0 \mid Z = z')$. These weights are used to adjust for potential baseline confounders when estimating the causal effect of treatment, allowing the creation of a *pseudo-population* where treatment assignment is independent of the observed covariates.
 
+### R example {#r-example-ipw}
+
+In R, this usually starts by fitting a propensity score model and then constructing the inverse-probability weights directly from the fitted probabilities.
+
+```{r}
+#| label: lst-ipw-example
+#| lst-cap: "Estimating an inverse-probability weighted risk difference in R."
+#| echo: true
+
+propensity_model <- glm(a ~ z, family = binomial(), data = causal_data)
+
+causal_data$ps <- predict(propensity_model, type = "response")
+causal_data$ipw <- ifelse(
+  causal_data$a == 1,
+  1 / causal_data$ps,
+  1 / (1 - causal_data$ps)
+)
+
+weighted_risk_treated <- weighted.mean(
+  causal_data$y[causal_data$a == 1],
+  causal_data$ipw[causal_data$a == 1]
+)
+weighted_risk_untreated <- weighted.mean(
+  causal_data$y[causal_data$a == 0],
+  causal_data$ipw[causal_data$a == 0]
+)
+
+c(
+  ipw_risk_treated = round(weighted_risk_treated, 3),
+  ipw_risk_untreated = round(weighted_risk_untreated, 3),
+  ipw_risk_difference = round(
+    weighted_risk_treated - weighted_risk_untreated,
+    3
+  )
+)
+```
+
+The weighted risk difference should move back towards the target-trial estimand by rebalancing the covariate distribution between treatment groups.
+
 ### Matching {#matching}
 
 Matching involves constructing a subset of the population in which the distribution of covariates, $Z$, is the same for the treated and untreated groups. This is typically achieved by pairing each treated individual with an untreated individual with the same or similar covariate values. The causal effect can be estimated as the average difference in outcomes among the matched pairs.
+
+### R example {#r-example-matching}
+
+The same propensity score can be used for a simple nearest-neighbour match, pairing each treated individual to the closest untreated individual on the estimated probability of treatment.
+
+```{r}
+#| label: lst-matching-example
+#| lst-cap: "Exact matching within Z strata in R."
+#| echo: true
+
+# Z is binary, so exact stratum matching is straightforward
+matched <- do.call(rbind, lapply(0:1, function(stratum) {
+  tr <- causal_data$y[causal_data$a == 1 & causal_data$z == stratum]
+  ct <- causal_data$y[causal_data$a == 0 & causal_data$z == stratum]
+  n  <- min(length(tr), length(ct))
+  data.frame(y_treated = tr[seq_len(n)], y_control = ct[seq_len(n)])
+}))
+
+round(c(
+  risk_treated        = mean(matched$y_treated),
+  risk_control        = mean(matched$y_control),
+  risk_difference     = mean(matched$y_treated - matched$y_control)
+), 3)
+```
+
+Matching within Z strata ensures the comparison group has the same covariate distribution as the treated group, removing the confounding contribution of Z.
 
 ### Standardization {#standardisation}
 
@@ -170,6 +267,78 @@ $$
 $$
 
 The standardised mean $E(Y^a) = \sum_z{E(Y \mid Z = z, A = a)\Pr(Z = z)}$ is known as the *g-formula*.
+
+### R example {#r-example-standardisation}
+
+In practice, standardisation means fitting an outcome model, predicting every individual's outcome under both treatment levels, and then averaging those counterfactual predictions across the observed covariate distribution.
+
+```{r}
+#| label: lst-standardisation-example
+#| lst-cap: "Estimating a standardised risk difference with the g-formula in R."
+#| echo: true
+
+outcome_model <- glm(y ~ a + z, family = binomial(), data = causal_data)
+
+risk_if_treated <- predict(
+  outcome_model,
+  newdata = transform(causal_data, a = 1),
+  type = "response"
+)
+risk_if_untreated <- predict(
+  outcome_model,
+  newdata = transform(causal_data, a = 0),
+  type = "response"
+)
+
+c(
+  standardised_risk_treated = round(mean(risk_if_treated), 3),
+  standardised_risk_untreated = round(mean(risk_if_untreated), 3),
+  standardised_risk_difference = round(
+    mean(risk_if_treated - risk_if_untreated),
+    3
+  )
+)
+```
+
+## Comparing methods {#comparing-methods}
+
+Finally, the results from the three methods can be compared to each other and to the true average causal effect built into the simulation.
+
+```{r}
+#| label: lst-compare-methods
+#| lst-cap: "Comparing causal inference methods in R."
+#| echo: true
+
+compare_df <- data.frame(
+  method = factor(
+    c("Crude", "IPW", "Matching", "Standardisation (g-formula)", "True ACE"),
+    levels = c("Crude", "IPW", "Matching", "Standardisation (g-formula)", "True ACE")
+  ),
+  rd = c(
+    crude_rd,
+    weighted_risk_treated - weighted_risk_untreated,
+    mean(matched$y_treated - matched$y_control),
+    mean(risk_if_treated - risk_if_untreated),
+    true_ace
+  )
+)
+
+ggplot(compare_df, aes(x = method, y = rd, fill = method)) +
+  geom_col(width = 0.5, show.legend = FALSE) +
+  geom_hline(yintercept = 0, linewidth = 0.4) +
+  scale_fill_manual(values = c(
+    "Crude"           = "#E74C3C",
+    "IPW"             = "#3498DB",
+    "Matching"        = "#9B59B6",
+    "Standardisation (g-formula)" = "#2ECC71",
+    "True ACE"        = "#2C3E50"
+  )) +
+  scale_y_continuous(name = "Risk difference") +
+  scale_x_discrete(name = NULL) +
+  theme_minimal()
+```
+
+We can see that the crude risk difference is biased away from the true average causal effect due to confounding, while the three methods to adjust for confounding (IPW, matching, and standardisation via the g-formula) all move the estimate closer to the true average causal effect.
 
 ::: {.callout-note}
 ## Key takeaways
