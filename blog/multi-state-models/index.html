@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -38,14 +38,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-46d0ca1acc81c62bd952dc240fab245a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-c37f7bf5fb3173725d257a82e877fa51.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-46d0ca1acc81c62bd952dc240fab245a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-3b02049878124896d3f82fc50d2eba5a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-3a61e16f88c9e3447d8fd58c260b31ee.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-3b02049878124896d3f82fc50d2eba5a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -400,7 +400,7 @@ window.Quarto = {
 <p>This is part five of a series on statistical methods for analysing time-to-event, or “survival” data.</p>
 <section id="multi-state-survival-models" class="level2">
 <h2 class="anchored" data-anchor-id="multi-state-survival-models">Multi-state survival models</h2>
-<p>When disease processes are more complex, or when intermediate events may influence the final outcome, the <a href="../../blog/classical-survival-methods/index.html">standard survival methods</a> <a href="../../blog/competing-risks-methods/index.html">described so far</a> may be insufficient to explore the effects of treatment on these outcomes. In these cases, multi-state models, which are more flexible and hence better able to investigate the different pathways that patients may experience, can be applied. These models allow for joint estimation of features of the underlying process and the associated hazards of transition for a set of given covariates, and implicitly account for competing risks.</p>
+<p>When disease processes are more complex, or when intermediate events may influence the final outcome, the standard survival methods described so far (<a href="../../blog/classical-survival-methods/index.html">classical survival methods</a> and <a href="../../blog/competing-risks-methods/index.html">competing risks methods</a>) may be insufficient to explore the effects of treatment on these outcomes. In these cases, multi-state models, which are more flexible and hence better able to investigate the different pathways that patients may experience, can be applied. These models allow for joint estimation of features of the underlying process and the associated hazards of transition for a set of given covariates, and implicitly account for competing risks.</p>
 <p>This section provides an introduction to the theory of multi-state processes and describes how these relate to continuous-time and discrete-time multi-state models.</p>
 </section>
 <section id="stochastic-processes" class="level2">
@@ -408,7 +408,7 @@ window.Quarto = {
 <p>Multi-state models combine statistical inference with the theory of stochastic processes.</p>
 <section id="parameter-processes" class="level3">
 <h3 class="anchored" data-anchor-id="parameter-processes">Discrete and continuous parameter processes</h3>
-<p>A stochastic process is formally defined as a collection of random variables <span class="math inline">\(\{X(t),\; t \in T\}\)</span>, indexed by a parameter <span class="math inline">\(t\)</span> which varies in a mathematical index set <span class="math inline">\(T\)</span>. The variable <span class="math inline">\(X(t)\)</span> is the state of the process at time <span class="math inline">\(t\)</span>, and the set <span class="math inline">\(\mathcal{S}\)</span> of all possible values of <span class="math inline">\(X(t)\)</span> is termed the <em>state space</em>.</p>
+<p>A stochastic process is formally defined as a collection of random variables <span class="math inline">\(\{X(t),\; t \in T\}\)</span>, indexed by a parameter such as time, which varies in a mathematical index set <span class="math inline">\(T\)</span>. The variable <span class="math inline">\(X(t)\)</span> is the state of the process at time <span class="math inline">\(t\)</span>, and the set <span class="math inline">\(\mathcal{S}\)</span> of all possible values of <span class="math inline">\(X(t)\)</span> is termed the <em>state space</em>.</p>
 <p>Two important cases of stochastic processes are discrete parameter processes, when <span class="math inline">\(T = \{\pm1, \pm2, \pm3, \dots\}\)</span>, and continuous parameter processes, when <span class="math inline">\(T = \{t:-\infty &lt; t &lt; \infty\}\)</span>. Both may be restricted to the positive domain, in which case the parameter <span class="math inline">\(t\)</span> may be used to represent time, and these processes are termed ‘discrete-time’ and ‘continuous-time’ processes.</p>
 </section>
 <section id="counting-processes" class="level3">

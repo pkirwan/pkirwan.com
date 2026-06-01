@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -26,6 +26,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -38,14 +73,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-46d0ca1acc81c62bd952dc240fab245a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-c37f7bf5fb3173725d257a82e877fa51.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-46d0ca1acc81c62bd952dc240fab245a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-3b02049878124896d3f82fc50d2eba5a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-3a61e16f88c9e3447d8fd58c260b31ee.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-3b02049878124896d3f82fc50d2eba5a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -373,7 +408,10 @@ window.Quarto = {
   <li><a href="#cause-specific-hazards" id="toc-cause-specific-hazards" class="nav-link" data-scroll-target="#cause-specific-hazards">Cause-specific hazard function</a></li>
   <li><a href="#cause-specific-cumulative-incidence" id="toc-cause-specific-cumulative-incidence" class="nav-link" data-scroll-target="#cause-specific-cumulative-incidence">Cause-specific cumulative incidence</a></li>
   </ul></li>
-  <li><a href="#aalen-johansen" id="toc-aalen-johansen" class="nav-link" data-scroll-target="#aalen-johansen">Aalen-Johansen estimator</a></li>
+  <li><a href="#aalen-johansen" id="toc-aalen-johansen" class="nav-link" data-scroll-target="#aalen-johansen">Aalen-Johansen estimator</a>
+  <ul class="collapse">
+  <li><a href="#r-example-aj" id="toc-r-example-aj" class="nav-link" data-scroll-target="#r-example-aj">R example</a></li>
+  </ul></li>
   <li><a href="#fine-gray" id="toc-fine-gray" class="nav-link" data-scroll-target="#fine-gray">Fine-Gray proportional hazards model</a>
   <ul class="collapse">
   <li><a href="#sub-distribution-hazard" id="toc-sub-distribution-hazard" class="nav-link" data-scroll-target="#sub-distribution-hazard">Sub-distribution hazard</a></li>
@@ -396,7 +434,7 @@ window.Quarto = {
 <p>This is part four of a series on statistical methods for analysing time-to-event, or “survival” data.</p>
 <section id="competing-risks" class="level2">
 <h2 class="anchored" data-anchor-id="competing-risks">Competing risks</h2>
-<p>In medical cohort studies, multiple study end-points are common (e.g.&nbsp;death, intensive care admission, and discharge). These multiple end-points are known as <em>competing risks</em> and may hinder the event of interest, or modify the chance that this event occurs. Treating competing events as ordinary censoring can be problematic when the aim is to estimate the probability of a specific event over time. In particular, the Kaplan-Meier estimator will typically overestimate this probability. Cause-specific Cox models remain useful for modelling cause-specific hazards, but they do not directly estimate the cumulative incidence function in the presence of competing risks.</p>
+<p>In medical cohort studies, multiple study end-points are common (e.g.&nbsp;death, intensive care admission, and discharge). These multiple end-points are known as <em>competing risks</em> and may prevent observation of the event of interest or alter its probability. Treating competing events as ordinary censoring can be problematic when the aim is to estimate the probability of a specific event over time. In particular, the Kaplan-Meier estimator will typically overestimate this probability. Cause-specific Cox models remain useful for modelling cause-specific hazards, but they do not directly estimate the cumulative incidence function in the presence of competing risks.</p>
 <div id="fig-competing-risks" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-competing-risks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -455,6 +493,78 @@ where <span class="math inline">\(d_{j}(t)\)</span> is the number of deaths due 
 \]</span></p>
 <p>for all times <span class="math inline">\(t_k \leq t\)</span> where transition events are observed to occur.</p>
 <p>The choice between cause-specific hazards and cumulative incidence depends on the research question. Cause-specific hazards are often preferred for <em>aetiological</em> questions about how a covariate affects the instantaneous rate of a given event. Cumulative incidence, and regression models such as Fine-Gray, are often preferred when the aim is to estimate or predict the <em>absolute risk</em> of a given event over time in the presence of competing risks.</p>
+<section id="r-example-aj" class="level3">
+<h3 class="anchored" data-anchor-id="r-example-aj">R example</h3>
+<p>We can illustrate the difference between the naive Kaplan-Meier estimate and the Aalen-Johansen estimator for cumulative incidence in a simple example. Consider a dataset of 10 patients with follow-up times and event types (death, discharge, or censoring):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-lst-cap="Comparing naive and Aalen-Johansen cumulative incidence estimates in R."><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>cr_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">time   =</span> <span class="fu">c</span>( <span class="dv">2</span>,    <span class="dv">3</span>,    <span class="dv">4</span>,      <span class="dv">5</span>,     <span class="dv">6</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>              <span class="dv">7</span>,    <span class="dv">8</span>,    <span class="dv">9</span>,     <span class="dv">10</span>,    <span class="dv">11</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">status =</span> <span class="fu">c</span>(<span class="st">"death"</span>, <span class="st">"discharge"</span>, <span class="st">"censor"</span>, <span class="st">"death"</span>, <span class="st">"discharge"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>             <span class="st">"death"</span>, <span class="st">"censor"</span>,    <span class="st">"discharge"</span>, <span class="st">"death"</span>, <span class="st">"censor"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Naive estimate: treat discharge as ordinary censoring</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>km_fit  <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status <span class="sc">==</span> <span class="st">"death"</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> cr_data)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Aalen-Johansen: F_j(t) = sum S(t_{k-1}) * d_j(t_k) / n(t_k)</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>overall <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status <span class="sc">!=</span> <span class="st">"censor"</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> cr_data)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>S_prev  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">head</span>(overall<span class="sc">$</span>surv, <span class="sc">-</span><span class="dv">1</span>))</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>d_death <span class="ot">&lt;-</span> <span class="fu">sapply</span>(overall<span class="sc">$</span>time, <span class="cf">function</span>(t) {</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(cr_data<span class="sc">$</span>time <span class="sc">==</span> t <span class="sc">&amp;</span> cr_data<span class="sc">$</span>status <span class="sc">==</span> <span class="st">"death"</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>cif_aj  <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(S_prev <span class="sc">*</span> d_death <span class="sc">/</span> overall<span class="sc">$</span>n.risk)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">time    =</span> overall<span class="sc">$</span>time,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_risk  =</span> overall<span class="sc">$</span>n.risk,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">d_death =</span> d_death,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">cif_aj  =</span> <span class="fu">round</span>(cif_aj, <span class="dv">2</span>),</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">cif_km  =</span> <span class="fu">round</span>(<span class="dv">1</span> <span class="sc">-</span> km_fit<span class="sc">$</span>surv, <span class="dv">2</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   time n_risk d_death cif_aj cif_km
+1     2     10       1   0.10   0.10
+2     3      9       0   0.10   0.10
+3     4      8       0   0.10   0.10
+4     5      7       1   0.21   0.23
+5     6      6       0   0.21   0.23
+6     7      5       1   0.33   0.38
+7     8      4       0   0.33   0.38
+8     9      3       0   0.33   0.38
+9    10      2       1   0.48   0.69
+10   11      1       0   0.48   0.69</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-lst-cap="Comparing naive and Aalen-Johansen cumulative incidence estimates in R."><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cif_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">time   =</span> <span class="fu">c</span>(<span class="dv">0</span>, overall<span class="sc">$</span>time),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cif_aj =</span> <span class="fu">c</span>(<span class="dv">0</span>, cif_aj),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">cif_km =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span> <span class="sc">-</span> km_fit<span class="sc">$</span>surv)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cif_df, <span class="fu">aes</span>(<span class="at">x =</span> time)) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">y =</span> cif_km, <span class="at">color =</span> <span class="st">"Naive (1 - KM)"</span>), <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">y =</span> cif_aj, <span class="at">color =</span> <span class="st">"Aalen-Johansen"</span>), <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="cn">NULL</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Naive (1 - KM)"</span> <span class="ot">=</span> <span class="st">"#2C3E50"</span>, <span class="st">"Aalen-Johansen"</span> <span class="ot">=</span> <span class="st">"#E74C3C"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="cn">NA</span>), <span class="at">name =</span> <span class="st">"Cumulative incidence of death"</span>) <span class="sc">+</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Follow-up time"</span>) <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/lst-competing-risk-cif-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The naive curve lies above the Aalen-Johansen estimate because discharge is handled as if it were non-informative censoring, even though it removes patients from ever experiencing the event of interest.</p>
+</section>
 </section>
 <section id="fine-gray" class="level2">
 <h2 class="anchored" data-anchor-id="fine-gray">Fine-Gray proportional hazards model</h2>
