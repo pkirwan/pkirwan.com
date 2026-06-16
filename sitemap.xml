@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.pkirwan.com/blog/multi-state-models/index.html</loc>
-    <lastmod>2026-06-01T13:11:12.670Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.pkirwan.com/blog/competing-risks-methods/index.html</loc>
-    <lastmod>2026-06-01T13:11:12.668Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.pkirwan.com/blog/causal-inference/index.html</loc>
-    <lastmod>2026-06-01T13:11:12.668Z</lastmod>
+    <loc>https://www.pkirwan.com/index.html</loc>
+    <lastmod>2026-06-16T07:07:27.060Z</lastmod>
   </url>
   <url>
     <loc>https://www.pkirwan.com/blog/survival-analysis/index.html</loc>
-    <lastmod>2026-06-01T13:11:12.671Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.pkirwan.com/index.html</loc>
-    <lastmod>2026-06-01T13:11:12.683Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.pkirwan.com/blog/classical-survival-methods/index.html</loc>
-    <lastmod>2026-06-01T13:11:12.668Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.pkirwan.com/blog/study-designs/index.html</loc>
-    <lastmod>2026-06-01T13:11:12.671Z</lastmod>
+    <lastmod>2026-06-16T07:07:27.045Z</lastmod>
   </url>
   <url>
     <loc>https://www.pkirwan.com/blog/key-concepts-infectious-disease/index.html</loc>
-    <lastmod>2026-06-01T13:11:12.669Z</lastmod>
+    <lastmod>2026-06-16T07:07:27.042Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pkirwan.com/blog/classical-survival-methods/index.html</loc>
+    <lastmod>2026-06-16T07:07:27.040Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pkirwan.com/blog/multi-state-models/index.html</loc>
+    <lastmod>2026-06-16T07:07:27.042Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pkirwan.com/blog/causal-inference/index.html</loc>
+    <lastmod>2026-06-16T07:07:27.040Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pkirwan.com/blog/study-designs/index.html</loc>
+    <lastmod>2026-06-16T07:07:27.044Z</lastmod>
   </url>
   <url>
     <loc>https://www.pkirwan.com/blog/statistical-inference-msms/index.html</loc>
-    <lastmod>2026-06-01T13:11:12.670Z</lastmod>
+    <lastmod>2026-06-16T07:07:27.043Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pkirwan.com/blog/competing-risks-methods/index.html</loc>
+    <lastmod>2026-06-16T07:07:27.041Z</lastmod>
   </url>
 </urlset>
