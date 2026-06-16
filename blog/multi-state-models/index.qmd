@@ -1,6 +1,6 @@
 ---
 title: "Part V: Multi-state models"
-date: "2025-04-17"
+date: "2025-09-23"
 description: "Some theory of multi-state models and their applications in epidemiology, including estimating transition intensities and the time spent in a state."
 image: "./multi-state-models-banner.png"
 categories:

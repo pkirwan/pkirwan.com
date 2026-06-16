@@ -1,6 +1,6 @@
 ---
 title: "Part IV: Competing risks survival methods"
-date: "2025-04-10"
+date: "2025-08-19"
 description: "How to handle scenarios where multiple possible events can occur, and the challenges this presents for traditional survival methods."
 image: "./competing-risks-banner.png"
 categories:

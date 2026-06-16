@@ -1,6 +1,6 @@
 ---
 title: "Part II: Survival analysis"
-date: "2025-03-27"
+date: "2025-06-17"
 description: "An introduction to survival analysis, time-to-event data, and how we handle censored observations in epidemiological research."
 image: "./survival-analysis-banner.jpg"
 categories:

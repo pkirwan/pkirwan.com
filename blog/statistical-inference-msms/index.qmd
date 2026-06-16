@@ -1,6 +1,6 @@
 ---
 title: "Part VI: Statistical inference for multi-state models"
-date: "2025-04-24"
+date: "2025-10-21"
 description: "Details of two statistical inference methods for multi-state models and how these are well-suited to the investigation of intermittently-observed data."
 image: "./statistical-inference-banner.png"
 categories:

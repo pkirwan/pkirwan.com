@@ -1,6 +1,6 @@
 ---
 title: "Part III: Classical survival methods"
-date: "2025-04-03"
+date: "2025-07-22"
 description: "Exploring two fundamental approaches to analysing survival data: non-parametric Kaplan-Meier estimation and semi-parametric Cox proportional hazards models."
 image: "./survival-methods-banner.png"
 categories:

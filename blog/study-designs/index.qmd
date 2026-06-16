@@ -1,6 +1,6 @@
 ---
 title: "Part VIII: Study designs and biases"
-date: "2025-05-08"
+date: "2025-12-23"
 description: "An overview of different observational study designs and the potential biases that can arise, including selection bias and confounding."
 image: "./study-designs-banner.png"
 categories:

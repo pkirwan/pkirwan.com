@@ -1,6 +1,6 @@
 ---
 title: "Part I: Key concepts in infectious disease research"
-date: "2025-03-20"
+date: "2025-05-20"
 description: "An overview of key concepts, introducing some of the challenges in estimating the burden of infectious disease."
 image: "./infectious-disease-banner.webp"
 categories:

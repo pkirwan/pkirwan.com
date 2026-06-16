@@ -1,6 +1,6 @@
 ---
 title: "Part VII: Key concepts in causal inference"
-date: "2025-05-01"
+date: "2025-11-18"
 description: "Challenges and methods for inferring causal relationships from observational data, including propensity score matching."
 image: "./causal-inference-banner.png"
 categories:
