@@ -19,7 +19,7 @@ listing:
 
 ::: {.about-container}
 ::: {.about-text}
-I'm a postdoctoral research fellow at the [Barcelona Institute for Global Health](https://www.isglobal.org), having completed my first postdoc at the [MRC Biostatistics Unit](https://www.mrc-bsu.cam.ac.uk) in Cambridge. My current research focuses on the development of statistical microsimulation and forecasting models to project the health effects of changes in Official Development Assistance (ODA) in low- and middle-income countries. My other research interests include the development of statistical models to estimate infectious disease burden, specifically for HIV.
+I'm a postdoctoral research fellow at the [Barcelona Institute for Global Health](https://www.isglobal.org). My current research focuses on the development of statistical microsimulation and forecasting models to project the health effects of changes in Official Development Assistance (ODA) in low- and middle-income countries. My other research interests include the development of statistical models to estimate infectious disease burden, with an application to HIV epidemiology.
 
 [GitHub](https://github.com/pkirwan) · [ORCiD](https://orcid.org/0000-0001-6904-0500) · [Mastodon](https://fediscience.org/@pkirwan)
 :::
@@ -61,7 +61,7 @@ cd4backcalc is an R package for Bayesian, discrete-time, multi-state modelling t
 ::: {.publication}
 **2026**
 
-Impact of a revised consensus definition of late HIV diagnosis in Europe: A multi-country study. *Eurosurveillance* (forthcoming).
+[Impact of a revised consensus definition of late HIV diagnosis in Europe: A multi-country study](https://doi.org/10.2807/1560-7917.ES.2026.31.32.2500921). *Eurosurveillance*.
 :::
 
 ::: {.publication}
