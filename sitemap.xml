@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.pkirwan.com/index.html</loc>
-    <lastmod>2026-07-15T15:25:14.795Z</lastmod>
+    <loc>https://www.pkirwan.com/blog/causal-inference/index.html</loc>
+    <lastmod>2026-08-21T13:02:28.219Z</lastmod>
   </url>
   <url>
     <loc>https://www.pkirwan.com/blog/survival-analysis/index.html</loc>
-    <lastmod>2026-07-15T15:25:14.782Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.pkirwan.com/blog/key-concepts-infectious-disease/index.html</loc>
-    <lastmod>2026-07-15T15:25:14.780Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.pkirwan.com/blog/classical-survival-methods/index.html</loc>
-    <lastmod>2026-07-15T15:25:14.778Z</lastmod>
+    <lastmod>2026-08-21T13:02:28.223Z</lastmod>
   </url>
   <url>
     <loc>https://www.pkirwan.com/blog/multi-state-models/index.html</loc>
-    <lastmod>2026-07-15T15:25:14.780Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.pkirwan.com/blog/causal-inference/index.html</loc>
-    <lastmod>2026-07-15T15:25:14.778Z</lastmod>
+    <lastmod>2026-08-21T13:02:28.221Z</lastmod>
   </url>
   <url>
     <loc>https://www.pkirwan.com/blog/study-designs/index.html</loc>
-    <lastmod>2026-07-15T15:25:14.782Z</lastmod>
+    <lastmod>2026-08-21T13:02:28.222Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pkirwan.com/index.html</loc>
+    <lastmod>2026-08-21T13:02:28.235Z</lastmod>
   </url>
   <url>
     <loc>https://www.pkirwan.com/blog/statistical-inference-msms/index.html</loc>
-    <lastmod>2026-07-15T15:25:14.781Z</lastmod>
+    <lastmod>2026-08-21T13:02:28.221Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pkirwan.com/blog/key-concepts-infectious-disease/index.html</loc>
+    <lastmod>2026-08-21T13:02:28.220Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pkirwan.com/blog/classical-survival-methods/index.html</loc>
+    <lastmod>2026-08-21T13:02:28.219Z</lastmod>
   </url>
   <url>
     <loc>https://www.pkirwan.com/blog/competing-risks-methods/index.html</loc>
-    <lastmod>2026-07-15T15:25:14.779Z</lastmod>
+    <lastmod>2026-08-21T13:02:28.219Z</lastmod>
   </url>
 </urlset>
