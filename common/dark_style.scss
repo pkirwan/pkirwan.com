@@ -6,6 +6,7 @@ $body-color:          #bbb;
 $navbar-bg:           #222 !default;
 $code-block-bg-alpha: -.9;
 $navbar-hl:            var(--bs-nav-link-color) !default;
+$link-color:           #1b95e0;
 
 /*-- scss:rules --*/
 .quarto-title-block .quarto-title-banner {
@@ -15,4 +16,13 @@ $navbar-hl:            var(--bs-nav-link-color) !default;
 pre {
   background: #222;
   color: #bbb;
+}
+
+// Figures are drawn for a white background, so keep them on a light card
+.quarto-figure img,
+.cell-output-display img,
+figure img,
+.quarto-float img {
+  background: #fff;
+  border-radius: 4px;
 }

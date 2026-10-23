@@ -3,7 +3,7 @@ project:
 
 website:
   title: "Peter Kirwan"
-  description: "Research Associate at MRC Biostatistics Unit, Cambridge"
+  description: "Postdoctoral research fellow at the Barcelona Institute for Global Health (ISGlobal)"
   favicon: common/apple-touch-icon.png
   site-url: https://www.pkirwan.com
   repo-url: https://github.com/pkirwan/pkirwan.com
@@ -15,8 +15,10 @@ website:
         text: Home
       - text: "About"
         href: index.qmd#about
-      - text: "Survival data posts"
+      - text: "Blog series"
         href: index.qmd#blog
+      - text: "Software"
+        href: index.qmd#software
       - text: "Publications"
         href: index.qmd#recent-publications
       - text: "Talks"

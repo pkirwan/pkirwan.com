@@ -8,7 +8,7 @@ categories:
   - Survival models
 ---
 
-This is part three of a series on statistical methods for analysing time-to-event, or "survival" data.
+This is part three of a series on statistical methods for infectious disease epidemiology, with a focus on time-to-event, or "survival", data.
 
 ## Statistical inference {#statistical-inference}
 
@@ -34,7 +34,7 @@ $$ f(\theta \mid D) = \frac{f(D \mid \theta)f(\theta)}{f(D)}$$
 
 Constructing likelihoods for censored or truncated data requires careful consideration of the information provided by each observation. The [previous post](/blog/survival-analysis/index.qmd) in this series provided a definition of censoring and truncation, and the right and left censoring and truncation times.
 
-The likelihood components provided by censored observations are:
+The likelihood components provided by censored observations, assuming that censoring is independent of the event process, are:
 
 - for exactly observed data: information on the probability of the event occurring at this time, i.e. $f(X)$
 - for right-censored observations: information on the survivor function up to a certain time, i.e. $S(C_r)$
@@ -45,7 +45,11 @@ As data may be observed with different levels of censoring or truncation, the li
 
 $$L \propto \prod_{i} f(X_i) \prod_{i} S(C_{r,i}) \prod_{i} F(C_{l,i}) \prod_i (S(L_i) - S(R_i))$$
 
-The equivalent likelihood components for truncated data provide information on conditional probabilities of events, i.e. $f(X)/F(Y_r)$ for right-truncated observations, where observation is conditional on the event of interest having occurred by truncation time $Y_r$.
+The equivalent likelihood components for truncated data provide information on conditional probabilities of events, given that the individual was observed:
+
+- for left-truncated observations, where observation is conditional on the event time being at least the left-truncation time $Y_l$: $f(X)/S(Y_l)$
+- for right-truncated observations, where observation is conditional on the event of interest having occurred by the truncation time $Y_r$: $f(X)/F(Y_r)$
+- for interval-truncated observations, where observation is conditional on the event occurring within the truncation interval $[Y_l, Y_r]$: $f(X)/\{F(Y_r) - F(Y_l)\}$.
 
 ## Parametric and non-parametric models {#parametric-non-parametric}
 
@@ -59,15 +63,18 @@ The Kaplan-Meier estimator is a widely-used, non-parametric method to estimate t
 
 $$\hat{S}(t) = \prod_{t_k \leq t}\left(\frac{n(t_k) - d(t_k)}{n(t_k)}\right)$$
 
-where $d(t_k)$ is the number of events, and $n(t_k)$ is the number of individuals at risk at time $t_k \leq t$.
+where $d(t_k)$ is the number of events, and $n(t_k)$ is the number of individuals at risk just before time $t_k$, for the observed event times $t_k \leq t$.
 
-The Kaplan-Meier estimator is a step function, with jumps at each observed event time, and the size of the jump is the proportion of individuals who experience the event at that time. The Kaplan-Meier estimator is often plotted as a survival curve, with time on the x-axis and the estimated survival probability on the y-axis.
-
-![Example of a Kaplan-Meier survival plot where time is on the x-axis and the estimated survival probability is on the y-axis.](./survival-methods-banner.png){#km-figure width=80%}
+The Kaplan-Meier estimator is a step function, with jumps at each observed event time. At each event time the estimate is multiplied by the proportion of individuals at risk who do not experience the event, so the size of each jump depends on both the number of events and the number still at risk. The Kaplan-Meier estimator is often plotted as a survival curve, with time on the x-axis and the estimated survival probability on the y-axis, as shown in @fig-km below.
 
 ### R example {#r-example-km}
 
 For a short example of the product-limit construction we can use the `survival` package in R to compute a Kaplan-Meier estimate from a small dataset of 10 observations, with some censored and some observed event times:
+
+```{r}
+#| include: false
+source("../../common/theme.R")
+```
 
 ```{r}
 #| label: lst-km-risk-set
@@ -75,7 +82,6 @@ For a short example of the product-limit construction we can use the `survival` 
 #| echo: true
 
 library(survival)
-library(ggplot2)
 
 km_data <- data.frame(
   time   = c(2, 3, 4, 4, 5, 6, 7, 8, 10, 10),
@@ -88,31 +94,42 @@ data.frame(
   time     = km_fit$time,
   n_risk   = km_fit$n.risk,
   n_event  = km_fit$n.event,
+  n_censor = km_fit$n.censor,
   survival = round(km_fit$surv, 2)
 )
-
-km_df <- data.frame(
-  time  = c(0, km_fit$time),
-  surv  = c(1, km_fit$surv),
-  event = c(0L, km_fit$n.event)
-)
-
-ggplot(km_df, aes(x = time, y = surv)) +
-  geom_step(color = "#E74C3C", linewidth = 1.1) +
-  geom_point(
-    data = subset(km_df, event == 0 & time > 0),
-    shape = 3, size = 3, color = "#E74C3C"
-  ) +
-  scale_y_continuous(limits = c(0, 1), name = "Estimated survival") +
-  scale_x_continuous(name = "Follow-up time") +
-  theme_minimal()
 ```
 
-The figure shows the Kaplan-Meier survival curve, with steps at each observed event time and tick marks indicating censored observations. Survival only steps down at observed event times (rows where `n_event > 0`), while censored observations reduce the risk set without causing a jump.
+```{r}
+#| label: fig-km
+#| fig-cap: "Kaplan-Meier survival curve for the example data. Crosses mark censored observations and dotted lines show pointwise 95% confidence limits."
+#| fig-alt: "Step plot of estimated survival, falling from 1 at time 0 to about 0.22 at day 10, with crosses where observations are censored and dotted lines showing wide 95% confidence limits."
+#| echo: true
+
+km_df <- data.frame(
+  time   = c(0, km_fit$time),
+  surv   = c(1, km_fit$surv),
+  lower  = c(1, km_fit$lower),
+  upper  = c(1, km_fit$upper),
+  censor = c(0L, km_fit$n.censor)
+)
+
+ggplot(km_df, aes(x = time)) +
+  geom_step(aes(y = lower), colour = blog_cols[["red"]], linetype = "dotted") +
+  geom_step(aes(y = upper), colour = blog_cols[["red"]], linetype = "dotted") +
+  geom_step(aes(y = surv), colour = blog_cols[["red"]], linewidth = 1.1) +
+  geom_point(
+    data = subset(km_df, censor > 0),
+    aes(y = surv), shape = 3, size = 3, stroke = 1
+  ) +
+  scale_y_continuous(limits = c(0, 1), name = "Estimated survival") +
+  scale_x_continuous(name = "Follow-up time (days)")
+```
+
+The figure shows the Kaplan-Meier survival curve, with steps at each observed event time and crosses indicating censored observations (including those which coincide with an event time, at days 4 and 10). Survival only steps down at observed event times (rows where `n_event > 0`), while censored observations reduce the risk set without causing a jump. With only 10 observations the confidence limits are wide.
 
 ## The Cox proportional hazards model {#cox-proportional-hazards}
 
-The Cox proportional hazards model assumes that the hazards of death for any two individuals are *proportional* over time, expressed by writing the hazard function conditional on a given set of $M$ constant or time-varying covariates $\boldsymbol{z} = \{z_{1}\ldots, z_{M}\}$ as:
+The Cox proportional hazards model assumes that the hazards of death for any two individuals are *proportional* over time, expressed by writing the hazard function conditional on a given set of $M$ constant covariates $\boldsymbol{z} = \{z_{1}\ldots, z_{M}\}$ as:
 
 $$h(t \mid \boldsymbol{z}) = h^{(0)}(t)\exp\left(\sum_{m=1}^{M}\beta_{m}z_{m}\right) \equiv h^{(0)}(t)\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z})$$
 
@@ -120,11 +137,11 @@ where $h^{(0)}(t)$ is the baseline hazard function, and $\beta_{m}$ are the regr
 
 $$\frac{h(t \mid z_m = 1)}{h(t \mid z_m = 0)} = \frac{h^{(0)}(t)\exp(\beta_m 1)}{h^{(0)}(t)\exp(\beta_m 0)} = \exp(\beta_{m})$$
 
-The regression coefficients $\beta_{m}$ are estimated by maximising the partial likelihood $L(\boldsymbol{\beta})$:
+The regression coefficients $\beta_{m}$ are estimated by maximising the partial likelihood $L(\boldsymbol{\beta})$ (shown here assuming there are no tied failure times):
         
-$$L(\boldsymbol{\beta}) = \prod_{i \in D}\frac{\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_{d_i})}{\sum_{j \in R_i}\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_j)}$$
+$$L(\boldsymbol{\beta}) = \prod_{i \in \mathcal{E}}\frac{\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_{d_i})}{\sum_{j \in R_i}\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_j)}$$
 
-where $D = \{T_1, T_2, \ldots, T_n\}$ are the set of distinct failure times, $R_i$ is the set of all individuals who are at risk of failure immediately before time $T_i$, $\boldsymbol{z}_{d_i}$ is the covariate vector for an individual who failed at time $T_i$, and $\boldsymbol{z}_j$ is the covariate vector for the $j$th individual at risk at time $T_i$.
+where $\mathcal{E} = \{T_1, T_2, \ldots, T_n\}$ are the set of distinct failure times, $R_i$ is the set of all individuals who are at risk of failure immediately before time $T_i$, $\boldsymbol{z}_{d_i}$ is the covariate vector for an individual who failed at time $T_i$, and $\boldsymbol{z}_j$ is the covariate vector for the $j$th individual at risk at time $T_i$. The model can be extended to time-varying covariates $\boldsymbol{z}(t)$, in which case the hazard ratio is no longer constant over time.
 
 In practice, the proportional hazards assumption should be assessed before interpreting hazard ratios, for example using Schoenfeld residuals or by allowing covariate effects to vary over time.
 
@@ -135,6 +152,7 @@ To illustrate fitting a Cox proportional hazards model, we can use the `survival
 ```{r}
 #| label: lst-cox-model
 #| lst-cap: "Fitting and checking a Cox proportional hazards model in R."
+#| fig-alt: "Forest plot of hazard ratios on a log scale. The hazard ratio for age per year is slightly above 1 with a confidence interval that includes 1. The hazard ratio for female versus male sex is about 0.6, with a confidence interval entirely below 1."
 #| echo: true
 
 library(survival)
@@ -155,15 +173,17 @@ coef_df <- data.frame(
 )
 
 ggplot(coef_df, aes(x = hr, y = term)) +
-  geom_vline(xintercept = 1, linetype = "dashed", color = "gray50") +
-  geom_errorbarh(aes(xmin = lo, xmax = hi), height = 0.1, color = "#2C3E50") +
-  geom_point(size = 3, color = "#E74C3C") +
+  geom_vline(xintercept = 1, linetype = "dashed", colour = "gray50") +
+  geom_errorbar(
+    aes(xmin = lo, xmax = hi),
+    orientation = "y", width = 0.1, colour = blog_cols[["dark"]]
+  ) +
+  geom_point(size = 3, colour = blog_cols[["red"]]) +
   scale_x_log10(name = "Hazard ratio (log scale)") +
-  scale_y_discrete(name = NULL) +
-  theme_minimal()
+  scale_y_discrete(name = NULL)
 ```
 
-Older age increases the hazard of death (`exp(coef) > 1`), although the effect is not statistically significant (p = 0.06). Female sex is protective (`exp(coef) < 1`), and this effect is statistically significant (p < 0.05). The Schoenfeld test p-values give a quick check of the proportional hazards assumption (satisfied when p > 0.05).
+Older age increases the hazard of death (`exp(coef) > 1`), although there is only weak evidence of an effect (p = `r round(summary(cox_fit)$coefficients["age", "Pr(>|z|)"], 2)`). Female sex is protective (`exp(coef) < 1`), and there is strong evidence of this effect (p = `r round(summary(cox_fit)$coefficients["sex", "Pr(>|z|)"], 3)`). The Schoenfeld test p-values give a quick check of the proportional hazards assumption: here, there is no strong evidence against it (all p > 0.05), but a non-significant test does not prove that the assumption holds, so the residuals should also be inspected graphically with `plot(cox.zph(cox_fit))`.
 
 ::: {.callout-note}
 ## Key takeaways
@@ -186,12 +206,14 @@ In the next post, I'll explain how to handle scenarios where multiple possible e
 ## References {#references}
 
 - Austin PC. [A Tutorial on Multilevel Survival Analysis: Methods, Models and Applications](http://dx.doi.org/10.1111/insr.12214). *Int Stat Rev*. 2017;85(2):185-203.
-- Collett D. [Modelling Survival Data in Medical Research](https://www.taylorfrancis.com/books/mono/10.1201/9781003282525/modelling-survival-data-medical-research-david-collett). *Chapman & Hall/CRC Texts in Statistical Science* 2023.
-- Klein JP, Moeschberger ML. [Survival Analysis: Techniques for Censored and Truncated Data](https://play.google.com/store/books/details?id=KSq0e-6VFJ0C).
+- Collett D. [Modelling Survival Data in Medical Research](https://www.taylorfrancis.com/books/mono/10.1201/9781003282525/modelling-survival-data-medical-research-david-collett). *Chapman & Hall/CRC Texts in Statistical Science*. 2023.
+- Klein JP, Moeschberger ML. [Survival Analysis: Techniques for Censored and Truncated Data](https://play.google.com/store/books/details?id=KSq0e-6VFJ0C). *Springer Science & Business Media*; 2005.
 - Wasserman LA. [All of statistics](https://books.google.com/books?hl=en&lr=&id=th3fbFI1DaMC&oi=fnd&pg=PA1&dq=All+Statistics+Concise+Course+Statistical+Inference+Wasserman&ots=eRiUBZMis9&sig=o9uqf2nz1ytzCEOVbRS2oXprG8w). *Springer*. 2004.
 
 ::: {.post-navigation}
 [← Previous post](/blog/survival-analysis/index.qmd)
+
+[Back to all posts](/index.qmd#blog)
 
 [Next post →](/blog/competing-risks-methods/index.qmd)
 :::

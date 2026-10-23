@@ -12,7 +12,12 @@ execute:
   warning: false
 ---
 
-This is part eight of a series on statistical methods for analysing time-to-event, or "survival" data.
+This is part eight of a series on statistical methods for infectious disease epidemiology, with a focus on time-to-event, or "survival", data.
+
+```{r}
+#| include: false
+source("../../common/theme.R")
+```
 
 In this final post of this series I'll describe a number of observational study designs and several potential sources of bias common to these studies.
 
@@ -20,17 +25,60 @@ In this final post of this series I'll describe a number of observational study 
 
 Observational studies are common in epidemiology and a valuable resource for understanding infectious disease burden. Several different types of observational study design exist, which may be more or less suitable depending on the research question, the need to control for specific biases, and the feasibility of data collection.
 
-![A hierarchy of different types of study designs and the perceived quality of the evidence. Figure from: Bodicoat D.](./study-designs.png){#fig-study-designs}
+```{r}
+#| label: fig-study-designs
+#| fig-cap: "A hierarchy of different types of study designs and the perceived quality of the evidence. Adapted from: Bodicoat D."
+#| fig-alt: "Pyramid of study designs, from case series and expert opinion at the base, then cross-sectional studies, case-control studies, cohort studies, trials, and systematic reviews and meta-analyses at the top, with an arrow indicating better quality evidence towards the top."
+#| fig-width: 5
+#| fig-height: 3.5
+tiers <- data.frame(
+  label = c("Case series/expert opinion", "Cross-sectional studies",
+            "Case-control studies", "Cohort studies", "Trials",
+            "Systematic review\n& meta-analysis"),
+  fill  = c("#2C3E50", "#4A6075", "#7B8FA3", "#AEBBC8", "#D5DCE3", "#EEF1F4"),
+  text  = c("white", "white", "white", "black", "black", "black"),
+  y     = 0:5 + 0.5
+)
 
-Table 1 shows a $2 \times 2$ table which may be used to group participants in observational studies and to inform the calculation of standard statistical measures.
+# Half-width of the (truncated) pyramid at height y
+half_width <- function(y) 3 - 1.8 * y / 6
 
-|              |         | **Outcome** |            |
+polys <- do.call(rbind, lapply(0:5, function(i) {
+  data.frame(
+    tier = i,
+    x = c(-half_width(i), half_width(i), half_width(i + 1), -half_width(i + 1)),
+    y = c(i, i, i + 1, i + 1),
+    fill = tiers$fill[i + 1]
+  )
+}))
+
+ggplot() +
+  geom_polygon(
+    data = polys, aes(x = x, y = y, group = tier, fill = fill),
+    colour = "white", linewidth = 0.8
+  ) +
+  scale_fill_identity() +
+  geom_text(
+    data = tiers, aes(x = 0, y = y, label = label, colour = text),
+    size = 3.6, fontface = "bold", lineheight = 0.9
+  ) +
+  scale_colour_identity() +
+  annotate("segment", x = 3.5, xend = 3.5, y = 0.2, yend = 5.8,
+           arrow = arrow_closed(0.1), linewidth = 0.5) +
+  annotate("text", x = 3.8, y = 3, label = "Better quality evidence",
+           angle = 90, size = 3.5) +
+  coord_cartesian(xlim = c(-3.1, 4)) +
+  theme_diagram()
+```
+
+@tbl-two-by-two shows a $2 \times 2$ table which may be used to group participants in observational studies and to inform the calculation of standard statistical measures.
+
+| | | **Outcome: Yes** | **Outcome: No** |
 |--------------|---------|:-----------:|:----------:|
-|              |         | **Yes**     | **No**     |
 | **Exposure** | **Yes** | $A$         | $B$        |
-|              | **No**  | $C$         | $D$        |
+| | **No**  | $C$         | $D$        |
 
-Table 1: A $2 \times 2$ table of outcomes and exposures.
+: A $2 \times 2$ table of outcomes and exposures. {#tbl-two-by-two}
 
 ### Cross-sectional studies {#cross-sectional-studies}
 
@@ -47,11 +95,11 @@ Case-control studies are used to investigate the effects of specific exposures o
 
 ### Test-negative case-control studies {#test-negative-case-control-studies}
 
-Test-negative case-control studies are a sub-type of case-control study. These studies aim to minimise bias specifically as a result of test-seeking behaviour by selecting only individuals who test for a disease. As for case-control studies, the cases are individuals who test positive, controls are those who test negative, and again the odds of being exposed are compared between cases and controls.
+Test-negative case-control studies are a sub-type of case-control study, commonly used to estimate vaccine effectiveness. These studies aim to minimise bias specifically as a result of test-seeking behaviour by selecting only individuals who test for a disease. As for case-control studies, the cases are individuals who test positive, controls are those who test negative, and again the odds of being exposed are compared between cases and controls. Since individuals are only included if they were tested, the design implicitly conditions on testing, so it remains important to consider whether the factors that lead to testing could differ between exposure groups (see collider bias below).
 
 ### Cohort studies {#cohort-studies}
 
-In cohort studies participants are selected based on their exposure status and followed up over time. The incidence of the outcome of interest is compared between individuals with and without the exposure using the *relative risk*:
+In cohort studies participants are selected based on their exposure status and followed up over time, either prospectively or retrospectively using existing records. The incidence of the outcome of interest is compared between individuals with and without the exposure using the *relative risk*:
 
 $$
 \frac{A/(A+B)}{C/(C+D)}
@@ -95,6 +143,8 @@ round(
 
 The same four cell counts therefore answer different questions: prevalence in cross-sectional studies, odds ratios in case-control studies, and risks or risk ratios in cohort studies.
 
+N.B. Not every measure is valid for every design. For example, in a case-control study the numbers of cases and controls are fixed by the study design, so the prevalence of the outcome and the relative risk cannot be estimated directly from the table, whereas the odds ratio can.
+
 ## Biases in observational studies {#biases-in-observational-studies}
 
 Bias can be defined as: *any process at any stage of inference which tends to produce results or conclusions that differ systematically from the truth*. All of the observational study designs described above can include potential sources of bias, which are often grouped into three broad types: information bias, collider bias, and confounding.
@@ -105,49 +155,25 @@ Information, or measurement, bias arises due to inaccuracies in data and may be 
 
 ### Collider bias {#collider-bias}
 
-Collider bias, or selection bias, occurs when individuals are selected into an analysis by conditioning on a common "collider" variable (a variable which is influenced by two other variables).
+Collider bias, a common form of selection bias, occurs when individuals are selected into an analysis by conditioning on a common "collider" variable (a variable which is influenced by two other variables).
 
 @fig-collider-bias shows an example of collider bias: people who are regular smokers and people at high risk of severe COVID-19 illness are both more likely to be admitted to hospital. By conditioning on hospitalisation a distorted association between smoking and COVID-19 mortality could be induced, and this bias may occur in either a positive or negative direction. For example: a negative association between smoking and COVID-19 severity was reported by more than one early risk-factor study for COVID-19, with a review concluding this result may have been a result of collider bias.
 
 :::{#fig-collider-bias}
 
 ```{r, fig.height = 2, fig.width = 4}
-library(ggdag)
-library(ggplot2)
-
-# Define the DAG structure
-dag <- dagify(
-  Hospitalisation ~ Smoker,
-  Hospitalisation ~ Severity,
-  exposure = "Smoker",
-  outcome = "Hospitalisation",
-  labels = c(
-    "Hospitalisation" = "Hospitalisation",
-    "Severity" = "COVID-19\nseverity",
-    "Smoker" = "Regular\nsmoker"
-  ),
-  coords = list(
-    x = c(Hospitalisation = 0.5, Smoker = 0, Severity = 1),
-    y = c(Hospitalisation = 1, Smoker = 0, Severity = 0)
-  )
+#| fig-alt: "Causal diagram with arrows from Regular smoker and from COVID-19 severity to Hospitalisation, which is enclosed in a box. A dashed line without arrowheads joins Regular smoker and COVID-19 severity."
+nodes <- data.frame(
+  name = c("H", "S", "V"),
+  label = c("Hospitalisation", "Regular\nsmoker", "COVID-19\nseverity"),
+  x = c(0.5, 0, 1), y = c(1, 0, 0)
+)
+edges <- data.frame(
+  from = c("S", "V", "S"), to = c("H", "H", "V"),
+  pad = c(0.22, 0.22, 0.3), arrow = c(TRUE, TRUE, FALSE)
 )
 
-# Plot the DAG
-ggdag(dag) +
-  theme_dag_blank() +
-  geom_dag_point(color = "white") +
-  geom_dag_label(aes(label = label), linewidth = 0, size = 5) +
-  geom_dag_edges(
-    edge_color = "grey40",
-    arrow_directed = grid::arrow(
-      length = grid::unit(5, "pt"),
-      type = "closed"
-    )
-  ) +
-  expand_plot(
-    expand_y = expansion(c(0.2, 0.2)),
-    expand_x = expansion(c(0.2, 0.2))
-  )
+dag_plot(nodes, edges, boxed = "H", circles = FALSE)
 ```
 
 Causal diagram showing the effect of collider bias, where conditioning on hospitalisation induces a distorted association between smoking and COVID-19 severity. Conditioned on variables have bounding boxes, distorted associations are shown as dashed lines.
@@ -165,45 +191,21 @@ An example of confounding is shown in the causal diagram in @fig-confounding: du
 :::{#fig-confounding}
 
 ```{r, fig.height = 2, fig.width = 4}
-library(ggdag)
-library(ggplot2)
-
-# Define the DAG structure
-dag <- dagify(
-  Severity ~ Age,
-  Vaccination ~ Age,
-  exposure = "Vaccination",
-  outcome = "Severity",
-  labels = c(
-    "Age" = "Age group",
-    "Severity" = "COVID-19\nseverity",
-    "Vaccination" = "Vaccination"
-  ),
-  coords = list(
-    x = c(Age = 0.5, Severity = 0, Vaccination = 1),
-    y = c(Age = 1, Severity = 0, Vaccination = 0)
-  )
+#| fig-alt: "Causal diagram with arrows from Age group to COVID-19 severity and to Vaccination. A dashed line without arrowheads joins COVID-19 severity and Vaccination."
+nodes <- data.frame(
+  name = c("A", "S", "V"),
+  label = c("Age group", "COVID-19\nseverity", "Vaccination"),
+  x = c(0.5, 0, 1), y = c(1, 0, 0)
+)
+edges <- data.frame(
+  from = c("A", "A", "S"), to = c("S", "V", "V"),
+  pad = c(0.22, 0.22, 0.3), arrow = c(TRUE, TRUE, FALSE)
 )
 
-# Plot the DAG
-ggdag(dag) +
-  theme_dag_blank() +
-  geom_dag_point(color = "white") +
-  geom_dag_label(aes(label = label), linewidth = 0, size = 5) +
-  geom_dag_edges(
-    edge_color = "grey40",
-    arrow_directed = grid::arrow(
-      length = grid::unit(5, "pt"),
-      type = "closed"
-    )
-  ) +
-  expand_plot(
-    expand_y = expansion(c(0.2, 0.2)),
-    expand_x = expansion(c(0.2, 0.2))
-  )
+dag_plot(nodes, edges, circles = FALSE)
 ```
 
-Causal diagram showing the effect of confounding, where not conditioning on age group induces a distorted association between vaccination and COVID-19 severity. Conditioned on variables have bounding boxes, distorted associations are shown as dashed lines.
+Causal diagram showing the effect of confounding, where not conditioning on age group induces a distorted association between vaccination and COVID-19 severity. Distorted associations are shown as dashed lines.
 
 :::
 
@@ -220,6 +222,7 @@ The simple sensitivity analysis below shows the basic mechanism in a growing epi
 ```{r}
 #| label: lst-epidemic-phase-bias
 #| lst-cap: "Sensitivity analysis for epidemic phase bias in R."
+#| fig-alt: "Line plot of estimated risk of severe outcome against the shift in days, falling from about 0.18 with no shift to about 0.15 with a shift of 3 days, approaching a dashed horizontal line at the true risk of about 0.15."
 #| echo: true
 
 set.seed(2026)
@@ -244,12 +247,12 @@ epb_df <- data.frame(
 epb_df
 
 ggplot(epb_df, aes(x = shift_days, y = estimated_risk)) +
-  geom_line(color = "#E74C3C", linewidth = 1.1) +
-  geom_point(color = "#E74C3C", size = 3) +
+  geom_line(colour = blog_cols[["red"]], linewidth = 1.1) +
+  geom_point(colour = blog_cols[["red"]], size = 3) +
   geom_hline(
     yintercept = epb_df$true_risk[1],
     linetype = "dashed",
-    color = "gray40"
+    colour = "gray40"
   ) +
   annotate(
     "text",
@@ -257,11 +260,10 @@ ggplot(epb_df, aes(x = shift_days, y = estimated_risk)) +
     label = "True risk", vjust = -0.5, hjust = 0, size = 3.5
   ) +
   scale_x_continuous(name = "Shift (days)", breaks = 0:3) +
-  scale_y_continuous(name = "Estimated severe risk") +
-  theme_minimal()
+  scale_y_continuous(name = "Estimated severe risk")
 ```
 
-When no shift is applied, the estimated risk of severe outcomes is biased downwards due to the faster symptom onset among severe cases. As the shift increases, the estimated risk approaches the true risk.
+When no shift is applied, the estimated risk of severe outcomes is biased upwards, because the faster symptom onset among severe cases means they are more likely to have an onset date within the observation window than mild cases. As the shift increases, the estimated risk approaches the true risk, which is recovered when the shift equals the true difference in time to symptom onset (3 days).
 
 ::: {.callout-note}
 ## Key takeaways
@@ -286,4 +288,6 @@ When no shift is applied, the estimated risk of severe outcomes is biased downwa
 
 ::: {.post-navigation}
 [← Previous post](/blog/causal-inference/index.qmd)
+
+[Back to all posts](/index.qmd#blog)
 :::

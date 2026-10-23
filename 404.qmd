@@ -8,10 +8,10 @@ title: "404 - Page not found"
 
 # 404
 
-![](./common/404.png)
+![](./common/404.png){fig-alt="Cartoon ghost"}
 
 Page not found
 
-[Go to the home page →](https://www.pkirwan.com)
+[Go to the home page →](/)
 
 :::
