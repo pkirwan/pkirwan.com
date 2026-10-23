@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Peter Kirwan">
-<meta name="dcterms.date" content="2025-03-27">
+<meta name="dcterms.date" content="2025-06-17">
 <meta name="description" content="An introduction to survival analysis, time-to-event data, and how we handle censored observations in epidemiological research.">
 
 <title>Part II: Survival analysis – Peter Kirwan</title>
@@ -76,14 +76,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b626d73c4c936ccc3cb08be7d45d1df6.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-d55b682e4f7fdcb983c3d765bb3b3e0d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-446cc6686a29dde237fce9e7d5205639.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-d55b682e4f7fdcb983c3d765bb3b3e0d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-d97631db3dfa23958e50037e5c390409.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -335,7 +335,11 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../index.html#blog"> 
-<span class="menu-text">Survival data posts</span></a>
+<span class="menu-text">Blog series</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html#software"> 
+<span class="menu-text">Software</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../index.html#recent-publications"> 
@@ -387,7 +391,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 27, 2025</p>
+        <p class="date">June 17, 2025</p>
       </div>
     </div>
     
@@ -429,7 +433,7 @@ window.Quarto = {
 
 
 
-<p>This is part two of a series on statistical methods for analysing time-to-event, or “survival” data.</p>
+<p>This is part two of a series on statistical methods for infectious disease epidemiology, with a focus on time-to-event, or “survival”, data.</p>
 <section id="what-is-survival-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-survival-analysis">What is survival analysis?</h2>
 <p>Survival analysis involves studying “time-to-event” data, also termed “survival data” - a powerful statistical framework that helps us answer questions about <em>when</em> events occur. It applies to any scenario where we’re interested in the time from a given origin to the occurrence of an event (the endpoint).</p>
@@ -466,21 +470,21 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" alt="Four horizontal lines, one per patient. The first has an observed origin and outcome. The second is right-censored and ends at the right-censoring time without an outcome. The third is left-censored, with no observed origin before the left-censoring time. The fourth is administratively censored and ends at a 30 day cut-off." width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-censoring-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Examples of right, left, and administrative censoring for patients in time-to-event data. <span class="math inline">\(C_l\)</span>: left-censoring time, <span class="math inline">\(C_r\)</span>: right-censoring time, <span class="math inline">\(\bullet\)</span>: reported origin, outcome, or intermediate event.
+Figure&nbsp;1: Examples of right, left, and administrative censoring for patients in time-to-event data. <span class="math inline">\(C_l\)</span>: left-censoring time, <span class="math inline">\(C_r\)</span>: right-censoring time, <span class="math inline">\(\bullet\)</span>: reported origin, outcome, or intermediate event. Lines without a final <span class="math inline">\(\bullet\)</span> end at the time of censoring.
 </figcaption>
 </figure>
 </div>
 </section>
 <section id="interval-censoring" class="level4">
 <h4 class="anchored" data-anchor-id="interval-censoring">Interval censoring</h4>
-<p>Often, we only know that an event happened between two observation points, i.e.&nbsp;within a censoring interval <span class="math inline">\((L, R],\ L &lt; X \leq R\)</span>. An example is the infection time for an individual which is typically not directly observed, but we can assume it occurs in-between a negative and positive test. Interval censoring is a feature of “intermittently-observed” data, where individuals are tested for the presence of infection at several time-points. Such interval-censored data can still be used to detect changes in an individual’s infection status when testing is sufficiently frequent, as shown in <a href="#fig-interval-censoring" class="quarto-xref">Figure&nbsp;2</a>.</p>
+<p>Often, we only know that an event happened between two observation points, i.e.&nbsp;within a censoring interval <span class="math inline">\((L, R],\ L &lt; X \leq R\)</span>. An example is the infection time for an individual which is typically not directly observed, but we can assume it occurs in-between a negative and positive test. Interval censoring is a feature of “intermittently-observed” data, where individuals are tested for the presence of infection at several time-points. Such interval-censored data can still be used to detect changes in an individual’s infection status when testing is sufficiently frequent, as shown in <a href="#fig-interval-censoring" class="quarto-xref">Figure&nbsp;2</a>. Here the transitions between states take place between observation times, so we only know that each change occurred within the interval between two visits.</p>
 <div id="fig-interval-censoring" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-interval-censoring-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -488,7 +492,7 @@ Figure&nbsp;1: Examples of right, left, and administrative censoring for patient
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" alt="Step plot of an underlying process which moves from state 1 to state 2 at week 3 and back to state 1 at week 7. Dashed vertical lines mark observation times every two weeks from week 2 to week 12, so each change falls between two observations." width="672"></p>
 </figure>
 </div>
 </div>
@@ -503,7 +507,7 @@ Figure&nbsp;2: Example of interval censoring with intermittently-observed data f
 </section>
 <section id="truncation" class="level3">
 <h3 class="anchored" data-anchor-id="truncation">Truncation</h3>
-<p>While censoring gives us partial information, truncation occurs when information about an individual is completely unobserved, and unavailable at the time of data collection or analysis. This is different from censoring because censored individuals are at least partially observed, while truncated individuals never enter our dataset. As with censoring, both left, right, and interval-truncation are possible.</p>
+<p>While censoring gives us partial information, truncation occurs when information about an individual is completely unobserved, and unavailable at the time of data collection or analysis. This is different from censoring because censored individuals are at least partially observed, while truncated individuals never enter our dataset. As with censoring, left-, right-, and interval-truncation are possible.</p>
 <ul>
 <li><strong>Left truncation</strong>: occurs when only event-times which take place after the left-truncation time, <span class="math inline">\(Y_l\)</span>, are available. For example, if individuals whose infection occurs prior to the study, <span class="math inline">\(X &lt; Y_l\)</span>, are not included in our dataset.</li>
 <li><strong>Right-truncation</strong>: occurs when only event-times which take place before the right-truncation time, <span class="math inline">\(Y_r\)</span>, are available. For example, when we have no knowledge of individuals who are at risk but whose event of interest takes place after the study endpoint, <span class="math inline">\(X &gt; Y_r\)</span>.</li>
@@ -516,14 +520,14 @@ Figure&nbsp;2: Example of interval censoring with intermittently-observed data f
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" alt="Three horizontal lines between two dashed vertical lines marking the left and right truncation times. The first line, with an event between the two times, is observed. The second, with an event after the right truncation time, and the third, with an event before the left truncation time, are drawn in grey and are not in the dataset." width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-truncation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Examples of left and right-truncation for patients in time-to-event data, assuming only information within the truncation interval (<span class="math inline">\(Y_l\)</span> ,<span class="math inline">\(Y_r\)</span>) is observed. <span class="math inline">\(Y_l\)</span>: left-truncation time, <span class="math inline">\(Y_r\)</span>: right-truncation time, <span class="math inline">\(\bullet\)</span>: outcome time.
+Figure&nbsp;3: Examples of left and right-truncation for patients in time-to-event data, assuming only information within the truncation interval (<span class="math inline">\(Y_l\)</span>, <span class="math inline">\(Y_r\)</span>) is observed. Truncated individuals (grey, dashed) never enter the dataset. The first patient has an event time inside the interval and is therefore observed, as under interval-truncation. <span class="math inline">\(Y_l\)</span>: left-truncation time, <span class="math inline">\(Y_r\)</span>: right-truncation time, <span class="math inline">\(\bullet\)</span>: outcome time.
 </figcaption>
 </figure>
 </div>
@@ -532,12 +536,14 @@ Figure&nbsp;3: Examples of left and right-truncation for patients in time-to-eve
 <section id="key-concepts" class="level2">
 <h2 class="anchored" data-anchor-id="key-concepts">When standard statistics aren’t enough</h2>
 <p>Why can’t we just use regular statistical methods like t-tests or linear regression for time-to-event data? The key challenge is that censoring and truncation create a form of missing data that’s not random. If we removed all censored observations or treated censoring times as event times, we’d introduce severe bias.</p>
+<p>Survival methods typically also assume that censoring is <em>independent</em> (or “non-informative”): an individual who is censored at time <span class="math inline">\(t\)</span> should be representative of the individuals who remain under observation at <span class="math inline">\(t\)</span>. For example, if participants withdraw from a study because their health is deteriorating then censoring is informative, and the methods described in this series may give biased results unless this is accounted for.</p>
 <p>Survival analysis methods are specifically designed for valid statistical estimation of incomplete data while avoiding these biases. We’ll start off by defining several fundamental functions for survival analysis:</p>
 <section id="cumulative-incidence" class="level3">
 <h3 class="anchored" data-anchor-id="cumulative-incidence">The cumulative incidence function</h3>
-<p>Let <span class="math inline">\(T\)</span> be the independent and identically distributed (i.i.d) random variable representing the survival time, <span class="math inline">\(T = t &gt; 0\)</span>, for an individual, and assume this random variable has a probability distribution with probability density function <span class="math inline">\(f(t)\)</span>.</p>
+<p>Let <span class="math inline">\(T\)</span> be the random variable representing the survival time, <span class="math inline">\(T = t &gt; 0\)</span>, for an individual, with survival times assumed to be independent and identically distributed (i.i.d) across individuals, and assume this random variable has a probability distribution with probability density function <span class="math inline">\(f(t)\)</span>.</p>
 <p>The distribution function of <span class="math inline">\(T\)</span>, also known as the cumulative incidence function, is the probability of “failure” before time <span class="math inline">\(t\)</span>, defined as:</p>
 <p><span class="math display">\[F(t) = \Pr(T &lt; t)=\int_0^t f(u) du\]</span></p>
+<p>When there are several possible events, as in <a href="../../blog/competing-risks-methods/index.html">part IV of this series</a>, this is extended to <em>cause-specific</em> cumulative incidence functions.</p>
 </section>
 <section id="survivor-function" class="level3">
 <h3 class="anchored" data-anchor-id="survivor-function">The survivor function</h3>
@@ -548,7 +554,7 @@ Figure&nbsp;3: Examples of left and right-truncation for patients in time-to-eve
 </section>
 <section id="hazard-function" class="level3">
 <h3 class="anchored" data-anchor-id="hazard-function">The hazard function</h3>
-<p>The hazard function <span class="math inline">\(h(t)\)</span> represents the instantaneous rate of experiencing the event at time <span class="math inline">\(t\)</span>, given survival up to that point. Think of it as the “risk” at each moment, conditional on having survived so far:</p>
+<p>The hazard function <span class="math inline">\(h(t)\)</span> represents the instantaneous rate of experiencing the event at time <span class="math inline">\(t\)</span>, given survival up to that point. Think of it as the “risk” at each moment, conditional on having survived so far (although, as a rate, it is not a probability and can exceed 1):</p>
 <p><span class="math display">\[h(t) = \lim_{\delta t \downarrow 0} \frac{\Pr(t \leq T &lt; t+\delta t | T \geq t)}{\delta t}\]</span></p>
 <p>By conditional probability, <span class="math inline">\(\Pr(A \mid B) = \Pr(AB)/\Pr(B)\)</span>, so the hazard function can also be expressed as:</p>
 <p><span class="math display">\[\begin{aligned}
@@ -564,7 +570,7 @@ h(t) &amp;= \lim_{\delta t \downarrow 0} \left\{\frac{\Pr(t \leq T &lt; t + \del
 </section>
 <section id="r-implementation" class="level2">
 <h2 class="anchored" data-anchor-id="r-implementation">R implementation</h2>
-<p>With all three functions defined, we can visualize how <span class="math inline">\(F(t)\)</span>, <span class="math inline">\(S(t)\)</span>, and <span class="math inline">\(h(t)\)</span> relate for a simple exponential model with a constant rate <span class="math inline">\(\lambda = 0.15\)</span>:</p>
+<p>With all three functions defined, we can visualise how <span class="math inline">\(F(t)\)</span>, <span class="math inline">\(S(t)\)</span>, and <span class="math inline">\(h(t)\)</span> relate for a simple exponential model with a constant rate <span class="math inline">\(\lambda = 0.15\)</span> events per unit time:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-lst-cap="Relating the cumulative incidence, survivor, and hazard functions in R."><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>rate      <span class="ot">&lt;-</span> <span class="fl">0.15</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>time_grid <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">12</span>)</span>
@@ -587,30 +593,41 @@ h(t) &amp;= \lim_{\delta t \downarrow 0} \left\{\frac{\Pr(t \leq T &lt; t + \del
 6   10 0.78 0.22 0.15
 7   12 0.83 0.17 0.15</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-lst-cap="Relating the cumulative incidence, survivor, and hazard functions in R."><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data) <span class="sc">+</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> time) <span class="sc">+</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> F_t, <span class="at">color =</span> <span class="st">"Cumulative Incidence"</span>), <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> S_t, <span class="at">color =</span> <span class="st">"Survivor"</span>), <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> h_t, <span class="at">color =</span> <span class="st">"Hazard"</span>), <span class="at">linewidth =</span> <span class="fl">1.2</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Function"</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Cumulative Incidence"</span> <span class="ot">=</span> <span class="st">"#E74C3C"</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Survivor"</span> <span class="ot">=</span> <span class="st">"#3498DB"</span>,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Hazard"</span> <span class="ot">=</span> <span class="st">"#2ECC71"</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Time"</span>, <span class="at">y =</span> <span class="st">"Probability / Rate"</span>) <span class="sc">+</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The functions are plotted over a finer grid of times in <a href="#fig-survival-functions" class="quarto-xref">Figure&nbsp;4</a>. The cumulative incidence and survivor functions are probabilities, so are shown on a separate panel to the hazard, which is a rate.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dense <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">12</span>, <span class="at">by =</span> <span class="fl">0.1</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dense<span class="sc">$</span>F_t <span class="ot">&lt;-</span> <span class="fu">pexp</span>(dense<span class="sc">$</span>time, <span class="at">rate =</span> rate)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>dense<span class="sc">$</span>S_t <span class="ot">&lt;-</span> <span class="fu">pexp</span>(dense<span class="sc">$</span>time, <span class="at">rate =</span> rate, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>dense<span class="sc">$</span>h_t <span class="ot">&lt;-</span> rate</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>p_prob <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dense, <span class="fu">aes</span>(<span class="at">x =</span> time)) <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> F_t, <span class="at">colour =</span> <span class="st">"Cumulative incidence"</span>), <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> S_t, <span class="at">colour =</span> <span class="st">"Survivor"</span>), <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Cumulative incidence"</span> <span class="ot">=</span> blog_cols[[<span class="st">"red"</span>]],</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Survivor"</span> <span class="ot">=</span> blog_cols[[<span class="st">"blue"</span>]]</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Time"</span>, <span class="at">y =</span> <span class="st">"Probability"</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>p_haz <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dense, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> h_t)) <span class="sc">+</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Hazard"</span>), <span class="at">linewidth =</span> <span class="fl">1.2</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Hazard"</span> <span class="ot">=</span> blog_cols[[<span class="st">"green"</span>]])) <span class="sc">+</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>)) <span class="sc">+</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Time"</span>, <span class="at">y =</span> <span class="st">"Hazard (events per unit time)"</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>p_prob <span class="sc">+</span> p_haz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/lst-survival-functions-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-survival-functions" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two panels. On the left, the cumulative incidence function rises from 0 towards 1 and the survivor function falls from 1 towards 0, crossing at around 4.6 units of time. On the right, the hazard is a flat dashed line at 0.15.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-survival-functions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-survival-functions-1.png" class="img-fluid figure-img" alt="Two panels. On the left, the cumulative incidence function rises from 0 towards 1 and the survivor function falls from 1 towards 0, crossing at around 4.6 units of time. On the right, the hazard is a flat dashed line at 0.15." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-survival-functions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Cumulative incidence and survivor functions (left), and the constant hazard (right), for an exponential model with a rate of 0.15 events per unit time.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -629,9 +646,9 @@ h(t) &amp;= \lim_{\delta t \downarrow 0} \left\{\frac{\Pr(t \leq T &lt; t + \del
 <ul>
 <li>Survival analysis deals with “time-to-event” data, helping us understand <em>when</em> events happen, not just <em>if</em> they happen.</li>
 <li>This approach handles incomplete information through concepts like censoring (when we have partial information) and truncation (when some subjects are never observed).</li>
-<li>Standard statistical methods can’t properly handle censored data, which is why specialised survival analysis techniques are essential.</li>
+<li>Standard statistical methods can’t properly handle censored data, which is why specialised survival analysis techniques are essential. These methods typically assume that censoring is independent of the event process.</li>
 <li>The survivor function <span class="math inline">\(S(t)\)</span> gives the probability of not experiencing the event beyond time <span class="math inline">\(t\)</span>.</li>
-<li>The hazard function <span class="math inline">\(h(t)\)</span> represents the instantaneous risk of the event at time <span class="math inline">\(t\)</span>, given survival up to that point.</li>
+<li>The hazard function <span class="math inline">\(h(t)\)</span> represents the instantaneous rate of the event at time <span class="math inline">\(t\)</span>, given survival up to that point.</li>
 </ul>
 </div>
 </div>
@@ -647,11 +664,12 @@ h(t) &amp;= \lim_{\delta t \downarrow 0} \left\{\frac{\Pr(t \leq T &lt; t + \del
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
 <ul>
-<li>Collett D. <a href="https://www.taylorfrancis.com/books/mono/10.1201/9781003282525/modelling-survival-data-medical-research-david-collett">Modelling Survival Data in Medical Research</a>. <em>Chapman &amp; Hall/CRC Texts in Statistical Science</em> 2023.</li>
-<li>Klein JP, Moeschberger ML. <a href="https://play.google.com/store/books/details?id=KSq0e-6VFJ0C">Survival Analysis: Techniques for Censored and Truncated Data</a>.</li>
+<li>Collett D. <a href="https://www.taylorfrancis.com/books/mono/10.1201/9781003282525/modelling-survival-data-medical-research-david-collett">Modelling Survival Data in Medical Research</a>. <em>Chapman &amp; Hall/CRC Texts in Statistical Science</em>. 2023.</li>
+<li>Klein JP, Moeschberger ML. <a href="https://play.google.com/store/books/details?id=KSq0e-6VFJ0C">Survival Analysis: Techniques for Censored and Truncated Data</a>. <em>Springer Science &amp; Business Media</em>; 2005.</li>
 </ul>
 <div class="post-navigation">
 <p><a href="../../blog/key-concepts-infectious-disease/index.html">← Previous post</a></p>
+<p><a href="../../index.html#blog">Back to all posts</a></p>
 <p><a href="../../blog/classical-survival-methods/index.html">Next post →</a></p>
 </div>
 

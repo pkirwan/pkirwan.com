@@ -2,10 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Postdoctoral research fellow at the Barcelona Institute for Global Health (ISGlobal). Statistical modelling of infectious disease burden, and a blog series on statistical methods for infectious disease data.">
 
 <title>Peter Kirwan</title>
 <style>
@@ -40,14 +41,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b626d73c4c936ccc3cb08be7d45d1df6.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-d55b682e4f7fdcb983c3d765bb3b3e0d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-446cc6686a29dde237fce9e7d5205639.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-d55b682e4f7fdcb983c3d765bb3b3e0d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-d97631db3dfa23958e50037e5c390409.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -125,10 +126,11 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="common/style.css">
-<meta property="og:title" content="– Peter Kirwan">
-<meta property="og:description" content="Research Associate at MRC Biostatistics Unit, Cambridge">
+<link rel="alternate" type="application/rss+xml" title="Peter Kirwan" href="index.xml" data-external="1"><meta property="og:title" content="Peter Kirwan">
+<meta property="og:description" content="Postdoctoral research fellow at the Barcelona Institute for Global Health (ISGlobal). Statistical modelling of infectious disease burden, and a blog series on statistical methods for infectious disease data.">
 <meta property="og:image" content="https://www.pkirwan.com/common/profile-photo.jpg">
 <meta property="og:site_name" content="Peter Kirwan">
+<meta property="og:image:alt" content="Photo of Peter Kirwan">
 </head>
 
 <body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -328,7 +330,11 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./index.html#blog"> 
-<span class="menu-text">Survival data posts</span></a>
+<span class="menu-text">Blog series</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html#software"> 
+<span class="menu-text">Software</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./index.html#recent-publications"> 
@@ -370,16 +376,16 @@ window.Quarto = {
 <p><a href="https://github.com/pkirwan">GitHub</a> · <a href="https://orcid.org/0000-0001-6904-0500">ORCiD</a> · <a href="https://fediscience.org/@pkirwan">Mastodon</a></p>
 </div>
 <div class="profile-image">
-<p><img src="./common/profile-photo.jpg" class="img-fluid" width="200"></p>
+<p><img src="./common/profile-photo.jpg" class="img-fluid" alt="Photo of Peter Kirwan" width="200"></p>
 </div>
 </div>
 </section>
 <section id="blog" class="level2">
-<h2 class="anchored" data-anchor-id="blog">Statistical methods for survival data</h2>
-<p>This series of blog posts provides an introduction to statistical methods for survival data, with applications for infectious disease modelling and epidemiology. Topics include: classical survival methods, competing risks analysis, and causal inference from observational data.</p>
+<h2 class="anchored" data-anchor-id="blog">Statistical methods for infectious disease data</h2>
+<p>This series of blog posts provides an introduction to statistical methods for analysing infectious disease data, with a focus on time-to-event, or “survival”, data. Topics include: key concepts in infectious disease research, survival analysis and classical survival methods, competing risks and multi-state models, causal inference from observational data, and observational study designs and biases.</p>
 <div id="listing-blog-listing" class="quarto-listing quarto-listing-container-grid">
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="SW5jaWRlbmNlJTJDUHJldmFsZW5jZSUyQ1NldmVyaXR5" data-listing-date-sort="1747699200000" data-listing-file-modified-sort="1787317348220" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1227">
+<div class="g-col-1" data-index="0" data-categories="SW5jaWRlbmNlJTJDUHJldmFsZW5jZSUyQ1NldmVyaXR5" data-listing-date-sort="1747699200000" data-listing-file-modified-sort="1792742528102" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1386">
 <a href="./blog/key-concepts-infectious-disease/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -405,7 +411,7 @@ Part I: Key concepts in infectious disease research
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="Q2Vuc29yaW5nJTJDVHJ1bmNhdGlvbg==" data-listing-date-sort="1750118400000" data-listing-file-modified-sort="1787317348223" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="19" data-listing-word-count-sort="3649">
+<div class="g-col-1" data-index="1" data-categories="Q2Vuc29yaW5nJTJDVHJ1bmNhdGlvbg==" data-listing-date-sort="1750118400000" data-listing-file-modified-sort="1792742528105" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2643">
 <a href="./blog/survival-analysis/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -415,7 +421,7 @@ Part I: Key concepts in infectious disease research
 <h5 class="no-anchor card-title listing-title">
 Part II: Survival analysis
 </h5>
-<div class="listing-reading-time card-text text-muted">19 min</div>
+<div class="listing-reading-time card-text text-muted">14 min</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('Q2Vuc29yaW5n'); return false;">Censoring</div>
@@ -429,7 +435,7 @@ Part II: Survival analysis
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="2" data-categories="TGlrZWxpaG9vZCUyQ1N1cnZpdmFsJTIwbW9kZWxz" data-listing-date-sort="1753142400000" data-listing-file-modified-sort="1787317348219" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1645">
+<div class="g-col-1" data-index="2" data-categories="TGlrZWxpaG9vZCUyQ1N1cnZpdmFsJTIwbW9kZWxz" data-listing-date-sort="1753142400000" data-listing-file-modified-sort="1792742528102" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1964">
 <a href="./blog/classical-survival-methods/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -439,7 +445,7 @@ Part II: Survival analysis
 <h5 class="no-anchor card-title listing-title">
 Part III: Classical survival methods
 </h5>
-<div class="listing-reading-time card-text text-muted">9 min</div>
+<div class="listing-reading-time card-text text-muted">10 min</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('TGlrZWxpaG9vZA=='); return false;">Likelihood</div>
@@ -453,7 +459,7 @@ Part III: Classical survival methods
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="3" data-categories="Q29tcGV0aW5nJTIwcmlza3MlMkNTdHJhdGlmaWNhdGlvbg==" data-listing-date-sort="1755561600000" data-listing-file-modified-sort="1787317348219" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1599">
+<div class="g-col-1" data-index="3" data-categories="Q29tcGV0aW5nJTIwcmlza3MlMkNTdHJhdGlmaWNhdGlvbg==" data-listing-date-sort="1755561600000" data-listing-file-modified-sort="1792742528102" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1820">
 <a href="./blog/competing-risks-methods/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -463,7 +469,7 @@ Part III: Classical survival methods
 <h5 class="no-anchor card-title listing-title">
 Part IV: Competing risks survival methods
 </h5>
-<div class="listing-reading-time card-text text-muted">8 min</div>
+<div class="listing-reading-time card-text text-muted">10 min</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('Q29tcGV0aW5nJTIwcmlza3M='); return false;">Competing risks</div>
@@ -477,7 +483,7 @@ Part IV: Competing risks survival methods
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="4" data-categories="VHJhbnNpdGlvbiUyMGludGVuc2l0eSUyQ01hcmtvdiUyMHByb3BlcnR5" data-listing-date-sort="1758585600000" data-listing-file-modified-sort="1787317348221" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2638">
+<div class="g-col-1" data-index="4" data-categories="VHJhbnNpdGlvbiUyMGludGVuc2l0eSUyQ01hcmtvdiUyMHByb3BlcnR5" data-listing-date-sort="1758585600000" data-listing-file-modified-sort="1792742528102" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2710">
 <a href="./blog/multi-state-models/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -501,7 +507,7 @@ Part V: Multi-state models
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="5" data-categories="TXVsdGktc3RhdGUlMjBtb2RlbHMlMkNTdGF0aXN0aWNhbCUyMGluZmVyZW5jZQ==" data-listing-date-sort="1761004800000" data-listing-file-modified-sort="1787317348221" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1979">
+<div class="g-col-1" data-index="5" data-categories="TXVsdGktc3RhdGUlMjBtb2RlbHMlMkNTdGF0aXN0aWNhbCUyMGluZmVyZW5jZQ==" data-listing-date-sort="1761004800000" data-listing-file-modified-sort="1792742528104" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1503">
 <a href="./blog/statistical-inference-msms/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -511,7 +517,7 @@ Part V: Multi-state models
 <h5 class="no-anchor card-title listing-title">
 Part VI: Statistical inference for multi-state models
 </h5>
-<div class="listing-reading-time card-text text-muted">10 min</div>
+<div class="listing-reading-time card-text text-muted">8 min</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('TXVsdGktc3RhdGUlMjBtb2RlbHM='); return false;">Multi-state models</div>
@@ -520,12 +526,12 @@ Part VI: Statistical inference for multi-state models
 
 </div>
 <div class="card-text listing-description delink">
-<p>Details of two statistical inference methods for multi-state models and how these are well-suited to the investigation of intermittently-observed data.</p>
+<p>Details of two statistical inference methods for multi-state models, and the conditions under which these can be used to investigate intermittently-observed data.</p>
 </div>
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="6" data-categories="Q2F1c2FsJTIwaW5mZXJlbmNlJTJDREFHcw==" data-listing-date-sort="1763424000000" data-listing-file-modified-sort="1787317348219" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2522">
+<div class="g-col-1" data-index="6" data-categories="Q2F1c2FsJTIwaW5mZXJlbmNlJTJDREFHcw==" data-listing-date-sort="1763424000000" data-listing-file-modified-sort="1792742528102" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2691">
 <a href="./blog/causal-inference/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -535,7 +541,7 @@ Part VI: Statistical inference for multi-state models
 <h5 class="no-anchor card-title listing-title">
 Part VII: Key concepts in causal inference
 </h5>
-<div class="listing-reading-time card-text text-muted">13 min</div>
+<div class="listing-reading-time card-text text-muted">14 min</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('Q2F1c2FsJTIwaW5mZXJlbmNl'); return false;">Causal inference</div>
@@ -544,12 +550,12 @@ Part VII: Key concepts in causal inference
 
 </div>
 <div class="card-text listing-description delink">
-<p>Challenges and methods for inferring causal relationships from observational data, including propensity score matching.</p>
+<p>Challenges and methods for inferring causal relationships from observational data, including inverse probability weighting, matching, and standardisation.</p>
 </div>
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="7" data-categories="QmlhcyUyQ0NvbmZvdW5kaW5n" data-listing-date-sort="1766448000000" data-listing-file-modified-sort="1787317348222" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2208">
+<div class="g-col-1" data-index="7" data-categories="QmlhcyUyQ0NvbmZvdW5kaW5n" data-listing-date-sort="1766448000000" data-listing-file-modified-sort="1792742528104" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2481">
 <a href="./blog/study-designs/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -559,7 +565,7 @@ Part VII: Key concepts in causal inference
 <h5 class="no-anchor card-title listing-title">
 Part VIII: Study designs and biases
 </h5>
-<div class="listing-reading-time card-text text-muted">12 min</div>
+<div class="listing-reading-time card-text text-muted">13 min</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('Qmlhcw=='); return false;">Bias</div>
@@ -581,7 +587,7 @@ Part VIII: Study designs and biases
 <h2 class="anchored" data-anchor-id="software">Software</h2>
 <div class="about-container">
 <div class="profile-image">
-<p><a href="https://pkirwan.github.io/cd4backcalc/"><img src="./common/hex_sticker.png" class="img-fluid" width="150"></a></p>
+<p><a href="https://pkirwan.github.io/cd4backcalc/"><img src="./common/hex_sticker.png" class="img-fluid" alt="Hex sticker for the cd4backcalc R package" width="150"></a></p>
 </div>
 <section id="cd4backcalc" class="level3 about-text">
 <h3 class="anchored" data-anchor-id="cd4backcalc"><a href="https://pkirwan.github.io/cd4backcalc/">cd4backcalc</a></h3>
@@ -628,8 +634,8 @@ Part VIII: Study designs and biases
 <div class="contact-container">
 <div class="contact-info">
 <p>Feel free to reach out about research collaborations, speaking opportunities, or general enquiries:</p>
-<p>📧 peter [dot] kirwan [at] isglobal [dot] org</p>
-<p>🐘 <a href="https://fediscience.org/@pkirwan"><span class="citation" data-cites="pkirwan">@pkirwan</span><span class="citation" data-cites="fediscience.org">@fediscience.org</span></a></p>
+<p><span role="img" aria-label="Email">📧</span>peter [dot] kirwan [at] isglobal [dot] org</p>
+<p><span role="img" aria-label="Mastodon">🐘</span> <a href="https://fediscience.org/@pkirwan"><span class="citation" data-cites="pkirwan">@pkirwan</span><span class="citation" data-cites="fediscience.org">@fediscience.org</span></a></p>
 </div>
 </div>
 

@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Peter Kirwan">
-<meta name="dcterms.date" content="2025-04-24">
-<meta name="description" content="Details of two statistical inference methods for multi-state models and how these are well-suited to the investigation of intermittently-observed data.">
+<meta name="dcterms.date" content="2025-10-21">
+<meta name="description" content="Details of two statistical inference methods for multi-state models, and the conditions under which these can be used to investigate intermittently-observed data.">
 
 <title>Part VI: Statistical inference for multi-state models – Peter Kirwan</title>
 <style>
@@ -41,14 +41,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b626d73c4c936ccc3cb08be7d45d1df6.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-d55b682e4f7fdcb983c3d765bb3b3e0d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-446cc6686a29dde237fce9e7d5205639.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-d55b682e4f7fdcb983c3d765bb3b3e0d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-d97631db3dfa23958e50037e5c390409.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -98,7 +98,7 @@ window.Quarto = {
 
 <link rel="stylesheet" href="../../common/style.css">
 <meta property="og:title" content="Part VI: Statistical inference for multi-state models – Peter Kirwan">
-<meta property="og:description" content="Details of two statistical inference methods for multi-state models and how these are well-suited to the investigation of intermittently-observed data.">
+<meta property="og:description" content="Details of two statistical inference methods for multi-state models, and the conditions under which these can be used to investigate intermittently-observed data.">
 <meta property="og:image" content="https://www.pkirwan.com/blog/statistical-inference-msms/statistical-inference-banner.png">
 <meta property="og:site_name" content="Peter Kirwan">
 <meta property="og:image:height" content="664">
@@ -302,7 +302,11 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../index.html#blog"> 
-<span class="menu-text">Survival data posts</span></a>
+<span class="menu-text">Blog series</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html#software"> 
+<span class="menu-text">Software</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../index.html#recent-publications"> 
@@ -331,7 +335,7 @@ window.Quarto = {
       <h1 class="title">Part VI: Statistical inference for multi-state models</h1>
                   <div>
         <div class="description">
-          Details of two statistical inference methods for multi-state models and how these are well-suited to the investigation of intermittently-observed data.
+          Details of two statistical inference methods for multi-state models, and the conditions under which these can be used to investigate intermittently-observed data.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -354,7 +358,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 24, 2025</p>
+        <p class="date">October 21, 2025</p>
       </div>
     </div>
     
@@ -391,8 +395,8 @@ window.Quarto = {
 
 
 
-<p>This is part six of a series on statistical methods for analysing time-to-event, or “survival” data.</p>
-<p>In this post I’ll describe two statistical inference methods (non-parametric and parametric multi-state survival models) and how these multi-state methods are well-suited to the investigation of intermittently-observed data.</p>
+<p>This is part six of a series on statistical methods for infectious disease epidemiology, with a focus on time-to-event, or “survival”, data.</p>
+<p>In this post I’ll describe two statistical inference methods (non-parametric and parametric multi-state survival models) and the conditions under which these multi-state methods can be used to investigate intermittently-observed data.</p>
 <section id="aalen-johansen" class="level2">
 <h2 class="anchored" data-anchor-id="aalen-johansen">Aalen-Johansen estimator</h2>
 <p>The non-parametric Aalen-Johansen estimator can be used to estimate the transition probability matrix, <span class="math inline">\(\mathbf{P}(t)\)</span> for a Markov process with a finite number of states. Firstly, let <span class="math inline">\(\mathbf{A}(t)\)</span> be the matrix of cumulative transition intensities from state <span class="math inline">\(r\)</span> to state <span class="math inline">\(s\)</span>:</p>
@@ -400,14 +404,14 @@ window.Quarto = {
 \mathbf{A}(t) = A_{r,s}(t) =
 \begin{cases}
 \int_{0}^{t}{q_{r,s}(u) du} &amp; \text{if } r\neq s \\
--\sum_{r \neq s}{A_{r,s}(t)} &amp; \text{if } r = s
+-\sum_{s \neq r}{A_{r,s}(t)} &amp; \text{if } r = s
 \end{cases}
 \]</span></p>
-<p>The transition probability matrix for this process can be represented as:</p>
+<p>The transition probability matrix for this process can be represented as the (time-ordered) matrix product:</p>
 <p><span class="math display">\[
-\mathbf{P} = \prod_{k = 1}^{K}{\left(\mathbb{I}+\Delta\mathbf{A}(t_k)\right)}
+\mathbf{P}(t) = \prod_{k = 1}^{K}{\left(\mathbb{I}+\Delta\mathbf{A}(t_k)\right)}
 \]</span></p>
-<p>where <span class="math inline">\(\mathbb{I}\)</span> is the identity matrix, <span class="math inline">\(\Delta\mathbf{A}(t_k) = \mathbf{A}(t_k) - \mathbf{A}(t_k \mbox{-})\)</span>, and <span class="math inline">\(t_k \mbox{-}\)</span> represents the instant before time <span class="math inline">\(t_k\)</span>. Substituting the Nelson-Aalen estimator for <span class="math inline">\(\mathbf{A}(t)\)</span>, then the Aalen-Johansen estimate of the transition probability matrix is:</p>
+<p>where <span class="math inline">\(t_1 &lt; \ldots &lt; t_K \leq t\)</span> are the times at which transitions take place, <span class="math inline">\(\mathbb{I}\)</span> is the identity matrix, <span class="math inline">\(\Delta\mathbf{A}(t_k) = \mathbf{A}(t_k) - \mathbf{A}(t_k \mbox{-})\)</span>, and <span class="math inline">\(t_k \mbox{-}\)</span> represents the instant before time <span class="math inline">\(t_k\)</span>. Substituting the Nelson-Aalen estimator for <span class="math inline">\(\mathbf{A}(t)\)</span>, then the Aalen-Johansen estimate of the transition probability matrix is:</p>
 <p><span class="math display">\[
 \mathbf{{\hat{P}}}(t) = \hat{P}_{r,s}(t) = \prod_{k =
 1}^{K}{\left(\mathbb{I}_{r,s}+\Delta\hat{A}_{r,s}(t_k)\right)}
@@ -421,6 +425,7 @@ window.Quarto = {
 \end{cases}
 \]</span></p>
 <p>where <span class="math inline">\(\Delta N_{r,s}(t_k)\)</span> is the number of transitions from state <span class="math inline">\(r\)</span> to state <span class="math inline">\(s\)</span> at time <span class="math inline">\(t_k\)</span>, <span class="math inline">\(\Delta N_{s}(t_k)\)</span> is the number of transitions away from state <span class="math inline">\(s\)</span> at time <span class="math inline">\(t_k\)</span>, and <span class="math inline">\(Y_{r}(t_k \mbox{-})\)</span> is the number of individuals in state <span class="math inline">\(r\)</span> just before time <span class="math inline">\(t_k\)</span>.</p>
+<p>The Aalen-Johansen estimator requires the times of transitions between states to be observed exactly (together with the state occupied by each individual at all times). It is therefore not directly applicable to intermittently-observed data, where the times of transitions are interval-censored; this is the main motivation for the likelihood-based approach described below.</p>
 </section>
 <section id="multi-state-mixture-models" class="level2">
 <h2 class="anchored" data-anchor-id="multi-state-mixture-models">Multi-state mixture models</h2>
@@ -447,15 +452,15 @@ q^{*}_{i,r,s}(t) &amp; \text{if } I_{i,r} = s \\
 \boldsymbol{\beta}_{r,j}^\mathsf{T} \boldsymbol{z}
 \]</span></p>
 <p>with <span class="math inline">\(\alpha_{r,j}\)</span> and <span class="math inline">\(\boldsymbol{\beta}_{r,j} = \{\beta_{r,j,k};\; k = 1, \ldots m\}\)</span> being regression coefficients for the probability of transition to state <span class="math inline">\(j\)</span>.</p>
-<p>Meanwhile, parameters <span class="math inline">\(\theta_{r,s}\)</span> of the time to transition distribution can be related to a different (or identical) set of <span class="math inline">\(l\)</span> covariates <span class="math inline">\(\boldsymbol{z} = \{z_1, \ldots, z_l\}\)</span> via a log-linear model with coefficients <span class="math inline">\(\gamma_{r,s}\)</span> and <span class="math inline">\(\boldsymbol{\omega}_{r,s} = \{\omega_{r,s,k};\; k = 1, \ldots, l\}\)</span>:</p>
+<p>Meanwhile, parameters <span class="math inline">\(\theta_{r,s}\)</span> of the time to transition distribution can be related to a different (or identical) set of <span class="math inline">\(l\)</span> covariates <span class="math inline">\(\boldsymbol{x} = \{x_1, \ldots, x_l\}\)</span> via a log-linear model (for parameters which are constrained to be positive) with coefficients <span class="math inline">\(\gamma_{r,s}\)</span> and <span class="math inline">\(\boldsymbol{\omega}_{r,s} = \{\omega_{r,s,k};\; k = 1, \ldots, l\}\)</span>:</p>
 <p><span class="math display">\[
-\log(\theta_{r,s}(\boldsymbol{z}))=\gamma_{r,s} + \boldsymbol{\omega}_{r,s}^\mathsf{T} \boldsymbol{z}
+\log(\theta_{r,s}(\boldsymbol{x}))=\gamma_{r,s} + \boldsymbol{\omega}_{r,s}^\mathsf{T} \boldsymbol{x}
 \]</span></p>
-<p>For most parametric time to transition distributions `accelerated failure time’ models are considered, where the covariates affect the rate of progression of time, i.e.&nbsp;the survival function <span class="math inline">\(S(t \mid \boldsymbol{z})\)</span> for an individual at time <span class="math inline">\(t\)</span> with covariates <span class="math inline">\(\boldsymbol{z}\)</span> is related to the baseline survival <span class="math inline">\(S^{(0)}\)</span> via:</p>
+<p>For most parametric time to transition distributions `accelerated failure time’ models are considered, where the covariates affect the rate of progression of time, i.e.&nbsp;the survival function <span class="math inline">\(S(t \mid \boldsymbol{x})\)</span> for an individual at time <span class="math inline">\(t\)</span> with covariates <span class="math inline">\(\boldsymbol{x}\)</span> is related to the baseline survival <span class="math inline">\(S^{(0)}\)</span> via:</p>
 <p><span class="math display">\[
-S(t\mid \boldsymbol{z}) = S^{(0)}\left(\exp(\boldsymbol{\theta}^\mathsf{T}\boldsymbol{z})t\right)
+S(t\mid \boldsymbol{x}) = S^{(0)}\left(\exp(\boldsymbol{\eta}^\mathsf{T}\boldsymbol{x})t\right)
 \]</span></p>
-<p>where <span class="math inline">\(\boldsymbol{\theta}\)</span> is a vector of regression coefficients.</p>
+<p>where <span class="math inline">\(\boldsymbol{\eta}\)</span> is a vector of regression coefficients.</p>
 </section>
 <section id="likelihood-contributions" class="level3">
 <h3 class="anchored" data-anchor-id="likelihood-contributions">Likelihood contributions</h3>
@@ -474,7 +479,7 @@ l_c = \sum_{s \in S_r}\pi_{r,s}(1-F_{r,s}(t))
 <section id="accounting-for-censoring" class="level2">
 <h2 class="anchored" data-anchor-id="accounting-for-censoring">Accounting for censoring</h2>
 <p>As described in <a href="../../blog/classical-survival-methods/index.html#likelihood-estimation">part III of this series</a>, survival models may be specified to account for censoring and truncation in observed data by careful consideration and construction of the likelihood function. Multi-state survival models, in particular, are well-suited to investigating interval-censored, or <em>intermittently-observed</em> data.</p>
-<p>In Figure 2 from <a href="../../blog/survival-analysis/index.html#interval-censoring">part II of this series</a>, changes in an underlying process were detected with an intermittent observation scheme. Depending on the nature of the underlying process, less frequent and/or irregular observation may result in transitions being undetected, as shown in <a href="#fig-intermittent-observation" class="quarto-xref">Figure&nbsp;1</a> below. This could be an issue for survival models, particularly when there is a dependency between the observation times and the underlying process.</p>
+<p>In the interval censoring figure from <a href="../../blog/survival-analysis/index.html#interval-censoring">part II of this series</a>, changes in an underlying process were detected with an intermittent observation scheme. Depending on the nature of the underlying process, less frequent and/or irregular observation may result in transitions being undetected, as shown in <a href="#fig-intermittent-observation" class="quarto-xref">Figure&nbsp;1</a> below. This could be an issue for survival models, particularly when there is a dependency between the observation times and the underlying process.</p>
 <div id="fig-intermittent-observation" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intermittent-observation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -482,7 +487,7 @@ l_c = \sum_{s \in S_r}\pi_{r,s}(1-F_{r,s}(t))
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" alt="Step plot of an underlying process which moves from state 1 to state 2 at week 3 and back to state 1 at week 7. Observations at weeks 2, 8 and 12 (dashed lines) all find the process in state 1, so both transitions are missed. Planned observations at weeks 4, 6 and 10 (dotted lines) were missed." width="672"></p>
 </figure>
 </div>
 </div>
@@ -494,15 +499,20 @@ Figure&nbsp;1: Example of intermittently-observed data with missed observations 
 </figure>
 </div>
 <p>An observation scheme is said to be <em>non-informative</em> if the likelihood is proportional to a scenario where observation times were fixed in advance and chosen independently of the underlying process. For example, a study with clinic visits scheduled every four weeks regardless of symptoms is closer to non-informative than a study where extra visits are triggered by clinical deterioration. With a non-informative observation scheme then multi-state models can correctly account for intermittently-observed data.</p>
+<p>For a Markov multi-state model, the likelihood for intermittently-observed data only requires the states occupied at the observation times. An individual <span class="math inline">\(i\)</span> observed in states <span class="math inline">\(s_0, s_1, \ldots, s_J\)</span> at times <span class="math inline">\(t_0, t_1, \ldots, t_J\)</span> contributes the product of the transition probabilities between successive observations, regardless of any unobserved transitions in between:</p>
+<p><span class="math display">\[
+l_i = \prod_{j=1}^{J} P_{s_{j-1}, s_j}(t_{j-1}, t_j)
+\]</span></p>
+<p>where, for a time-homogeneous model, <span class="math inline">\(\mathbf{P}(t_{j-1}, t_j) = \exp\left((t_j - t_{j-1})\mathbf{Q}\right)\)</span> as described in <a href="../../blog/multi-state-models/index.html">part V of this series</a>.</p>
 </section>
 <section id="implementing-multi-state-models" class="level2">
 <h2 class="anchored" data-anchor-id="implementing-multi-state-models">Implementing multi-state models</h2>
 <p>A number of sophisticated statistical software packages exist to implement frequentist and Bayesian survival and multi-state models using the <code>R</code> programming language. Frequentist maximum likelihood estimation tends to be less computationally intensive than Bayesian inference, and the latter may require integrating over a vast number of parameters, which is usually impracticable for higher dimensions. Instead, algorithms which simulate from the posterior distribution are often used to evaluate features of these integrals. Markov Chain Monte Carlo (MCMC) algorithms have been widely used for this application.</p>
-<p>There are several specialised modelling packages available to fit multi-state models, including: <a href="https://github.com/therneau/survival"><code>survival</code></a>, <a href="https://chjackson.github.io/msm/"><code>msm</code></a>, <a href="https://chjackson.github.io/flexsurv/index.html"><code>flexsurv</code></a> which fit models using maximum likelihood, and <a href="https://mcmc-jags.sourceforge.io/"><code>JAGS</code></a> and <a href="https://mc-stan.org/"><code>STAN</code></a> which fit Bayesian models using MCMC.</p>
+<p>There are several specialised modelling packages available to fit multi-state models, including: <a href="https://github.com/therneau/survival"><code>survival</code></a>, <a href="https://chjackson.github.io/msm/"><code>msm</code></a>, <a href="https://cran.r-project.org/package=mstate"><code>mstate</code></a>, <a href="https://cran.r-project.org/package=etm"><code>etm</code></a> and <a href="https://chjackson.github.io/flexsurv/index.html"><code>flexsurv</code></a> which fit models using maximum likelihood or non-parametric estimators, and <a href="https://mcmc-jags.sourceforge.io/"><code>JAGS</code></a> and <a href="https://mc-stan.org/"><code>Stan</code></a> which fit Bayesian models using MCMC.</p>
 <p>For HIV back-calculation specifically, the <a href="https://pkirwan.github.io/cd4backcalc/"><code>cd4backcalc</code></a> package implements Bayesian, discrete-time, multi-state CD4-staged back-calculation models in Stan.</p>
 <p>Two useful online tutorials for running statistical inference for survival and multi-state models are:</p>
 <ul>
-<li><p><a href="https://www.emilyzabor.com/survival-analysis-in-r.html">Survival analysis in R</a>” by Emily C. Zabor</p></li>
+<li><p><a href="https://www.emilyzabor.com/survival-analysis-in-r.html">Survival analysis in R</a> by Emily C. Zabor</p></li>
 <li><p><a href="https://chjackson.github.io/msm/msmcourse/">Multi-state modelling with msm: a practical course</a> by Christopher Jackson</p></li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -516,9 +526,9 @@ Figure&nbsp;1: Example of intermittently-observed data with missed observations 
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>The Aalen-Johansen estimator extends the Kaplan-Meier approach to provide non-parametric estimates of transition probabilities in multi-state models.</li>
+<li>The Aalen-Johansen estimator extends the Kaplan-Meier approach to provide non-parametric estimates of transition probabilities in multi-state models, provided that transitions are observed exactly.</li>
 <li>Multi-state mixture models allow for different transition types with their own probability distributions and covariate effects.</li>
-<li>Intermittently-observed data with interval censoring can be properly handled by multi-state models when observation schemes are non-informative.</li>
+<li>Intermittently-observed data with interval censoring can be properly handled by likelihood-based multi-state models when observation schemes are non-informative.</li>
 <li>Covariates can influence both the probability of transitions between states and the timing of those transitions.</li>
 <li>Both frequentist (maximum likelihood) and Bayesian (MCMC) approaches are available for fitting multi-state models, with several specialised <code>R</code> packages providing implementation.</li>
 </ul>
@@ -543,6 +553,7 @@ Figure&nbsp;1: Example of intermittently-observed data with missed observations 
 </ul>
 <div class="post-navigation">
 <p><a href="../../blog/multi-state-models/index.html">← Previous post</a></p>
+<p><a href="../../index.html#blog">Back to all posts</a></p>
 <p><a href="../../blog/causal-inference/index.html">Next post →</a></p>
 </div>
 

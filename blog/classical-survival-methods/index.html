@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Peter Kirwan">
-<meta name="dcterms.date" content="2025-04-03">
+<meta name="dcterms.date" content="2025-07-22">
 <meta name="description" content="Exploring two fundamental approaches to analysing survival data: non-parametric Kaplan-Meier estimation and semi-parametric Cox proportional hazards models.">
 
 <title>Part III: Classical survival methods – Peter Kirwan</title>
@@ -76,14 +76,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b626d73c4c936ccc3cb08be7d45d1df6.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-d55b682e4f7fdcb983c3d765bb3b3e0d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-446cc6686a29dde237fce9e7d5205639.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-d55b682e4f7fdcb983c3d765bb3b3e0d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-d97631db3dfa23958e50037e5c390409.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -337,7 +337,11 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../index.html#blog"> 
-<span class="menu-text">Survival data posts</span></a>
+<span class="menu-text">Blog series</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html#software"> 
+<span class="menu-text">Software</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../index.html#recent-publications"> 
@@ -389,7 +393,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 3, 2025</p>
+        <p class="date">July 22, 2025</p>
       </div>
     </div>
     
@@ -433,7 +437,7 @@ window.Quarto = {
 
 
 
-<p>This is part three of a series on statistical methods for analysing time-to-event, or “survival” data.</p>
+<p>This is part three of a series on statistical methods for infectious disease epidemiology, with a focus on time-to-event, or “survival”, data.</p>
 <section id="statistical-inference" class="level2">
 <h2 class="anchored" data-anchor-id="statistical-inference">Statistical inference</h2>
 <p>Statistical inference is the process of using data to infer the properties of an underlying probability distribution. In the context of survival analysis, we want to estimate the distribution of time-to-event data, which is often incomplete due to censoring or truncation. This is a key challenge in survival analysis, as we need to account for the possibility that we do not observe the event of interest for all individuals in our study. For more details about censored and truncated data see the <a href="../../blog/survival-analysis/index.html">previous post</a> in this series.</p>
@@ -452,7 +456,7 @@ window.Quarto = {
 <section id="censored-truncated" class="level3">
 <h3 class="anchored" data-anchor-id="censored-truncated">Censored and truncated data</h3>
 <p>Constructing likelihoods for censored or truncated data requires careful consideration of the information provided by each observation. The <a href="../../blog/survival-analysis/index.html">previous post</a> in this series provided a definition of censoring and truncation, and the right and left censoring and truncation times.</p>
-<p>The likelihood components provided by censored observations are:</p>
+<p>The likelihood components provided by censored observations, assuming that censoring is independent of the event process, are:</p>
 <ul>
 <li>for exactly observed data: information on the probability of the event occurring at this time, i.e.&nbsp;<span class="math inline">\(f(X)\)</span></li>
 <li>for right-censored observations: information on the survivor function up to a certain time, i.e.&nbsp;<span class="math inline">\(S(C_r)\)</span></li>
@@ -461,7 +465,12 @@ window.Quarto = {
 </ul>
 <p>As data may be observed with different levels of censoring or truncation, the likelihood function is constructed from the joint product of each component for each observation <span class="math inline">\(i\)</span>:</p>
 <p><span class="math display">\[L \propto \prod_{i} f(X_i) \prod_{i} S(C_{r,i}) \prod_{i} F(C_{l,i}) \prod_i (S(L_i) - S(R_i))\]</span></p>
-<p>The equivalent likelihood components for truncated data provide information on conditional probabilities of events, i.e.&nbsp;<span class="math inline">\(f(X)/F(Y_r)\)</span> for right-truncated observations, where observation is conditional on the event of interest having occurred by truncation time <span class="math inline">\(Y_r\)</span>.</p>
+<p>The equivalent likelihood components for truncated data provide information on conditional probabilities of events, given that the individual was observed:</p>
+<ul>
+<li>for left-truncated observations, where observation is conditional on the event time being at least the left-truncation time <span class="math inline">\(Y_l\)</span>: <span class="math inline">\(f(X)/S(Y_l)\)</span></li>
+<li>for right-truncated observations, where observation is conditional on the event of interest having occurred by the truncation time <span class="math inline">\(Y_r\)</span>: <span class="math inline">\(f(X)/F(Y_r)\)</span></li>
+<li>for interval-truncated observations, where observation is conditional on the event occurring within the truncation interval <span class="math inline">\([Y_l, Y_r]\)</span>: <span class="math inline">\(f(X)/\{F(Y_r) - F(Y_l)\}\)</span>.</li>
+</ul>
 </section>
 </section>
 <section id="parametric-non-parametric" class="level2">
@@ -473,80 +482,84 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="kaplan-meier">The Kaplan-Meier estimator</h2>
 <p>The Kaplan-Meier estimator is a widely-used, non-parametric method to estimate the survivor function, <span class="math inline">\(S(t)\)</span>, from censored data, and defined as:</p>
 <p><span class="math display">\[\hat{S}(t) = \prod_{t_k \leq t}\left(\frac{n(t_k) - d(t_k)}{n(t_k)}\right)\]</span></p>
-<p>where <span class="math inline">\(d(t_k)\)</span> is the number of events, and <span class="math inline">\(n(t_k)\)</span> is the number of individuals at risk at time <span class="math inline">\(t_k \leq t\)</span>.</p>
-<p>The Kaplan-Meier estimator is a step function, with jumps at each observed event time, and the size of the jump is the proportion of individuals who experience the event at that time. The Kaplan-Meier estimator is often plotted as a survival curve, with time on the x-axis and the estimated survival probability on the y-axis.</p>
-<div id="km-figure" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="./survival-methods-banner.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption>Example of a Kaplan-Meier survival plot where time is on the x-axis and the estimated survival probability is on the y-axis.</figcaption>
-</figure>
-</div>
+<p>where <span class="math inline">\(d(t_k)\)</span> is the number of events, and <span class="math inline">\(n(t_k)\)</span> is the number of individuals at risk just before time <span class="math inline">\(t_k\)</span>, for the observed event times <span class="math inline">\(t_k \leq t\)</span>.</p>
+<p>The Kaplan-Meier estimator is a step function, with jumps at each observed event time. At each event time the estimate is multiplied by the proportion of individuals at risk who do not experience the event, so the size of each jump depends on both the number of events and the number still at risk. The Kaplan-Meier estimator is often plotted as a survival curve, with time on the x-axis and the estimated survival probability on the y-axis, as shown in <a href="#fig-km" class="quarto-xref">Figure&nbsp;1</a> below.</p>
 <section id="r-example-km" class="level3">
 <h3 class="anchored" data-anchor-id="r-example-km">R example</h3>
 <p>For a short example of the product-limit construction we can use the <code>survival</code> package in R to compute a Kaplan-Meier estimate from a small dataset of 10 observations, with some censored and some observed event times:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-lst-cap="Computing a Kaplan-Meier estimate in R."><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>km_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">time   =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">10</span>),</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">status =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>,  <span class="dv">1</span>,  <span class="dv">0</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>km_fit <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> km_data)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">time     =</span> km_fit<span class="sc">$</span>time,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_risk   =</span> km_fit<span class="sc">$</span>n.risk,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_event  =</span> km_fit<span class="sc">$</span>n.event,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>km_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">time   =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">10</span>),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">status =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>,  <span class="dv">1</span>,  <span class="dv">0</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>km_fit <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> km_data)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">time     =</span> km_fit<span class="sc">$</span>time,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_risk   =</span> km_fit<span class="sc">$</span>n.risk,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_event  =</span> km_fit<span class="sc">$</span>n.event,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_censor =</span> km_fit<span class="sc">$</span>n.censor,</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">survival =</span> <span class="fu">round</span>(km_fit<span class="sc">$</span>surv, <span class="dv">2</span>)</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  time n_risk n_event survival
-1    2     10       1     0.90
-2    3      9       1     0.80
-3    4      8       1     0.70
-4    5      6       1     0.58
-5    6      5       0     0.58
-6    7      4       1     0.44
-7    8      3       0     0.44
-8   10      2       1     0.22</code></pre>
+<pre><code>  time n_risk n_event n_censor survival
+1    2     10       1        0     0.90
+2    3      9       1        0     0.80
+3    4      8       1        1     0.70
+4    5      6       1        0     0.58
+5    6      5       0        1     0.58
+6    7      4       1        0     0.44
+7    8      3       0        1     0.44
+8   10      2       1        1     0.22</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-lst-cap="Computing a Kaplan-Meier estimate in R."><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>km_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">time  =</span> <span class="fu">c</span>(<span class="dv">0</span>, km_fit<span class="sc">$</span>time),</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">surv  =</span> <span class="fu">c</span>(<span class="dv">1</span>, km_fit<span class="sc">$</span>surv),</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">event =</span> <span class="fu">c</span>(<span class="dv">0</span>L, km_fit<span class="sc">$</span>n.event)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(km_df, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> surv)) <span class="sc">+</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">color =</span> <span class="st">"#E74C3C"</span>, <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">subset</span>(km_df, event <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> time <span class="sc">&gt;</span> <span class="dv">0</span>),</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="dv">3</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"#E74C3C"</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">name =</span> <span class="st">"Estimated survival"</span>) <span class="sc">+</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Follow-up time"</span>) <span class="sc">+</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>km_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">time   =</span> <span class="fu">c</span>(<span class="dv">0</span>, km_fit<span class="sc">$</span>time),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">surv   =</span> <span class="fu">c</span>(<span class="dv">1</span>, km_fit<span class="sc">$</span>surv),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower  =</span> <span class="fu">c</span>(<span class="dv">1</span>, km_fit<span class="sc">$</span>lower),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper  =</span> <span class="fu">c</span>(<span class="dv">1</span>, km_fit<span class="sc">$</span>upper),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">censor =</span> <span class="fu">c</span>(<span class="dv">0</span>L, km_fit<span class="sc">$</span>n.censor)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(km_df, <span class="fu">aes</span>(<span class="at">x =</span> time)) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">y =</span> lower), <span class="at">colour =</span> blog_cols[[<span class="st">"red"</span>]], <span class="at">linetype =</span> <span class="st">"dotted"</span>) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">y =</span> upper), <span class="at">colour =</span> blog_cols[[<span class="st">"red"</span>]], <span class="at">linetype =</span> <span class="st">"dotted"</span>) <span class="sc">+</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">y =</span> surv), <span class="at">colour =</span> blog_cols[[<span class="st">"red"</span>]], <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">subset</span>(km_df, censor <span class="sc">&gt;</span> <span class="dv">0</span>),</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> surv), <span class="at">shape =</span> <span class="dv">3</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">stroke =</span> <span class="dv">1</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">name =</span> <span class="st">"Estimated survival"</span>) <span class="sc">+</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Follow-up time (days)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/lst-km-risk-set-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-km" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Step plot of estimated survival, falling from 1 at time 0 to about 0.22 at day 10, with crosses where observations are censored and dotted lines showing wide 95% confidence limits.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-km-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-km-1.png" class="img-fluid figure-img" alt="Step plot of estimated survival, falling from 1 at time 0 to about 0.22 at day 10, with crosses where observations are censored and dotted lines showing wide 95% confidence limits." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-km-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Kaplan-Meier survival curve for the example data. Crosses mark censored observations and dotted lines show pointwise 95% confidence limits.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>The figure shows the Kaplan-Meier survival curve, with steps at each observed event time and tick marks indicating censored observations. Survival only steps down at observed event times (rows where <code>n_event &gt; 0</code>), while censored observations reduce the risk set without causing a jump.</p>
+<p>The figure shows the Kaplan-Meier survival curve, with steps at each observed event time and crosses indicating censored observations (including those which coincide with an event time, at days 4 and 10). Survival only steps down at observed event times (rows where <code>n_event &gt; 0</code>), while censored observations reduce the risk set without causing a jump. With only 10 observations the confidence limits are wide.</p>
 </section>
 </section>
 <section id="cox-proportional-hazards" class="level2">
 <h2 class="anchored" data-anchor-id="cox-proportional-hazards">The Cox proportional hazards model</h2>
-<p>The Cox proportional hazards model assumes that the hazards of death for any two individuals are <em>proportional</em> over time, expressed by writing the hazard function conditional on a given set of <span class="math inline">\(M\)</span> constant or time-varying covariates <span class="math inline">\(\boldsymbol{z} = \{z_{1}\ldots, z_{M}\}\)</span> as:</p>
+<p>The Cox proportional hazards model assumes that the hazards of death for any two individuals are <em>proportional</em> over time, expressed by writing the hazard function conditional on a given set of <span class="math inline">\(M\)</span> constant covariates <span class="math inline">\(\boldsymbol{z} = \{z_{1}\ldots, z_{M}\}\)</span> as:</p>
 <p><span class="math display">\[h(t \mid \boldsymbol{z}) = h^{(0)}(t)\exp\left(\sum_{m=1}^{M}\beta_{m}z_{m}\right) \equiv h^{(0)}(t)\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z})\]</span></p>
 <p>where <span class="math inline">\(h^{(0)}(t)\)</span> is the baseline hazard function, and <span class="math inline">\(\beta_{m}\)</span> are the regression coefficients. Notably, the ‘hazard ratio’ for the <span class="math inline">\(m\)</span>th covariate is a constant:</p>
 <p><span class="math display">\[\frac{h(t \mid z_m = 1)}{h(t \mid z_m = 0)} = \frac{h^{(0)}(t)\exp(\beta_m 1)}{h^{(0)}(t)\exp(\beta_m 0)} = \exp(\beta_{m})\]</span></p>
-<p>The regression coefficients <span class="math inline">\(\beta_{m}\)</span> are estimated by maximising the partial likelihood <span class="math inline">\(L(\boldsymbol{\beta})\)</span>:</p>
-<p><span class="math display">\[L(\boldsymbol{\beta}) = \prod_{i \in D}\frac{\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_{d_i})}{\sum_{j \in R_i}\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_j)}\]</span></p>
-<p>where <span class="math inline">\(D = \{T_1, T_2, \ldots, T_n\}\)</span> are the set of distinct failure times, <span class="math inline">\(R_i\)</span> is the set of all individuals who are at risk of failure immediately before time <span class="math inline">\(T_i\)</span>, <span class="math inline">\(\boldsymbol{z}_{d_i}\)</span> is the covariate vector for an individual who failed at time <span class="math inline">\(T_i\)</span>, and <span class="math inline">\(\boldsymbol{z}_j\)</span> is the covariate vector for the <span class="math inline">\(j\)</span>th individual at risk at time <span class="math inline">\(T_i\)</span>.</p>
+<p>The regression coefficients <span class="math inline">\(\beta_{m}\)</span> are estimated by maximising the partial likelihood <span class="math inline">\(L(\boldsymbol{\beta})\)</span> (shown here assuming there are no tied failure times):</p>
+<p><span class="math display">\[L(\boldsymbol{\beta}) = \prod_{i \in \mathcal{E}}\frac{\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_{d_i})}{\sum_{j \in R_i}\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_j)}\]</span></p>
+<p>where <span class="math inline">\(\mathcal{E} = \{T_1, T_2, \ldots, T_n\}\)</span> are the set of distinct failure times, <span class="math inline">\(R_i\)</span> is the set of all individuals who are at risk of failure immediately before time <span class="math inline">\(T_i\)</span>, <span class="math inline">\(\boldsymbol{z}_{d_i}\)</span> is the covariate vector for an individual who failed at time <span class="math inline">\(T_i\)</span>, and <span class="math inline">\(\boldsymbol{z}_j\)</span> is the covariate vector for the <span class="math inline">\(j\)</span>th individual at risk at time <span class="math inline">\(T_i\)</span>. The model can be extended to time-varying covariates <span class="math inline">\(\boldsymbol{z}(t)\)</span>, in which case the hazard ratio is no longer constant over time.</p>
 <p>In practice, the proportional hazards assumption should be assessed before interpreting hazard ratios, for example using Schoenfeld residuals or by allowing covariate effects to vary over time.</p>
 <section id="r-example-cox" class="level3">
 <h3 class="anchored" data-anchor-id="r-example-cox">R example</h3>
@@ -578,21 +591,23 @@ sex -0.513     0.599    0.002</code></pre>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(coef_df, <span class="fu">aes</span>(<span class="at">x =</span> hr, <span class="at">y =</span> term)) <span class="sc">+</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray50"</span>) <span class="sc">+</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> lo, <span class="at">xmax =</span> hi), <span class="at">height =</span> <span class="fl">0.1</span>, <span class="at">color =</span> <span class="st">"#2C3E50"</span>) <span class="sc">+</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"#E74C3C"</span>) <span class="sc">+</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>(<span class="at">name =</span> <span class="st">"Hazard ratio (log scale)"</span>) <span class="sc">+</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">colour =</span> <span class="st">"gray50"</span>) <span class="sc">+</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">xmin =</span> lo, <span class="at">xmax =</span> hi),</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">orientation =</span> <span class="st">"y"</span>, <span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">colour =</span> blog_cols[[<span class="st">"dark"</span>]]</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">colour =</span> blog_cols[[<span class="st">"red"</span>]]) <span class="sc">+</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>(<span class="at">name =</span> <span class="st">"Hazard ratio (log scale)"</span>) <span class="sc">+</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="at">name =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/lst-cox-model-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/lst-cox-model-1.png" class="img-fluid figure-img" alt="Forest plot of hazard ratios on a log scale. The hazard ratio for age per year is slightly above 1 with a confidence interval that includes 1. The hazard ratio for female versus male sex is about 0.6, with a confidence interval entirely below 1." width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Older age increases the hazard of death (<code>exp(coef) &gt; 1</code>), although the effect is not statistically significant (p = 0.06). Female sex is protective (<code>exp(coef) &lt; 1</code>), and this effect is statistically significant (p &lt; 0.05). The Schoenfeld test p-values give a quick check of the proportional hazards assumption (satisfied when p &gt; 0.05).</p>
+<p>Older age increases the hazard of death (<code>exp(coef) &gt; 1</code>), although there is only weak evidence of an effect (p = 0.06). Female sex is protective (<code>exp(coef) &lt; 1</code>), and there is strong evidence of this effect (p = 0.002). The Schoenfeld test p-values give a quick check of the proportional hazards assumption: here, there is no strong evidence against it (all p &gt; 0.05), but a non-significant test does not prove that the assumption holds, so the residuals should also be inspected graphically with <code>plot(cox.zph(cox_fit))</code>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -627,12 +642,13 @@ sex -0.513     0.599    0.002</code></pre>
 <h2 class="anchored" data-anchor-id="references">References</h2>
 <ul>
 <li>Austin PC. <a href="http://dx.doi.org/10.1111/insr.12214">A Tutorial on Multilevel Survival Analysis: Methods, Models and Applications</a>. <em>Int Stat Rev</em>. 2017;85(2):185-203.</li>
-<li>Collett D. <a href="https://www.taylorfrancis.com/books/mono/10.1201/9781003282525/modelling-survival-data-medical-research-david-collett">Modelling Survival Data in Medical Research</a>. <em>Chapman &amp; Hall/CRC Texts in Statistical Science</em> 2023.</li>
-<li>Klein JP, Moeschberger ML. <a href="https://play.google.com/store/books/details?id=KSq0e-6VFJ0C">Survival Analysis: Techniques for Censored and Truncated Data</a>.</li>
+<li>Collett D. <a href="https://www.taylorfrancis.com/books/mono/10.1201/9781003282525/modelling-survival-data-medical-research-david-collett">Modelling Survival Data in Medical Research</a>. <em>Chapman &amp; Hall/CRC Texts in Statistical Science</em>. 2023.</li>
+<li>Klein JP, Moeschberger ML. <a href="https://play.google.com/store/books/details?id=KSq0e-6VFJ0C">Survival Analysis: Techniques for Censored and Truncated Data</a>. <em>Springer Science &amp; Business Media</em>; 2005.</li>
 <li>Wasserman LA. <a href="https://books.google.com/books?hl=en&amp;lr=&amp;id=th3fbFI1DaMC&amp;oi=fnd&amp;pg=PA1&amp;dq=All+Statistics+Concise+Course+Statistical+Inference+Wasserman&amp;ots=eRiUBZMis9&amp;sig=o9uqf2nz1ytzCEOVbRS2oXprG8w">All of statistics</a>. <em>Springer</em>. 2004.</li>
 </ul>
 <div class="post-navigation">
 <p><a href="../../blog/survival-analysis/index.html">← Previous post</a></p>
+<p><a href="../../index.html#blog">Back to all posts</a></p>
 <p><a href="../../blog/competing-risks-methods/index.html">Next post →</a></p>
 </div>
 

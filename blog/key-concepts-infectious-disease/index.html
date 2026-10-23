@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -41,14 +41,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b626d73c4c936ccc3cb08be7d45d1df6.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-d55b682e4f7fdcb983c3d765bb3b3e0d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-446cc6686a29dde237fce9e7d5205639.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-d55b682e4f7fdcb983c3d765bb3b3e0d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-d97631db3dfa23958e50037e5c390409.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -300,7 +300,11 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../index.html#blog"> 
-<span class="menu-text">Survival data posts</span></a>
+<span class="menu-text">Blog series</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html#software"> 
+<span class="menu-text">Software</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../index.html#recent-publications"> 
@@ -371,7 +375,7 @@ window.Quarto = {
   <ul>
   <li><a href="#epidemiological-measures" id="toc-epidemiological-measures" class="nav-link active" data-scroll-target="#epidemiological-measures">Epidemiological measures</a>
   <ul class="collapse">
-  <li><a href="#r-number" id="toc-r-number" class="nav-link" data-scroll-target="#r-number">The <span class="math inline">\(R\)</span> number</a></li>
+  <li><a href="#r-number" id="toc-r-number" class="nav-link" data-scroll-target="#r-number">The reproduction number</a></li>
   </ul></li>
   <li><a href="#estimating-burden" id="toc-estimating-burden" class="nav-link" data-scroll-target="#estimating-burden">Estimating the burden of infectious disease</a>
   <ul class="collapse">
@@ -393,7 +397,7 @@ window.Quarto = {
 
 
 
-<p>This is part one of a series on statistical methods for analysing time-to-event, or “survival” data.</p>
+<p>This is part one of a series on statistical methods for infectious disease epidemiology, with a focus on time-to-event, or “survival”, data.</p>
 <section id="epidemiological-measures" class="level2">
 <h2 class="anchored" data-anchor-id="epidemiological-measures">Epidemiological measures</h2>
 <p>Epidemiology is the study and analysis of patterns of diseases and determinants of health in a population. In the context of infectious diseases, epidemiologists and statisticians employ several standard measures of disease burden to assess the impact of a disease, and to guide the appropriate public health response. These measures include:</p>
@@ -403,10 +407,10 @@ window.Quarto = {
 <li>for diseases with adverse outcomes, the <strong>mortality associated with infection</strong>, defined as the incidence of death from the disease.</li>
 </ul>
 <section id="r-number" class="level3">
-<h3 class="anchored" data-anchor-id="r-number">The <span class="math inline">\(R\)</span> number</h3>
+<h3 class="anchored" data-anchor-id="r-number">The reproduction number</h3>
 <p>A key measure of the spread of a disease, related to the incidence of infection, is the basic reproduction number, denoted <span class="math inline">\(R_0\)</span>. The <span class="math inline">\(R_0\)</span> value measures the expected number of cases directly generated by one case in a population where all individuals are susceptible to infection.</p>
 <p>For instance, if <span class="math inline">\(R_0 = 3\)</span> for a particular disease then one infected individual will, on average, infect three others. When <span class="math inline">\(R_0 &gt; 1\)</span> an infection will spread in a population, whereas when <span class="math inline">\(R_0 &lt; 1\)</span> the disease will eventually die out.</p>
-<p>Importantly, not every individual within a population will be equally susceptible to infection. Immunity to a pathogen might be acquired through vaccination or recovery from previous infection, both of which can provide a level of protection against future infections. Through widespread vaccination, immunity can be conferred to a large portion of a population, reducing susceptibility and thereby decreasing <span class="math inline">\(R_0\)</span>.</p>
+<p>Importantly, not every individual within a population will be equally susceptible to infection. Immunity to a pathogen might be acquired through vaccination or recovery from previous infection, both of which can provide a level of protection against future infections. Through widespread vaccination, immunity can be conferred to a large portion of a population, reducing susceptibility and thereby decreasing the number of new cases generated by each case. This is captured by the effective reproduction number, <span class="math inline">\(R_t\)</span>, the expected number of cases directly generated by one case at time <span class="math inline">\(t\)</span> in a population where some individuals may no longer be susceptible, or where control measures are in place. Unlike <span class="math inline">\(R_0\)</span>, <span class="math inline">\(R_t\)</span> changes over time.</p>
 </section>
 </section>
 <section id="estimating-burden" class="level2">
@@ -414,10 +418,10 @@ window.Quarto = {
 <p>To understand how quickly a virus is spreading through a population, and the corresponding burden of disease, timely and robust estimates are required. The incidence of new cases, prevalence of undiagnosed infection, and extent of disease severity can all inform policy makers seeking to implement effective and appropriate public health measures.</p>
 <section id="incidence-and-prevalence" class="level3">
 <h3 class="anchored" data-anchor-id="incidence-and-prevalence">Incidence and prevalence</h3>
-<div id="fig-incidence-prevalence" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-incidence-prevalence" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Line chart of HIV prevalence and incidence in the US from 1980 to 2010. Active HIV/AIDS cases rise steadily to about 1.2 million, while new cases stay below about 150,000 per year">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-incidence-prevalence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./incidence-prevalence.png" class="img-fluid figure-img" style="width:80.0%">
+<img src="./incidence-prevalence.png" class="img-fluid figure-img" style="width:80.0%" alt="Line chart of HIV prevalence and incidence in the US from 1980 to 2010. Active HIV/AIDS cases rise steadily to about 1.2 million, while new cases stay below about 150,000 per year">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-incidence-prevalence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: An example of the prevalence and incidence of HIV in the US over time. Incidence measures new cases over time, while prevalence measures total active cases at a specific point. Figure from: Steward K.
@@ -429,10 +433,10 @@ Figure&nbsp;1: An example of the prevalence and incidence of HIV in the US over 
 </section>
 <section id="severity" class="level3">
 <h3 class="anchored" data-anchor-id="severity">Severity</h3>
-<p>Two common metrics used to understand the severity of infectious diseases and the factors associated with adverse outcomes are the infection fatality risk (IFR) and case fatality rate (CFR):</p>
+<p>Two common metrics used to understand the severity of infectious diseases and the factors associated with adverse outcomes are the infection fatality risk (IFR) and case fatality rate (CFR). Both are proportions, although the CFR is conventionally called a “rate”:</p>
 <ul>
-<li><strong>Infection Fatality Risk (IFR)</strong>: The percentage of <em>all infected people</em> who die from the disease (including those whose infections were never detected)</li>
-<li><strong>Case Fatality Rate (CFR)</strong>: The percentage of <em>confirmed cases</em> who die from the disease</li>
+<li><strong>Infection Fatality Risk (IFR)</strong>: The proportion of <em>all infected people</em> who die from the disease (including those whose infections were never detected)</li>
+<li><strong>Case Fatality Rate (CFR)</strong>: The proportion of <em>confirmed cases</em> who die from the disease</li>
 </ul>
 <p>Since infections resulting in death are more likely to be recorded, and mild infections (particularly asymptomatic infections) less likely to be recorded, the CFR will almost always be higher than the IFR. Statistical modelling can be used to relate these measures of severity to underlying characteristics collected through case-surveillance data.</p>
 </section>
@@ -443,10 +447,10 @@ Figure&nbsp;1: An example of the prevalence and incidence of HIV in the US over 
 <section id="challenges-in-estimating" class="level3">
 <h3 class="anchored" data-anchor-id="challenges-in-estimating">Challenges in estimating infectious disease burden</h3>
 <p>The majority of the data available for infectious disease monitoring relies on observational data, where a population is followed without actively intervening on an exposure in a randomised way. As a result, estimates of infectious disease burden are often considerably complicated by selection bias, which arises when the selected population observed is different from the general population of interest.</p>
-<div id="fig-biases" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-biases" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Schematic of a hypothetical serosurvey. Recruitment at a grocery store (ascertainment bias) and testing of individuals with recent illness (volunteer bias) give a sample that over-represents infected individuals compared with the population of interest">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-biases-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./biases.webp" class="img-fluid figure-img" style="width:80.0%">
+<img src="./biases.webp" class="img-fluid figure-img" style="width:80.0%" alt="Schematic of a hypothetical serosurvey. Recruitment at a grocery store (ascertainment bias) and testing of individuals with recent illness (volunteer bias) give a sample that over-represents infected individuals compared with the population of interest">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biases-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Schematic showing recruitment-based biases in a hypothetical serosurvey. Figure from: Accorsi <em>et al.</em>
@@ -454,7 +458,7 @@ Figure&nbsp;2: Schematic showing recruitment-based biases in a hypothetical sero
 </figure>
 </div>
 <p>Common causes of selection bias in observational data include: testing policies (which may vary nationally and sub-nationally), individual health-seeking behaviour, test availability, clinician decision-making, and detection rates of different tests. Inaccuracies in the available case-surveillance data may also arise: at data input, due to incomplete/inaccurate reporting or misdiagnosis; and at data collection, due to insufficient surveillance infrastructure and data processing methods.</p>
-<p>Unless these potential sources of bias are well-understood and accounted for they can affect the validity of estimates. For example, the IFR measure of severity requires complete knowledge of both the number of infections and number of deaths. Particularly in the early stages of a pandemic, when testing is either unavailable or sub-optimal, these quantities may be impossible to measure. The CFR is more straightforward to assess, since confirmed infections are more likely to be recorded, but this measure is highly sensitive to testing practices. This was particularly the case during the initial wave of the COVID-19 pandemic, when biases in case-surveillance led to wide variability in national estimates of the case-fatality rate, from 0.1% to over 25%.</p>
+<p>Unless these potential sources of bias are well-understood and accounted for they can affect the validity of estimates. For example, the IFR measure of severity requires complete knowledge of both the number of infections and number of deaths. Particularly in the early stages of a pandemic, when testing is either unavailable or sub-optimal, these quantities may be impossible to measure. The CFR is more straightforward to assess, since confirmed infections are more likely to be recorded, but this measure is highly sensitive to testing practices. This was particularly the case during the initial wave of the COVID-19 pandemic, when biases in case-surveillance led to wide variability in national estimates of the case-fatality rate, from 0.1% to over 25% (World Health Organization, 2020).</p>
 <p>Even when knowledge of these multi-faceted biases is available, statistical methodologies must be carefully chosen to properly control for the biases.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -467,8 +471,8 @@ Figure&nbsp;2: Schematic showing recruitment-based biases in a hypothetical sero
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Incidence of infection is the number of people who acquire an infection within a given period, whereas prevalence is the number of people who have the infection at one time.</li>
-<li>The basic reproduction number, <span class="math inline">\(R_0\)</span>, is the expected number of cases directly generated by one case in a population.</li>
+<li>Incidence of infection is the rate at which people acquire an infection over a given period, whereas prevalence is the proportion of the population who have the infection at one time.</li>
+<li>The basic reproduction number, <span class="math inline">\(R_0\)</span>, is the expected number of cases directly generated by one case in a fully susceptible population, whereas the effective reproduction number, <span class="math inline">\(R_t\)</span>, allows for immunity and control measures changing over time.</li>
 <li>There are various ways to assess the impact of a disease, these include incidence and prevalence, as well as disease severity and the effectiveness of interventions.</li>
 <li>Measuring the burden of infectious disease using observational data is difficult and requires a special class of statistical methods.</li>
 </ul>

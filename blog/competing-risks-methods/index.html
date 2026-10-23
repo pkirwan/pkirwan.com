@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Peter Kirwan">
-<meta name="dcterms.date" content="2025-04-10">
+<meta name="dcterms.date" content="2025-08-19">
 <meta name="description" content="How to handle scenarios where multiple possible events can occur, and the challenges this presents for traditional survival methods.">
 
 <title>Part IV: Competing risks survival methods – Peter Kirwan</title>
@@ -76,14 +76,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b626d73c4c936ccc3cb08be7d45d1df6.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-d55b682e4f7fdcb983c3d765bb3b3e0d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-446cc6686a29dde237fce9e7d5205639.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-d55b682e4f7fdcb983c3d765bb3b3e0d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-d97631db3dfa23958e50037e5c390409.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -337,7 +337,11 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../index.html#blog"> 
-<span class="menu-text">Survival data posts</span></a>
+<span class="menu-text">Blog series</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html#software"> 
+<span class="menu-text">Software</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../index.html#recent-publications"> 
@@ -389,7 +393,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 10, 2025</p>
+        <p class="date">August 19, 2025</p>
       </div>
     </div>
     
@@ -418,7 +422,7 @@ window.Quarto = {
   <li><a href="#fine-gray" id="toc-fine-gray" class="nav-link" data-scroll-target="#fine-gray">Fine-Gray proportional hazards model</a>
   <ul class="collapse">
   <li><a href="#sub-distribution-hazard" id="toc-sub-distribution-hazard" class="nav-link" data-scroll-target="#sub-distribution-hazard">Sub-distribution hazard</a></li>
-  <li><a href="#fine-gray-regression-model" id="toc-fine-gray-regression-model" class="nav-link" data-scroll-target="#fine-gray-regression-model">Fine-Gray regression model</a></li>
+  <li><a href="#fine-gray-regression" id="toc-fine-gray-regression" class="nav-link" data-scroll-target="#fine-gray-regression">Fine-Gray regression model</a></li>
   </ul></li>
   <li><a href="#stratification" id="toc-stratification" class="nav-link" data-scroll-target="#stratification">Stratification</a></li>
   <li><a href="#coming-next" id="toc-coming-next" class="nav-link" data-scroll-target="#coming-next">Coming next</a></li>
@@ -434,21 +438,26 @@ window.Quarto = {
 
 
 
-<p>This is part four of a series on statistical methods for analysing time-to-event, or “survival” data.</p>
+<p>This is part four of a series on statistical methods for infectious disease epidemiology, with a focus on time-to-event, or “survival”, data.</p>
 <section id="competing-risks" class="level2">
 <h2 class="anchored" data-anchor-id="competing-risks">Competing risks</h2>
-<p>In medical cohort studies, multiple study end-points are common (e.g.&nbsp;death, intensive care admission, and discharge). These multiple end-points are known as <em>competing risks</em> and may prevent observation of the event of interest or alter its probability. Treating competing events as ordinary censoring can be problematic when the aim is to estimate the probability of a specific event over time. In particular, the Kaplan-Meier estimator will typically overestimate this probability. Cause-specific Cox models remain useful for modelling cause-specific hazards, but they do not directly estimate the cumulative incidence function in the presence of competing risks.</p>
-<div id="fig-competing-risks" class="quarto-float quarto-figure quarto-figure-center anchored">
+<p>In medical cohort studies, multiple study end-points are common (e.g.&nbsp;death and discharge from hospital). These multiple end-points are known as <em>competing risks</em> and may prevent observation of the event of interest or alter its probability. Treating competing events as ordinary censoring can be problematic when the aim is to estimate the probability of a specific event over time. In particular, the Kaplan-Meier estimator will typically overestimate this probability. Cause-specific Cox models remain useful for modelling cause-specific hazards, but they do not directly estimate the cumulative incidence function in the presence of competing risks.</p>
+<p>Note that not every event is a competing risk. An intermediate event, such as admission to intensive care, can be followed by death or discharge, so does not prevent observation of these events. Processes with intermediate events are instead described by <em>multi-state models</em>, which are the subject of the next post.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-competing-risks" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Diagram with a box labelled Hospital and arrows leading to two boxes, Discharged and Died.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-competing-risks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./competing-risks.png" class="img-fluid figure-img" style="width:60.0%">
+<img src="index_files/figure-html/fig-competing-risks-1.png" class="img-fluid figure-img" alt="Diagram with a box labelled Hospital and arrows leading to two boxes, Discharged and Died." width="480">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-competing-risks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: An example of competing risks in survival data. In this scenario, patients can experience one of three outcomes: death, discharge, or intensive care admission. Each outcome “competes” with the others, and experiencing one prevents the observation of others.
+Figure&nbsp;1: An example of competing risks in survival data. In this scenario, patients admitted to hospital can experience one of two outcomes: death or discharge. Each outcome “competes” with the other, and experiencing one prevents the observation of the other.
 </figcaption>
 </figure>
 </div>
-<p>To correctly address competing risks, “competing risks survival models” are available. In these models an individual is observed over time, with several possible events ‘competing’ until one takes place and the individual transitions to the corresponding state. Importantly there is no assumption of independence for the distribution of the time to competing events and censoring can still be appropriately accounted for.</p>
+</div>
+</div>
+<p>To correctly address competing risks, “competing risks survival models” are available. In these models an individual is observed over time, with several possible events ‘competing’ until one takes place and the individual transitions to the corresponding state. Importantly, these methods do not require an assumption of independence between the times to the competing events, and censoring can still be appropriately accounted for (provided it is independent of the event process).</p>
 </section>
 <section id="cause-specific-functions" class="level2">
 <h2 class="anchored" data-anchor-id="cause-specific-functions">Cause-specific survival functions</h2>
@@ -459,14 +468,14 @@ Figure&nbsp;1: An example of competing risks in survival data. In this scenario,
 <p><span class="math display">\[
 h_j(t) = \lim_{\delta t \downarrow 0} \frac{\Pr(t \leq T &lt; t + \delta t, C=j \mid T \geq t)}{\delta t}
 \]</span></p>
-<p>Defining <span class="math inline">\(f_j(t)\)</span> as the <em>cause-specific</em> density function, and <span class="math inline">\(S(t)=\Pr(T \geq t)\)</span> as the overall survivor function, the relationship shown in <a href="survival-analysis.html#hazard-function">part II of this series</a> still holds in the presence of competing risks:</p>
+<p>Defining <span class="math inline">\(f_j(t)\)</span> as the <em>cause-specific</em> density function, and <span class="math inline">\(S(t)=\Pr(T \geq t)\)</span> as the overall survivor function, the relationship shown in <a href="../../blog/survival-analysis/index.html#hazard-function">part II of this series</a> still holds in the presence of competing risks:</p>
 <p><span class="math display">\[
 h_j(t)=\frac{f_j(t)}{S(t)}
 \]</span></p>
 </section>
 <section id="cause-specific-cumulative-incidence" class="level3">
 <h3 class="anchored" data-anchor-id="cause-specific-cumulative-incidence">Cause-specific cumulative incidence</h3>
-<p>The <em>cause-specific</em> cumulative incidence function, i.e.&nbsp;the probability of surviving until time <span class="math inline">\(t\)</span> and failure from cause <span class="math inline">\(j\)</span>, in the presence of all other risks, is given by:</p>
+<p>The <em>cause-specific</em> cumulative incidence function, i.e.&nbsp;the probability of failure from cause <span class="math inline">\(j\)</span> before time <span class="math inline">\(t\)</span>, in the presence of all other risks, is given by:</p>
 <p><span class="math display">\[
 F_j(t) = \Pr(T &lt; t, C=j)
 \]</span></p>
@@ -484,13 +493,12 @@ F_j(t) &amp;=\int_0^t S(u)h_j(u) du
 <section id="aalen-johansen" class="level2">
 <h2 class="anchored" data-anchor-id="aalen-johansen">Aalen-Johansen estimator</h2>
 <p>The standard non-parametric estimator of the cause-specific incidence function is the Aalen-Johansen estimator, also described as the ‘multi-state version’ of the Kaplan-Meier estimator.</p>
-<p>Firstly, by the non-parametric Nelson-Aalen estimator of the cause-specific hazard function for cause <span class="math inline">\(j\)</span>:</p>
+<p>The Aalen-Johansen estimator is built from the non-parametric Nelson-Aalen estimator of the cause-specific hazard function for cause <span class="math inline">\(j\)</span>, which has increments:</p>
 <p><span class="math display">\[
 \hat{h}_j(t) = \frac{d_{j}(t)}{n(t\mbox{-})}
 \]</span></p>
-where <span class="math inline">\(d_{j}(t)\)</span> is the number of deaths due to cause <span class="math inline">\(j\)</span> at time <span class="math inline">\(t\)</span>, and <span class="math inline">\(n(t\mbox{-})\)</span> is the number of individuals at risk just prior to <span class="math inline">\(t\)</span>.
-<p></p>
-<p>With the Kaplan-Meier estimate of the survivor function defined in <a href="classical-survival-methods.html#kaplan-meier">part III of this series</a>, <span class="math inline">\(\hat{S}(t)\)</span>, the Aalen-Johansen estimator for the cause-specific cumulative incidence function then follows from the equation above:</p>
+<p>where <span class="math inline">\(d_{j}(t)\)</span> is the number of events due to cause <span class="math inline">\(j\)</span> at time <span class="math inline">\(t\)</span>, and <span class="math inline">\(n(t\mbox{-})\)</span> is the number of individuals at risk just prior to <span class="math inline">\(t\)</span>.</p>
+<p>With the Kaplan-Meier estimate of the survivor function defined in <a href="../../blog/classical-survival-methods/index.html#kaplan-meier">part III of this series</a>, <span class="math inline">\(\hat{S}(t)\)</span>, the Aalen-Johansen estimator for the cause-specific cumulative incidence function then follows from the equation above:</p>
 <p><span class="math display">\[
 \hat{F}_j(t) = \sum_{t_k \leq t} \hat{S}(t_{k-1})\frac{d_{j}(t_k)}{n(t_k\mbox{-})}
 \]</span></p>
@@ -501,87 +509,81 @@ where <span class="math inline">\(d_{j}(t)\)</span> is the number of deaths due 
 <p>We can illustrate the difference between the naive Kaplan-Meier estimate and the Aalen-Johansen estimator for cumulative incidence in a simple example. Consider a dataset of 10 patients with follow-up times and event types (death, discharge, or censoring):</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-lst-cap="Comparing naive and Aalen-Johansen cumulative incidence estimates in R."><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>cr_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">time   =</span> <span class="fu">c</span>( <span class="dv">2</span>,    <span class="dv">3</span>,    <span class="dv">4</span>,      <span class="dv">5</span>,     <span class="dv">6</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>              <span class="dv">7</span>,    <span class="dv">8</span>,    <span class="dv">9</span>,     <span class="dv">10</span>,    <span class="dv">11</span>),</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">status =</span> <span class="fu">c</span>(<span class="st">"death"</span>, <span class="st">"discharge"</span>, <span class="st">"censor"</span>, <span class="st">"death"</span>, <span class="st">"discharge"</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>             <span class="st">"death"</span>, <span class="st">"censor"</span>,    <span class="st">"discharge"</span>, <span class="st">"death"</span>, <span class="st">"censor"</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Naive estimate: treat discharge as ordinary censoring</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>km_fit  <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status <span class="sc">==</span> <span class="st">"death"</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> cr_data)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Aalen-Johansen: F_j(t) = sum S(t_{k-1}) * d_j(t_k) / n(t_k)</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>overall <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status <span class="sc">!=</span> <span class="st">"censor"</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> cr_data)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>S_prev  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">head</span>(overall<span class="sc">$</span>surv, <span class="sc">-</span><span class="dv">1</span>))</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>d_death <span class="ot">&lt;-</span> <span class="fu">sapply</span>(overall<span class="sc">$</span>time, <span class="cf">function</span>(t) {</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(cr_data<span class="sc">$</span>time <span class="sc">==</span> t <span class="sc">&amp;</span> cr_data<span class="sc">$</span>status <span class="sc">==</span> <span class="st">"death"</span>)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>cif_aj  <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(S_prev <span class="sc">*</span> d_death <span class="sc">/</span> overall<span class="sc">$</span>n.risk)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">time    =</span> overall<span class="sc">$</span>time,</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_risk  =</span> overall<span class="sc">$</span>n.risk,</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">d_death =</span> d_death,</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">cif_aj  =</span> <span class="fu">round</span>(cif_aj, <span class="dv">2</span>),</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">cif_km  =</span> <span class="fu">round</span>(<span class="dv">1</span> <span class="sc">-</span> km_fit<span class="sc">$</span>surv, <span class="dv">2</span>)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>cr_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">time   =</span> <span class="fu">c</span>( <span class="dv">2</span>,    <span class="dv">3</span>,    <span class="dv">4</span>,      <span class="dv">5</span>,     <span class="dv">6</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>              <span class="dv">7</span>,    <span class="dv">8</span>,    <span class="dv">9</span>,     <span class="dv">10</span>,    <span class="dv">11</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">status =</span> <span class="fu">c</span>(<span class="st">"death"</span>, <span class="st">"discharge"</span>, <span class="st">"censor"</span>, <span class="st">"death"</span>, <span class="st">"discharge"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>             <span class="st">"death"</span>, <span class="st">"censor"</span>,    <span class="st">"discharge"</span>, <span class="st">"death"</span>, <span class="st">"censor"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Naive estimate: treat discharge as ordinary censoring</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>km_fit <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status <span class="sc">==</span> <span class="st">"death"</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> cr_data)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Aalen-Johansen: with a multi-state outcome, survfit() returns the estimated</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># probability of being in each state; the first level is censoring</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>aj_fit <span class="ot">&lt;-</span> <span class="fu">survfit</span>(</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Surv</span>(time, <span class="fu">factor</span>(status, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"censor"</span>, <span class="st">"death"</span>, <span class="st">"discharge"</span>))) <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> cr_data</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>cif_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">time   =</span> <span class="fu">c</span>(<span class="dv">0</span>, aj_fit<span class="sc">$</span>time),</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">cif_aj =</span> <span class="fu">c</span>(<span class="dv">0</span>, aj_fit<span class="sc">$</span>pstate[, <span class="st">"death"</span>]),</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">cif_km =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span> <span class="sc">-</span> <span class="fu">summary</span>(km_fit, <span class="at">times =</span> aj_fit<span class="sc">$</span>time, <span class="at">extend =</span> <span class="cn">TRUE</span>)<span class="sc">$</span>surv)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(cif_df, <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   time n_risk d_death cif_aj cif_km
-1     2     10       1   0.10   0.10
-2     3      9       0   0.10   0.10
-3     4      8       0   0.10   0.10
-4     5      7       1   0.21   0.23
-5     6      6       0   0.21   0.23
-6     7      5       1   0.33   0.38
-7     8      4       0   0.33   0.38
-8     9      3       0   0.33   0.38
-9    10      2       1   0.48   0.69
-10   11      1       0   0.48   0.69</code></pre>
+<pre><code>   time cif_aj cif_km
+1     0   0.00   0.00
+2     2   0.10   0.10
+3     3   0.10   0.10
+4     4   0.10   0.10
+5     5   0.21   0.23
+6     6   0.21   0.23
+7     7   0.33   0.38
+8     8   0.33   0.38
+9     9   0.33   0.38
+10   10   0.48   0.69
+11   11   0.48   0.69</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-lst-cap="Comparing naive and Aalen-Johansen cumulative incidence estimates in R."><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cif_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">time   =</span> <span class="fu">c</span>(<span class="dv">0</span>, overall<span class="sc">$</span>time),</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cif_aj =</span> <span class="fu">c</span>(<span class="dv">0</span>, cif_aj),</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">cif_km =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span> <span class="sc">-</span> km_fit<span class="sc">$</span>surv)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cif_df, <span class="fu">aes</span>(<span class="at">x =</span> time)) <span class="sc">+</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">y =</span> cif_km, <span class="at">color =</span> <span class="st">"Naive (1 - KM)"</span>), <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">y =</span> cif_aj, <span class="at">color =</span> <span class="st">"Aalen-Johansen"</span>), <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="cn">NULL</span>,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Naive (1 - KM)"</span> <span class="ot">=</span> <span class="st">"#2C3E50"</span>, <span class="st">"Aalen-Johansen"</span> <span class="ot">=</span> <span class="st">"#E74C3C"</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="cn">NA</span>), <span class="at">name =</span> <span class="st">"Cumulative incidence of death"</span>) <span class="sc">+</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Follow-up time"</span>) <span class="sc">+</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-lst-cap="Comparing naive and Aalen-Johansen cumulative incidence estimates in R."><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cif_df, <span class="fu">aes</span>(<span class="at">x =</span> time)) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">y =</span> cif_km, <span class="at">colour =</span> <span class="st">"Naive (1 - KM)"</span>), <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">y =</span> cif_aj, <span class="at">colour =</span> <span class="st">"Aalen-Johansen"</span>), <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Naive (1 - KM)"</span> <span class="ot">=</span> blog_cols[[<span class="st">"dark"</span>]],</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Aalen-Johansen"</span> <span class="ot">=</span> blog_cols[[<span class="st">"red"</span>]]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="cn">NA</span>), <span class="at">name =</span> <span class="st">"Cumulative incidence of death"</span>) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Follow-up time"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/lst-competing-risk-cif-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/lst-competing-risk-cif-1.png" class="img-fluid figure-img" alt="Step plot of cumulative incidence of death over follow-up time. The naive one minus Kaplan-Meier curve lies above the Aalen-Johansen curve, reaching about 0.69 compared with about 0.48 at the end of follow-up." width="672"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>The Aalen-Johansen estimate is equivalent to the sum <span class="math inline">\(\hat{F}_j(t) = \sum_{t_k \leq t} \hat{S}(t_{k-1})\, d_{j}(t_k)/n(t_k\mbox{-})\)</span> given above, where <span class="math inline">\(\hat{S}\)</span> is the Kaplan-Meier estimate of surviving all causes. Other packages, such as <code>cmprsk</code> and <code>tidycmprsk</code>, also provide cumulative incidence estimates and Fine-Gray regression.</p>
 <p>The naive curve lies above the Aalen-Johansen estimate because discharge is handled as if it were non-informative censoring, even though it removes patients from ever experiencing the event of interest.</p>
 </section>
 </section>
 <section id="fine-gray" class="level2">
 <h2 class="anchored" data-anchor-id="fine-gray">Fine-Gray proportional hazards model</h2>
-<p>Analogous to the Cox proportional hazards model described in <a href="classical-survival-methods.html">the last post</a>, the Fine-Gray proportional hazards model may be used estimate the hazard of a competing event (termed the sub-distribution hazard) among those yet to experience an event by time <span class="math inline">\(t\)</span>. The risk set for the sub-distribution hazard consists of both those who have yet to experience any event, and those who have yet to experience the event of interest, but who have experienced a competing event.</p>
+<p>Analogous to the Cox proportional hazards model described in <a href="../../blog/classical-survival-methods/index.html">the last post</a>, the Fine-Gray proportional hazards model may be used to estimate the hazard of the event of interest (termed the sub-distribution hazard) among those yet to experience that event by time <span class="math inline">\(t\)</span>. The risk set for the sub-distribution hazard consists of both those who have yet to experience any event, and those who have already experienced a competing event (who remain in the risk set).</p>
 <section id="sub-distribution-hazard" class="level3">
 <h3 class="anchored" data-anchor-id="sub-distribution-hazard">Sub-distribution hazard</h3>
-<p>The sub-distribution hazard is therefore defined as the instantaneous risk of experiencing a competing event <span class="math inline">\(j\)</span> given that the individual has not already experienced this event:</p>
+<p>The sub-distribution hazard is therefore defined as the instantaneous risk of experiencing the event of interest <span class="math inline">\(j\)</span> given that the individual has not already experienced this event:</p>
 <p><span class="math display">\[
 \lambda_j(t)=\lim_{\delta t \downarrow 0}{\frac{\Pr\left(t \leq T &lt; t + \delta t, C=j \mid T&gt;t \text{ or} \left(T \le t, C \neq j\right)\right)}{\delta t}}
 \]</span></p>
 <p>where, as before, <span class="math inline">\(C\)</span> is the random variable for the event that occurs.</p>
 </section>
-<section id="fine-gray-regression-model" class="level3">
-<h3 class="anchored" data-anchor-id="fine-gray-regression-model">Fine-Gray regression model</h3>
+<section id="fine-gray-regression" class="level3">
+<h3 class="anchored" data-anchor-id="fine-gray-regression">Fine-Gray regression model</h3>
 <p>Fine-Gray regression links the sub-distribution hazard, <span class="math inline">\(\lambda_{j}\)</span>, to the cause-specific cumulative incidence function, <span class="math inline">\(F_{j}\)</span>, through the relationship:</p>
 <p><span class="math display">\[ \lambda_{j}(t) = - \frac{d}{dt} \log{(1-F_{j}(t))} \]</span></p>
 <p>As with the Cox proportional hazards model, a proportional hazards regression model is assumed, where the hazard of cause <span class="math inline">\(j\)</span> at time <span class="math inline">\(t\)</span> for individual <span class="math inline">\(i\)</span> is:</p>
@@ -591,16 +593,16 @@ where <span class="math inline">\(d_{j}(t)\)</span> is the number of deaths due 
 <p>with <span class="math inline">\(\lambda^{(0)}_{j}(t)\)</span> being the baseline sub-distribution hazard for cause <span class="math inline">\(j\)</span>. Covariate coefficients are estimated by maximising the weighted partial likelihood <span class="math inline">\(L(\boldsymbol{\beta})\)</span>:</p>
 <p><span class="math display">\[
 L(\boldsymbol{\beta}) = \prod_{i \in
-D}\frac{\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_{d_i})}{\sum_{j \in
-R_i}w_{i,j}\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_j)}
+\mathcal{E}}\frac{\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_{d_i})}{\sum_{\ell \in
+R_i}w_{i,\ell}\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_\ell)}
 \]</span></p>
-<p>where <span class="math inline">\(w_{i,j}\)</span> are weights which account for the increasing probability of censoring with increasing follow-up time, <span class="math inline">\(D = \{T_1, T_2, \ldots, T_n\}\)</span> are the set of distinct failure times, <span class="math inline">\(R_i\)</span> is the set of all individuals who are at risk of failure immediately before time <span class="math inline">\(T_i\)</span>, <span class="math inline">\(\boldsymbol{z}_{d_i}\)</span> is the covariate vector for an individual who failed at time <span class="math inline">\(T_i\)</span>, and <span class="math inline">\(\boldsymbol{z}_j\)</span> is the covariate vector for the <span class="math inline">\(j\)</span>th individual at risk at time <span class="math inline">\(T_i\)</span>. Covariate effects on the sub-distribution hazard may be interpreted as covariate effects on the cumulative incidence of a competing event.</p>
+<p>where <span class="math inline">\(w_{i,\ell}\)</span> are inverse probability of censoring weights, which down-weight individuals who have experienced a competing event to account for the probability that they would have been censored had they remained under follow-up, <span class="math inline">\(\mathcal{E} = \{T_1, T_2, \ldots, T_n\}\)</span> are the set of distinct failure times, <span class="math inline">\(R_i\)</span> is the set of all individuals who are at risk of failure immediately before time <span class="math inline">\(T_i\)</span> (including those who have experienced a competing event), <span class="math inline">\(\boldsymbol{z}_{d_i}\)</span> is the covariate vector for an individual who failed at time <span class="math inline">\(T_i\)</span>, and <span class="math inline">\(\boldsymbol{z}_\ell\)</span> is the covariate vector for the <span class="math inline">\(\ell\)</span>th individual at risk at time <span class="math inline">\(T_i\)</span>. Covariate effects on the sub-distribution hazard may be interpreted as covariate effects on the cumulative incidence of the event of interest.</p>
 </section>
 </section>
 <section id="stratification" class="level2">
 <h2 class="anchored" data-anchor-id="stratification">Stratification</h2>
 <p>Whilst proportional hazards models are a common method for incorporating covariates in survival analyses, a more straightforward approach is through stratification. In a stratified model the population is subdivided according to covariate group (or strata), the survival is compared within each stratum, and the differences within stratum are combined to give an overall comparison.</p>
-<p>As stratification allows the baseline hazard to vary across strata it is sometimes used to accommodate non-proportional hazards in Cox and Fine-Gray proportional hazards.</p>
+<p>As stratification allows the baseline hazard to vary across strata it is sometimes used to accommodate non-proportional hazards in Cox and Fine-Gray proportional hazards. Note that the effect of the stratifying variable itself is not estimated, so stratification is most useful for variables which are not of direct interest.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -632,13 +634,14 @@ R_i}w_{i,j}\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_j)}
 <h2 class="anchored" data-anchor-id="references">References</h2>
 <ul>
 <li>Aalen OO, Johansen S. <a href="http://www.jstor.org/stable/4615704">An Empirical Transition Matrix for Non-Homogeneous Markov Chains Based on Censored Observations</a>. <em>Scand Stat Theory Appl</em>. 1978;5(3):141-50.</li>
-<li>Borgan, Ø. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/9781118445112.stat06045%22">Nelson-Aalen Estimator</a>. <em>Wiley StatsRef: Statistics Reference Online</em>. 2014.</li>
+<li>Borgan, Ø. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/9781118445112.stat06045">Nelson-Aalen Estimator</a>. <em>Wiley StatsRef: Statistics Reference Online</em>. 2014.</li>
 <li>Collett, D. <a href="https://www.taylorfrancis.com/books/mono/10.1201/9781003282525/modelling-survival-data-medical-research-david-collett">Modelling Survival Data in Medical Research</a>. <em>Chapman &amp; Hall/CRC Texts in Statistical Science</em>. 2023.</li>
-<li>Fine JP, Gray RJ. <a href="https://www.tandfonline.com/doi/abs/10.1080/01621459.1999.10474144%22">A proportional hazards model for the subdistribution of a competing risk</a>. <em>J Am Stat Assoc</em>. 1999;94(446):496-509.</li>
+<li>Fine JP, Gray RJ. <a href="https://www.tandfonline.com/doi/abs/10.1080/01621459.1999.10474144">A proportional hazards model for the subdistribution of a competing risk</a>. <em>J Am Stat Assoc</em>. 1999;94(446):496-509.</li>
 <li>Hosmer DW, Lemeshow S. <a href="https://onlinelibrary.wiley.com/doi/book/10.1002/9780470258019">Applied survival analysis: Regression modeling of time to event data</a>. <em>Wiley</em>. 1999.</li>
 </ul>
 <div class="post-navigation">
 <p><a href="../../blog/classical-survival-methods/index.html">← Previous post</a></p>
+<p><a href="../../index.html#blog">Back to all posts</a></p>
 <p><a href="../../blog/multi-state-models/index.html">Next post →</a></p>
 </div>
 

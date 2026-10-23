@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Peter Kirwan">
-<meta name="dcterms.date" content="2025-05-08">
+<meta name="dcterms.date" content="2025-12-23">
 <meta name="description" content="An overview of different observational study designs and the potential biases that can arise, including selection bias and confounding.">
 
 <title>Part VIII: Study designs and biases – Peter Kirwan</title>
@@ -76,14 +76,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b626d73c4c936ccc3cb08be7d45d1df6.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-d55b682e4f7fdcb983c3d765bb3b3e0d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-446cc6686a29dde237fce9e7d5205639.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-d55b682e4f7fdcb983c3d765bb3b3e0d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-d97631db3dfa23958e50037e5c390409.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -337,7 +337,11 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../index.html#blog"> 
-<span class="menu-text">Survival data posts</span></a>
+<span class="menu-text">Blog series</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html#software"> 
+<span class="menu-text">Software</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../index.html#recent-publications"> 
@@ -389,7 +393,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">May 8, 2025</p>
+        <p class="date">December 23, 2025</p>
       </div>
     </div>
     
@@ -433,45 +437,49 @@ window.Quarto = {
 
 
 
-<p>This is part eight of a series on statistical methods for analysing time-to-event, or “survival” data.</p>
+<p>This is part eight of a series on statistical methods for infectious disease epidemiology, with a focus on time-to-event, or “survival”, data.</p>
 <p>In this final post of this series I’ll describe a number of observational study designs and several potential sources of bias common to these studies.</p>
 <section id="observational-study-designs" class="level2">
 <h2 class="anchored" data-anchor-id="observational-study-designs">Observational study designs</h2>
 <p>Observational studies are common in epidemiology and a valuable resource for understanding infectious disease burden. Several different types of observational study design exist, which may be more or less suitable depending on the research question, the need to control for specific biases, and the feasibility of data collection.</p>
-<div id="fig-study-designs" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-study-designs" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Pyramid of study designs, from case series and expert opinion at the base, then cross-sectional studies, case-control studies, cohort studies, trials, and systematic reviews and meta-analyses at the top, with an arrow indicating better quality evidence towards the top.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-study-designs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./study-designs.png" class="img-fluid figure-img">
+<img src="index_files/figure-html/fig-study-designs-1.png" class="img-fluid figure-img" alt="Pyramid of study designs, from case series and expert opinion at the base, then cross-sectional studies, case-control studies, cohort studies, trials, and systematic reviews and meta-analyses at the top, with an arrow indicating better quality evidence towards the top." width="480">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-study-designs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: A hierarchy of different types of study designs and the perceived quality of the evidence. Figure from: Bodicoat D.
+Figure&nbsp;1: A hierarchy of different types of study designs and the perceived quality of the evidence. Adapted from: Bodicoat D.
 </figcaption>
 </figure>
 </div>
-<p>Table 1 shows a <span class="math inline">\(2 \times 2\)</span> table which may be used to group participants in observational studies and to inform the calculation of standard statistical measures.</p>
+</div>
+</div>
+<p><a href="#tbl-two-by-two" class="quarto-xref">Table&nbsp;1</a> shows a <span class="math inline">\(2 \times 2\)</span> table which may be used to group participants in observational studies and to inform the calculation of standard statistical measures.</p>
+<div id="tbl-two-by-two" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-two-by-two-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: A <span class="math inline">\(2 \times 2\)</span> table of outcomes and exposures.
+</figcaption>
+<div aria-describedby="tbl-two-by-two-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th></th>
 <th></th>
-<th style="text-align: center;"><strong>Outcome</strong></th>
-<th style="text-align: center;"></th>
+<th style="text-align: center;"><strong>Outcome: Yes</strong></th>
+<th style="text-align: center;"><strong>Outcome: No</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td></td>
-<td></td>
-<td style="text-align: center;"><strong>Yes</strong></td>
-<td style="text-align: center;"><strong>No</strong></td>
-</tr>
-<tr class="even">
 <td><strong>Exposure</strong></td>
 <td><strong>Yes</strong></td>
 <td style="text-align: center;"><span class="math inline">\(A\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(B\)</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td></td>
 <td><strong>No</strong></td>
 <td style="text-align: center;"><span class="math inline">\(C\)</span></td>
@@ -479,7 +487,9 @@ Figure&nbsp;1: A hierarchy of different types of study designs and the perceived
 </tr>
 </tbody>
 </table>
-<p>Table 1: A <span class="math inline">\(2 \times 2\)</span> table of outcomes and exposures.</p>
+</div>
+</figure>
+</div>
 <section id="cross-sectional-studies" class="level3">
 <h3 class="anchored" data-anchor-id="cross-sectional-studies">Cross-sectional studies</h3>
 <p>Cross-sectional studies may be used to assess:</p>
@@ -495,11 +505,11 @@ Figure&nbsp;1: A hierarchy of different types of study designs and the perceived
 </section>
 <section id="test-negative-case-control-studies" class="level3">
 <h3 class="anchored" data-anchor-id="test-negative-case-control-studies">Test-negative case-control studies</h3>
-<p>Test-negative case-control studies are a sub-type of case-control study. These studies aim to minimise bias specifically as a result of test-seeking behaviour by selecting only individuals who test for a disease. As for case-control studies, the cases are individuals who test positive, controls are those who test negative, and again the odds of being exposed are compared between cases and controls.</p>
+<p>Test-negative case-control studies are a sub-type of case-control study, commonly used to estimate vaccine effectiveness. These studies aim to minimise bias specifically as a result of test-seeking behaviour by selecting only individuals who test for a disease. As for case-control studies, the cases are individuals who test positive, controls are those who test negative, and again the odds of being exposed are compared between cases and controls. Since individuals are only included if they were tested, the design implicitly conditions on testing, so it remains important to consider whether the factors that lead to testing could differ between exposure groups (see collider bias below).</p>
 </section>
 <section id="cohort-studies" class="level3">
 <h3 class="anchored" data-anchor-id="cohort-studies">Cohort studies</h3>
-<p>In cohort studies participants are selected based on their exposure status and followed up over time. The incidence of the outcome of interest is compared between individuals with and without the exposure using the <em>relative risk</em>:</p>
+<p>In cohort studies participants are selected based on their exposure status and followed up over time, either prospectively or retrospectively using existing records. The incidence of the outcome of interest is compared between individuals with and without the exposure using the <em>relative risk</em>:</p>
 <p><span class="math display">\[
 \frac{A/(A+B)}{C/(C+D)}
 \]</span></p>
@@ -544,7 +554,7 @@ Exposure Yes  No
               0.140               0.400               2.582               2.250 </code></pre>
 </div>
 </div>
-<p>The same four cell counts therefore answer different questions: prevalence in cross-sectional studies, odds ratios in case-control studies, and risks or risk ratios in cohort studies.</p>
+<p>The same four cell counts therefore answer different questions: prevalence in cross-sectional studies, odds ratios in case-control studies, and risks or risk ratios in cohort studies. Not every measure is valid for every design. For example, in a case-control study the numbers of cases and controls are fixed by the study design, so the prevalence of the outcome and the relative risk cannot be estimated directly from the table, whereas the odds ratio can.</p>
 </section>
 </section>
 <section id="biases-in-observational-studies" class="level2">
@@ -556,7 +566,7 @@ Exposure Yes  No
 </section>
 <section id="collider-bias" class="level3">
 <h3 class="anchored" data-anchor-id="collider-bias">Collider bias</h3>
-<p>Collider bias, or selection bias, occurs when individuals are selected into an analysis by conditioning on a common “collider” variable (a variable which is influenced by two other variables).</p>
+<p>Collider bias, a common form of selection bias, occurs when individuals are selected into an analysis by conditioning on a common “collider” variable (a variable which is influenced by two other variables).</p>
 <p><a href="#fig-collider-bias" class="quarto-xref">Figure&nbsp;2</a> shows an example of collider bias: people who are regular smokers and people at high risk of severe COVID-19 illness are both more likely to be admitted to hospital. By conditioning on hospitalisation a distorted association between smoking and COVID-19 mortality could be induced, and this bias may occur in either a positive or negative direction. For example: a negative association between smoking and COVID-19 severity was reported by more than one early risk-factor study for COVID-19, with a review concluding this result may have been a result of collider bias.</p>
 <div id="fig-collider-bias" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -565,7 +575,7 @@ Exposure Yes  No
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="384"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" alt="Causal diagram with arrows from Regular smoker and from COVID-19 severity to Hospitalisation, which is enclosed in a box. A dashed line without arrowheads joins Regular smoker and COVID-19 severity." width="384"></p>
 </figure>
 </div>
 </div>
@@ -589,14 +599,14 @@ Figure&nbsp;2: Causal diagram showing the effect of collider bias, where conditi
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="384"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" alt="Causal diagram with arrows from Age group to COVID-19 severity and to Vaccination. A dashed line without arrowheads joins COVID-19 severity and Vaccination." width="384"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-confounding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Causal diagram showing the effect of confounding, where not conditioning on age group induces a distorted association between vaccination and COVID-19 severity. Conditioned on variables have bounding boxes, distorted associations are shown as dashed lines.
+Figure&nbsp;3: Causal diagram showing the effect of confounding, where not conditioning on age group induces a distorted association between vaccination and COVID-19 severity. Distorted associations are shown as dashed lines.
 </figcaption>
 </figure>
 </div>
@@ -638,12 +648,12 @@ Figure&nbsp;3: Causal diagram showing the effect of confounding, where not condi
 4          3          0.152     0.149</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" data-lst-cap="Sensitivity analysis for epidemic phase bias in R."><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(epb_df, <span class="fu">aes</span>(<span class="at">x =</span> shift_days, <span class="at">y =</span> estimated_risk)) <span class="sc">+</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"#E74C3C"</span>, <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#E74C3C"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">colour =</span> blog_cols[[<span class="st">"red"</span>]], <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> blog_cols[[<span class="st">"red"</span>]], <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">yintercept =</span> epb_df<span class="sc">$</span>true_risk[<span class="dv">1</span>],</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"gray40"</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"gray40"</span></span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span>,</span>
@@ -651,17 +661,16 @@ Figure&nbsp;3: Causal diagram showing the effect of confounding, where not condi
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"True risk"</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="fl">3.5</span></span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Shift (days)"</span>, <span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Estimated severe risk"</span>) <span class="sc">+</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Estimated severe risk"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/lst-epidemic-phase-bias-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/lst-epidemic-phase-bias-1.png" class="img-fluid figure-img" alt="Line plot of estimated risk of severe outcome against the shift in days, falling from about 0.18 with no shift to about 0.15 with a shift of 3 days, approaching a dashed horizontal line at the true risk of about 0.15." width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>When no shift is applied, the estimated risk of severe outcomes is biased downwards due to the faster symptom onset among severe cases. As the shift increases, the estimated risk approaches the true risk.</p>
+<p>When no shift is applied, the estimated risk of severe outcomes is biased upwards, because the faster symptom onset among severe cases means they are more likely to have an onset date within the observation window than mild cases. As the shift increases, the estimated risk approaches the true risk, which is recovered when the shift equals the true difference in time to symptom onset (3 days).</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -696,6 +705,7 @@ Figure&nbsp;3: Causal diagram showing the effect of confounding, where not condi
 </ul>
 <div class="post-navigation">
 <p><a href="../../blog/causal-inference/index.html">← Previous post</a></p>
+<p><a href="../../index.html#blog">Back to all posts</a></p>
 </div>
 
 

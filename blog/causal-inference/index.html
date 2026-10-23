@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Peter Kirwan">
-<meta name="dcterms.date" content="2025-05-01">
-<meta name="description" content="Challenges and methods for inferring causal relationships from observational data, including propensity score matching.">
+<meta name="dcterms.date" content="2025-11-18">
+<meta name="description" content="Challenges and methods for inferring causal relationships from observational data, including inverse probability weighting, matching, and standardisation.">
 
 <title>Part VII: Key concepts in causal inference – Peter Kirwan</title>
 <style>
@@ -76,14 +76,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b626d73c4c936ccc3cb08be7d45d1df6.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-d55b682e4f7fdcb983c3d765bb3b3e0d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-446cc6686a29dde237fce9e7d5205639.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-d55b682e4f7fdcb983c3d765bb3b3e0d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-d97631db3dfa23958e50037e5c390409.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -133,7 +133,7 @@ window.Quarto = {
 
 <link rel="stylesheet" href="../../common/style.css">
 <meta property="og:title" content="Part VII: Key concepts in causal inference – Peter Kirwan">
-<meta property="og:description" content="Challenges and methods for inferring causal relationships from observational data, including propensity score matching.">
+<meta property="og:description" content="Challenges and methods for inferring causal relationships from observational data, including inverse probability weighting, matching, and standardisation.">
 <meta property="og:image" content="https://www.pkirwan.com/blog/causal-inference/causal-inference-banner.png">
 <meta property="og:site_name" content="Peter Kirwan">
 <meta property="og:image:height" content="600">
@@ -337,7 +337,11 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../index.html#blog"> 
-<span class="menu-text">Survival data posts</span></a>
+<span class="menu-text">Blog series</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html#software"> 
+<span class="menu-text">Software</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../index.html#recent-publications"> 
@@ -366,7 +370,7 @@ window.Quarto = {
       <h1 class="title">Part VII: Key concepts in causal inference</h1>
                   <div>
         <div class="description">
-          Challenges and methods for inferring causal relationships from observational data, including propensity score matching.
+          Challenges and methods for inferring causal relationships from observational data, including inverse probability weighting, matching, and standardisation.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -389,7 +393,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">May 1, 2025</p>
+        <p class="date">November 18, 2025</p>
       </div>
     </div>
     
@@ -418,7 +422,7 @@ window.Quarto = {
   <li><a href="#r-example-ipw" id="toc-r-example-ipw" class="nav-link" data-scroll-target="#r-example-ipw">R example</a></li>
   <li><a href="#matching" id="toc-matching" class="nav-link" data-scroll-target="#matching">Matching</a></li>
   <li><a href="#r-example-matching" id="toc-r-example-matching" class="nav-link" data-scroll-target="#r-example-matching">R example</a></li>
-  <li><a href="#standardisation" id="toc-standardisation" class="nav-link" data-scroll-target="#standardisation">Standardization</a></li>
+  <li><a href="#standardisation" id="toc-standardisation" class="nav-link" data-scroll-target="#standardisation">Standardisation</a></li>
   <li><a href="#r-example-standardisation" id="toc-r-example-standardisation" class="nav-link" data-scroll-target="#r-example-standardisation">R example</a></li>
   </ul></li>
   <li><a href="#comparing-methods" id="toc-comparing-methods" class="nav-link" data-scroll-target="#comparing-methods">Comparing methods</a></li>
@@ -435,8 +439,8 @@ window.Quarto = {
 
 
 
-<p>This is part seven of a series on statistical methods for analysing time-to-event, or “survival” data.</p>
-<p>In this post I’ll introduce the concept of causal inference from observational data and provide an outline of three common methods to compute the average causal effect.</p>
+<p>This is part seven of a series on statistical methods for infectious disease epidemiology, with a focus on time-to-event, or “survival”, data.</p>
+<p>In this post I’ll introduce the concept of causal inference from observational data and provide an outline of three common methods to compute the average causal effect. For simplicity, the examples use a binary outcome rather than a time-to-event outcome, but the same ideas extend to survival data.</p>
 <section id="assessing-causal-effects" class="level2">
 <h2 class="anchored" data-anchor-id="assessing-causal-effects">Assessing causal effects</h2>
 <p>In trial settings, well-designed randomised experiments, where the treated and untreated are theoretically exchangeable (or <em>exogenous</em>), provide a rigorous way to assess causal effects within a specific population. Under these ideal conditions, any observed association between the treatment and the outcome can be more confidently interpreted as causation, due to the minimisation of confounding and selection bias. However, even randomised trials have limitations, with potential issues including external validity or the <em>Hawthorne effect</em> - where participants modify their behaviour in response to being observed.</p>
@@ -452,7 +456,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="384"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" alt="Causal diagram with three nodes. C has arrows to A and to Y, and A has an arrow to Y." width="384"></p>
 </figure>
 </div>
 </div>
@@ -471,7 +475,7 @@ Figure&nbsp;1: Example of a causal DAG representing discrete measurements for tr
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="384"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" alt="Local independence graph with three nodes. C has an arrow to A, and A has an arrow to Y. There is no arrow from C to Y." width="384"></p>
 </figure>
 </div>
 </div>
@@ -506,7 +510,7 @@ Figure&nbsp;2: Example of a local independence graph representing continuous pro
 \Pr(A = a \mid Z = z) &gt; 0 \quad\text{for all } z \text{ where } \Pr(Z = z) \neq 0
 \]</span></p></li>
 </ol>
-<p>Among these conditions, consistency and positivity are usually straightforward to check in observational studies whilst exchangeability relies on the assumption that all predictors of an outcome have been measured. It is usually impossible to guarantee exchangeability, but understanding the potential for biases such as confounding and collider bias (defined below) can inform which covariates to include such that the assumption will be approximately true.</p>
+<p>Among these conditions, positivity can be checked empirically in observational studies (for example by looking for covariate levels where nobody is treated), whereas consistency relies on treatment being well-defined, and exchangeability relies on the assumption that all predictors of an outcome have been measured. It is usually impossible to guarantee exchangeability, but understanding the potential for biases such as confounding and collider bias (defined in the next post) can inform which covariates to include such that the assumption will be approximately true.</p>
 <p>If the three identifiability conditions are fulfilled, a (hypothetical) randomised experiment, known as a <em>target trial</em>, may be emulated using causal inference from observational data, with the average causal effect quantified as <span class="math inline">\(E(Y^{a = 1}) - E(Y^{a = 0})\)</span>.</p>
 </section>
 <section id="r-example-confounding" class="level3">
@@ -515,7 +519,7 @@ Figure&nbsp;2: Example of a local independence graph representing continuous pro
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-lst-cap="Simulating confounding in an observational study in R."><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">600</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>causal_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">z =</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.45</span>))</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>causal_data<span class="sc">$</span>y0 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fu">plogis</span>(<span class="sc">-</span><span class="fl">2.2</span> <span class="sc">+</span> <span class="fl">1.2</span> <span class="sc">*</span> causal_data<span class="sc">$</span>z))</span>
@@ -533,10 +537,10 @@ Figure&nbsp;2: Example of a local independence graph representing continuous pro
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     crude_risk_difference true_average_causal_effect 
-                     0.006                     -0.052 </code></pre>
+                    -0.022                     -0.061 </code></pre>
 </div>
 </div>
-<p>In this setup the crude comparison is biased because treated individuals are more likely to come from the higher-risk covariate stratum.</p>
+<p>In this setup the crude comparison is biased because treated individuals are more likely to come from the higher-risk covariate stratum. The crude risk difference (-0.022) understates the protective effect of treatment compared with the true average causal effect (-0.061).</p>
 </section>
 </section>
 <section id="causal-methods" class="level2">
@@ -579,41 +583,39 @@ Figure&nbsp;2: Example of a local independence graph representing continuous pro
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   ipw_risk_treated  ipw_risk_untreated ipw_risk_difference 
-              0.124               0.170              -0.045 </code></pre>
+              0.094               0.158              -0.064 </code></pre>
 </div>
 </div>
 <p>The weighted risk difference should move back towards the target-trial estimand by rebalancing the covariate distribution between treatment groups.</p>
 </section>
 <section id="matching" class="level3">
 <h3 class="anchored" data-anchor-id="matching">Matching</h3>
-<p>Matching involves constructing a subset of the population in which the distribution of covariates, <span class="math inline">\(Z\)</span>, is the same for the treated and untreated groups. This is typically achieved by pairing each treated individual with an untreated individual with the same or similar covariate values. The causal effect can be estimated as the average difference in outcomes among the matched pairs.</p>
+<p>Matching involves constructing a subset of the population in which the distribution of covariates, <span class="math inline">\(Z\)</span>, is the same for the treated and untreated groups. This is typically achieved by pairing each individual with an individual in the other treatment group who has the same or similar covariate values. The causal effect can be estimated as the average difference in outcomes among the matched pairs. Note that matching only treated individuals to controls estimates the average effect in the treated, whereas matching individuals in both groups estimates the average effect in the whole population.</p>
 </section>
 <section id="r-example-matching" class="level3">
 <h3 class="anchored" data-anchor-id="r-example-matching">R example</h3>
-<p>The same propensity score can be used for a simple nearest-neighbour match, pairing each treated individual to the closest untreated individual on the estimated probability of treatment.</p>
+<p>Since <span class="math inline">\(Z\)</span> is binary, we can match exactly on <span class="math inline">\(Z\)</span>. In the example below, each individual is matched at random (with replacement) to an individual in the opposite treatment group with the same value of <span class="math inline">\(Z\)</span>, so that the matched outcome stands in for the unobserved potential outcome:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-lst-cap="Exact matching within Z strata in R."><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Z is binary, so exact stratum matching is straightforward</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>matched <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>, <span class="cf">function</span>(stratum) {</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  tr <span class="ot">&lt;-</span> causal_data<span class="sc">$</span>y[causal_data<span class="sc">$</span>a <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> causal_data<span class="sc">$</span>z <span class="sc">==</span> stratum]</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  ct <span class="ot">&lt;-</span> causal_data<span class="sc">$</span>y[causal_data<span class="sc">$</span>a <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> causal_data<span class="sc">$</span>z <span class="sc">==</span> stratum]</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  n  <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="fu">length</span>(tr), <span class="fu">length</span>(ct))</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">y_treated =</span> tr[<span class="fu">seq_len</span>(n)], <span class="at">y_control =</span> ct[<span class="fu">seq_len</span>(n)])</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>}))</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">c</span>(</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk_treated        =</span> <span class="fu">mean</span>(matched<span class="sc">$</span>y_treated),</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk_control        =</span> <span class="fu">mean</span>(matched<span class="sc">$</span>y_control),</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk_difference     =</span> <span class="fu">mean</span>(matched<span class="sc">$</span>y_treated <span class="sc">-</span> matched<span class="sc">$</span>y_control)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>), <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-lst-cap="Exact matching on Z in R."><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>match_rd <span class="ot">&lt;-</span> <span class="cf">function</span>(d) {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  d<span class="sc">$</span>y_match <span class="ot">&lt;-</span> <span class="cn">NA_real_</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (z_val <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>) <span class="cf">for</span> (a_val <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>) {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    idx  <span class="ot">&lt;-</span> <span class="fu">which</span>(d<span class="sc">$</span>z <span class="sc">==</span> z_val <span class="sc">&amp;</span> d<span class="sc">$</span>a <span class="sc">==</span> a_val)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    pool <span class="ot">&lt;-</span> d<span class="sc">$</span>y[d<span class="sc">$</span>z <span class="sc">==</span> z_val <span class="sc">&amp;</span> d<span class="sc">$</span>a <span class="sc">!=</span> a_val]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    d<span class="sc">$</span>y_match[idx] <span class="ot">&lt;-</span> pool[<span class="fu">sample.int</span>(<span class="fu">length</span>(pool), <span class="fu">length</span>(idx), <span class="at">replace =</span> <span class="cn">TRUE</span>)]</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(<span class="fu">ifelse</span>(d<span class="sc">$</span>a <span class="sc">==</span> <span class="dv">1</span>, d<span class="sc">$</span>y <span class="sc">-</span> d<span class="sc">$</span>y_match, d<span class="sc">$</span>y_match <span class="sc">-</span> d<span class="sc">$</span>y))</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">match_rd</span>(causal_data), <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   risk_treated    risk_control risk_difference 
-          0.138           0.189          -0.051 </code></pre>
+<pre><code>[1] -0.068</code></pre>
 </div>
 </div>
-<p>Matching within Z strata ensures the comparison group has the same covariate distribution as the treated group, removing the confounding contribution of Z.</p>
+<p>Matching on <span class="math inline">\(Z\)</span> ensures the comparison group has the same covariate distribution as the treated group, removing the confounding contribution of <span class="math inline">\(Z\)</span>.</p>
 </section>
 <section id="standardisation" class="level3">
-<h3 class="anchored" data-anchor-id="standardisation">Standardization</h3>
+<h3 class="anchored" data-anchor-id="standardisation">Standardisation</h3>
 <p>Standardisation involves estimating the counterfactual risk using a weighted average of the risks (or standardisation of the risks) in each covariate level. For example, for a covariate <span class="math inline">\(Z\)</span> with two levels <span class="math inline">\((0,1)\)</span>:</p>
 <p><span class="math display">\[
 \Pr(Y^a = 1) = \Pr(Y = 1 \mid Z = 1, A = a)\Pr(Z = 1) + \Pr(Y = 1 \mid Z = 0, A = a)\Pr(Z = 0)
@@ -650,53 +652,71 @@ Figure&nbsp;2: Example of a local independence graph representing continuous pro
 <span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   standardised_risk_treated  standardised_risk_untreated 
-                       0.122                        0.169 
+                       0.096                        0.159 
 standardised_risk_difference 
-                      -0.046 </code></pre>
+                      -0.063 </code></pre>
 </div>
 </div>
 </section>
 </section>
 <section id="comparing-methods" class="level2">
 <h2 class="anchored" data-anchor-id="comparing-methods">Comparing methods</h2>
-<p>Finally, the results from the three methods can be compared to each other and to the true average causal effect built into the simulation.</p>
+<p>Finally, the results from the three methods can be compared to each other and to the true average causal effect built into the simulation. Uncertainty is quantified using a non-parametric bootstrap, repeating each analysis in 500 resamples of the data.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" data-lst-cap="Comparing causal inference methods in R."><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>compare_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="fu">factor</span>(</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">"Crude"</span>, <span class="st">"IPW"</span>, <span class="st">"Matching"</span>, <span class="st">"Standardisation (g-formula)"</span>, <span class="st">"True ACE"</span>),</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Crude"</span>, <span class="st">"IPW"</span>, <span class="st">"Matching"</span>, <span class="st">"Standardisation (g-formula)"</span>, <span class="st">"True ACE"</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">rd =</span> <span class="fu">c</span>(</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    crude_rd,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    weighted_risk_treated <span class="sc">-</span> weighted_risk_untreated,</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mean</span>(matched<span class="sc">$</span>y_treated <span class="sc">-</span> matched<span class="sc">$</span>y_control),</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mean</span>(risk_if_treated <span class="sc">-</span> risk_if_untreated),</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    true_ace</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(compare_df, <span class="fu">aes</span>(<span class="at">x =</span> method, <span class="at">y =</span> rd, <span class="at">fill =</span> method)) <span class="sc">+</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linewidth =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Crude"</span>           <span class="ot">=</span> <span class="st">"#E74C3C"</span>,</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"IPW"</span>             <span class="ot">=</span> <span class="st">"#3498DB"</span>,</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Matching"</span>        <span class="ot">=</span> <span class="st">"#9B59B6"</span>,</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Standardisation (g-formula)"</span> <span class="ot">=</span> <span class="st">"#2ECC71"</span>,</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"True ACE"</span>        <span class="ot">=</span> <span class="st">"#2C3E50"</span></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Risk difference"</span>) <span class="sc">+</span></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" data-lst-cap="Comparing causal inference methods in R, with bootstrap 95% confidence intervals."><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>estimate_rd <span class="ot">&lt;-</span> <span class="cf">function</span>(d) {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  ps  <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="fu">glm</span>(a <span class="sc">~</span> z, <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">data =</span> d), <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  w   <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(d<span class="sc">$</span>a <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span> <span class="sc">/</span> ps, <span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> ps))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> a <span class="sc">+</span> z, <span class="at">family =</span> <span class="fu">binomial</span>(), <span class="at">data =</span> d)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Crude =</span> <span class="fu">mean</span>(d<span class="sc">$</span>y[d<span class="sc">$</span>a <span class="sc">==</span> <span class="dv">1</span>]) <span class="sc">-</span> <span class="fu">mean</span>(d<span class="sc">$</span>y[d<span class="sc">$</span>a <span class="sc">==</span> <span class="dv">0</span>]),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">IPW =</span> <span class="fu">weighted.mean</span>(d<span class="sc">$</span>y[d<span class="sc">$</span>a <span class="sc">==</span> <span class="dv">1</span>], w[d<span class="sc">$</span>a <span class="sc">==</span> <span class="dv">1</span>]) <span class="sc">-</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">weighted.mean</span>(d<span class="sc">$</span>y[d<span class="sc">$</span>a <span class="sc">==</span> <span class="dv">0</span>], w[d<span class="sc">$</span>a <span class="sc">==</span> <span class="dv">0</span>]),</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">Matching =</span> <span class="fu">match_rd</span>(d),</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Standardisation (g-formula)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">predict</span>(fit, <span class="fu">transform</span>(d, <span class="at">a =</span> <span class="dv">1</span>), <span class="at">type =</span> <span class="st">"response"</span>) <span class="sc">-</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">predict</span>(fit, <span class="fu">transform</span>(d, <span class="at">a =</span> <span class="dv">0</span>), <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>estimates <span class="ot">&lt;-</span> <span class="fu">estimate_rd</span>(causal_data)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>boot <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">replicate</span>(<span class="dv">500</span>, <span class="fu">estimate_rd</span>(causal_data[<span class="fu">sample</span>(n, <span class="at">replace =</span> <span class="cn">TRUE</span>), ])))</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>compare_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="fu">factor</span>(<span class="fu">names</span>(estimates), <span class="at">levels =</span> <span class="fu">rev</span>(<span class="fu">names</span>(estimates))),</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">rd     =</span> estimates,</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">lo     =</span> <span class="fu">apply</span>(boot, <span class="dv">2</span>, quantile, <span class="fl">0.025</span>),</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">hi     =</span> <span class="fu">apply</span>(boot, <span class="dv">2</span>, quantile, <span class="fl">0.975</span>)</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(compare_df, <span class="fu">aes</span>(<span class="at">x =</span> rd, <span class="at">y =</span> method)) <span class="sc">+</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> true_ace, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">colour =</span> <span class="st">"gray40"</span>) <span class="sc">+</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span>, <span class="at">x =</span> true_ace, <span class="at">y =</span> <span class="fl">4.5</span>, <span class="at">label =</span> <span class="st">"True ACE"</span>,</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">size =</span> <span class="fl">3.5</span>, <span class="at">colour =</span> <span class="st">"gray40"</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">xmin =</span> lo, <span class="at">xmax =</span> hi, <span class="at">colour =</span> method <span class="sc">==</span> <span class="st">"Crude"</span>),</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">orientation =</span> <span class="st">"y"</span>, <span class="at">width =</span> <span class="fl">0.15</span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">colour =</span> method <span class="sc">==</span> <span class="st">"Crude"</span>), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"TRUE"</span> <span class="ot">=</span> blog_cols[[<span class="st">"dark"</span>]], <span class="st">"FALSE"</span> <span class="ot">=</span> blog_cols[[<span class="st">"red"</span>]]),</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">guide =</span> <span class="st">"none"</span></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Risk difference"</span>) <span class="sc">+</span></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="at">name =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/lst-compare-methods-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/lst-compare-methods-1.png" class="img-fluid figure-img" alt="Dot plot of risk differences with 95% confidence intervals for the crude, IPW, matching and standardisation estimates, and a dashed vertical line at the true average causal effect. The crude estimate is close to zero, while the three adjusted estimates are close to the true value of about minus 0.06." width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>We can see that the crude risk difference is biased away from the true average causal effect due to confounding, while the three methods to adjust for confounding (IPW, matching, and standardisation via the g-formula) all move the estimate closer to the true average causal effect.</p>
+<p>We can see that the crude risk difference is biased towards zero (the protective effect of treatment is understated) due to confounding, while the three methods to adjust for confounding (IPW, matching, and standardisation via the g-formula) all give estimates close to the true average causal effect, with confidence intervals that include it. The confidence intervals reflect sampling variability only, and cannot account for unmeasured confounding.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -713,7 +733,7 @@ standardised_risk_difference
 <li>Three key conditions enable causal inference from observational data: consistency, exchangeability, and positivity.</li>
 <li>Exchangeability (no unmeasured confounding) is usually the most challenging assumption to verify in practice.</li>
 <li>Three main methods estimate causal effects: inverse probability weighting, matching, and standardisation (g-formula).</li>
-<li>Each method adjusts for measured confounding in different ways: inverse probability weighting creates a pseudo-population, matching creates a balanced matched sample, and standardization averages over a target covariate distribution.</li>
+<li>Each method adjusts for measured confounding in different ways: inverse probability weighting creates a pseudo-population, matching creates a balanced matched sample, and standardisation averages over a target covariate distribution.</li>
 </ul>
 </div>
 </div>
@@ -734,6 +754,7 @@ standardised_risk_difference
 </ul>
 <div class="post-navigation">
 <p><a href="../../blog/statistical-inference-msms/index.html">← Previous post</a></p>
+<p><a href="../../index.html#blog">Back to all posts</a></p>
 <p><a href="../../blog/study-designs/index.html">Next post →</a></p>
 </div>
 

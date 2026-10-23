@@ -15,10 +15,6 @@ h3 {
   font-weight: 500;
 }
 
-a {
-  color: #1b95e0;
-}
-
 .about-container {
   display: flex;
   align-items: flex-start;
@@ -48,7 +44,7 @@ a {
   gap: 1rem;
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid var(--bs-border-color);
 }
 
 .publication:last-child {
@@ -87,20 +83,26 @@ a {
   text-decoration: none;
 }
 
+/* Underline links in running text so they are not distinguished by colour alone */
+#quarto-document-content p a,
+#quarto-document-content li a {
+  text-decoration: underline;
+}
+
 a:hover {
   text-decoration: underline;
 }
 
 .nav-link:hover, .navbar-nav .nav-link.active:hover, .navbar-brand:hover {
-  color: #1b95e0;
+  color: var(--bs-link-color);
 }
 .sidebar nav[role="doc-toc"] ul > li > a.active, .sidebar nav[role="doc-toc"] ul > li > ul > li > a.active {
-	border-left: 1px solid #1b95e0;
-	color: #1b95e0 !important;
+	border-left: 1px solid var(--bs-link-color);
+	color: var(--bs-link-color) !important;
 }
 
 .sidebar nav[role="doc-toc"] ul > li > a:hover, .sidebar nav[role="doc-toc"] ul > li > ul > li > a:hover {
-  color: #1b95e0 !important;
+  color: var(--bs-link-color) !important;
 }
 
 .navbar-nav .nav-link.active {
@@ -112,7 +114,7 @@ a:hover {
   justify-content: space-between;
   margin-top: 3rem;
   padding-top: 1rem;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--bs-border-color);
 }
 
 .centered {
