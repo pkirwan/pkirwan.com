@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.19">
+<meta name="generator" content="quarto-1.10.20">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -41,14 +41,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b626d73c4c936ccc3cb08be7d45d1df6.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-17888a1159294d3eb470f19f6f52f5a5.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0ae969d3293726db143f6e9eb89af930.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-17888a1159294d3eb470f19f6f52f5a5.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-d97631db3dfa23958e50037e5c390409.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-bd48df2141e147b11c9159b9d423e67a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-46175f1f1f469a29c69dc839b14834d5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-bd48df2141e147b11c9159b9d423e67a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -425,7 +425,7 @@ window.Quarto = {
 \end{cases}
 \]</span></p>
 <p>where <span class="math inline">\(\Delta N_{r,s}(t_k)\)</span> is the number of transitions from state <span class="math inline">\(r\)</span> to state <span class="math inline">\(s\)</span> at time <span class="math inline">\(t_k\)</span>, <span class="math inline">\(\Delta N_{s}(t_k)\)</span> is the number of transitions away from state <span class="math inline">\(s\)</span> at time <span class="math inline">\(t_k\)</span>, and <span class="math inline">\(Y_{r}(t_k \mbox{-})\)</span> is the number of individuals in state <span class="math inline">\(r\)</span> just before time <span class="math inline">\(t_k\)</span>.</p>
-<p>The Aalen-Johansen estimator requires the times of transitions between states to be observed exactly (together with the state occupied by each individual at all times). It is therefore not directly applicable to intermittently-observed data, where the times of transitions are interval-censored; this is the main motivation for the likelihood-based approach described below.</p>
+<p>The Aalen-Johansen estimator requires the times of transitions between states and the states themselves to be observed exactly. It is therefore not directly applicable to intermittently-observed data, where the times of transitions are interval-censored. This is the main motivation for the likelihood-based approach described below.</p>
 </section>
 <section id="multi-state-mixture-models" class="level2">
 <h2 class="anchored" data-anchor-id="multi-state-mixture-models">Multi-state mixture models</h2>

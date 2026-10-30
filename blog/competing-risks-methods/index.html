@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.19">
+<meta name="generator" content="quarto-1.10.20">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -76,14 +76,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b626d73c4c936ccc3cb08be7d45d1df6.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-17888a1159294d3eb470f19f6f52f5a5.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0ae969d3293726db143f6e9eb89af930.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-17888a1159294d3eb470f19f6f52f5a5.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-d97631db3dfa23958e50037e5c390409.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-bd48df2141e147b11c9159b9d423e67a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-46175f1f1f469a29c69dc839b14834d5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-bd48df2141e147b11c9159b9d423e67a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -567,7 +567,7 @@ F_j(t) &amp;=\int_0^t S(u)h_j(u) du
 </div>
 </div>
 </div>
-<p>The Aalen-Johansen estimate is equivalent to the sum <span class="math inline">\(\hat{F}_j(t) = \sum_{t_k \leq t} \hat{S}(t_{k-1})\, d_{j}(t_k)/n(t_k\mbox{-})\)</span> given above, where <span class="math inline">\(\hat{S}\)</span> is the Kaplan-Meier estimate of surviving all causes. Other packages, such as <code>cmprsk</code> and <code>tidycmprsk</code>, also provide cumulative incidence estimates and Fine-Gray regression.</p>
+<p>The Aalen-Johansen estimate is equivalent to the sum <span class="math inline">\(\hat{F}_j(t) = \sum_{t_k \leq t} \hat{S}(t_{k-1})\, d_{j}(t_k)/n(t_k\mbox{-})\)</span> given above, where <span class="math inline">\(\hat{S}\)</span> is the Kaplan-Meier estimate of surviving all causes.</p>
 <p>The naive curve lies above the Aalen-Johansen estimate because discharge is handled as if it were non-informative censoring, even though it removes patients from ever experiencing the event of interest.</p>
 </section>
 </section>
@@ -602,7 +602,7 @@ R_i}w_{i,\ell}\exp(\boldsymbol{\beta}^\mathsf{T}\boldsymbol{z}_\ell)}
 <section id="stratification" class="level2">
 <h2 class="anchored" data-anchor-id="stratification">Stratification</h2>
 <p>Whilst proportional hazards models are a common method for incorporating covariates in survival analyses, a more straightforward approach is through stratification. In a stratified model the population is subdivided according to covariate group (or strata), the survival is compared within each stratum, and the differences within stratum are combined to give an overall comparison.</p>
-<p>As stratification allows the baseline hazard to vary across strata it is sometimes used to accommodate non-proportional hazards in Cox and Fine-Gray proportional hazards. Note that the effect of the stratifying variable itself is not estimated, so stratification is most useful for variables which are not of direct interest.</p>
+<p>As stratification allows the baseline hazard to vary across strata it is sometimes used to accommodate non-proportional hazards in Cox and Fine-Gray proportional hazards. Since the effect of the stratifying variable itself is not estimated, stratification is most useful for variables which are not of direct interest.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

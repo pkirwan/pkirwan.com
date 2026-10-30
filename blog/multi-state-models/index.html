@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.19">
+<meta name="generator" content="quarto-1.10.20">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -76,14 +76,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b626d73c4c936ccc3cb08be7d45d1df6.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-17888a1159294d3eb470f19f6f52f5a5.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0ae969d3293726db143f6e9eb89af930.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-17888a1159294d3eb470f19f6f52f5a5.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-d97631db3dfa23958e50037e5c390409.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-d158ebe6e4b278dedfe8e970fd0b3a7f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-bd48df2141e147b11c9159b9d423e67a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-46175f1f1f469a29c69dc839b14834d5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-bd48df2141e147b11c9159b9d423e67a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -549,7 +549,7 @@ q_{r,s}(t, \boldsymbol{z}(t)) &amp; = q^{(0)}_{r,s}(t)\exp\left(\sum_{m=1}^{M}\b
 </section>
 <section id="r-example-msm" class="level3">
 <h3 class="anchored" data-anchor-id="r-example-msm">R example</h3>
-<p>The <code>msm</code> package can be used to fit continuous-time Markov multi-state models. The <code>cav</code> dataset included in the package contains serial examinations of heart transplant recipients, with states <span class="math inline">\(1\)</span> = no coronary allograft vasculopathy (CAV), <span class="math inline">\(2\)</span> = mild/moderate CAV, <span class="math inline">\(3\)</span> = severe CAV, and <span class="math inline">\(4\)</span> = death. Patients were only examined at intermittent clinic visits, so the times of transitions between the first three states are interval-censored, whereas the time of death is known exactly (<code>deathexact = 4</code>). The code below fits a model with a constant intensity for each allowed transition, with non-zero entries of the initial matrix indicating which transitions are allowed.</p>
+<p>The <code>msm</code> package can be used to fit continuous-time Markov multi-state models. The <code>cav</code> dataset included in the package contains panel data relating to heart transplant recipients, with states <span class="math inline">\(1\)</span> = no coronary allograft vasculopathy (CAV), <span class="math inline">\(2\)</span> = mild/moderate CAV, <span class="math inline">\(3\)</span> = severe CAV, and <span class="math inline">\(4\)</span> = death. Patients were examined at intermittent clinic visits, so the times of transitions between the first three states are interval-censored, whereas the time of death is known exactly (<code>deathexact = 4</code>). The code below fits a model with a constant intensity for each allowed transition, with non-zero entries of the initial matrix indicating which transitions are allowed.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-lst-cap="Fitting a continuous-time multi-state model to the cav data using the msm package."><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(msm)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>

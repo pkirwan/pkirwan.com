@@ -9,7 +9,7 @@
 <link>https://www.pkirwan.com/</link>
 <atom:link href="https://www.pkirwan.com/index.xml" rel="self" type="application/rss+xml"/>
 <description>Postdoctoral research fellow at the Barcelona Institute for Global Health (ISGlobal). Statistical modelling of infectious disease burden, and a blog series on statistical methods for infectious disease data.</description>
-<generator>quarto-1.10.19</generator>
+<generator>quarto-1.10.20</generator>
 <lastBuildDate>Tue, 23 Dec 2025 00:00:00 GMT</lastBuildDate>
 <item>
   <title>Part VIII: Study designs and biases</title>
@@ -253,7 +253,8 @@ font-style: inherit;">3</span></span>
               0.140               0.400               2.582               2.250 </code></pre>
 </div>
 </div>
-<p>The same four cell counts therefore answer different questions: prevalence in cross-sectional studies, odds ratios in case-control studies, and risks or risk ratios in cohort studies. Not every measure is valid for every design. For example, in a case-control study the numbers of cases and controls are fixed by the study design, so the prevalence of the outcome and the relative risk cannot be estimated directly from the table, whereas the odds ratio can.</p>
+<p>The same four cell counts therefore answer different questions: prevalence in cross-sectional studies, odds ratios in case-control studies, and risks or risk ratios in cohort studies.</p>
+<p>N.B. Not every measure is valid for every design. For example, in a case-control study the numbers of cases and controls are fixed by the study design, so the prevalence of the outcome and the relative risk cannot be estimated directly from the table, whereas the odds ratio can.</p>
 </section>
 </section>
 <section id="biases-in-observational-studies" class="level2">
@@ -1060,7 +1061,8 @@ font-style: inherit;">3</span></span>
 </section>
 <section id="matching" class="level3">
 <h3 class="anchored" data-anchor-id="matching">Matching</h3>
-<p>Matching involves constructing a subset of the population in which the distribution of covariates, <img src="https://latex.codecogs.com/png.latex?Z">, is the same for the treated and untreated groups. This is typically achieved by pairing each individual with an individual in the other treatment group who has the same or similar covariate values. The causal effect can be estimated as the average difference in outcomes among the matched pairs. Note that matching only treated individuals to controls estimates the average effect in the treated, whereas matching individuals in both groups estimates the average effect in the whole population.</p>
+<p>Matching involves constructing a subset of the population in which the distribution of covariates, <img src="https://latex.codecogs.com/png.latex?Z">, is the same for the treated and untreated groups. This is typically achieved by pairing each individual with an individual in the other treatment group who has the same or similar covariate values. The causal effect can be estimated as the average difference in outcomes among the matched pairs.</p>
+<p>N.B. Matching only treated individuals to controls estimates the average effect in the treated, whereas matching individuals in both groups estimates the average effect in the whole population.</p>
 </section>
 <section id="r-example-matching" class="level3">
 <h3 class="anchored" data-anchor-id="r-example-matching">R example</h3>
@@ -1802,7 +1804,7 @@ Inference.”</span> November 18. <a href="https://www.pkirwan.com/blog/causal-i
 <p>with:</p>
 <p><img src="https://latex.codecogs.com/png.latex?%0A%5CDelta%5Chat%7BA%7D_%7Br,s%7D(t_k)%20=%0A%5Cbegin%7Bcases%7D%0A%5Cfrac%7B%5CDelta%20N_%7Br,s%7D(t_k)%7D%7BY_%7Br%7D(t_k%20%5Cmbox%7B-%7D)%7D%20&amp;%20%5Ctext%7Bif%20%7D%20r%5Cneq%20s%20%5C%5C%0A%5Cfrac%7B-%5CDelta%20N_%7Bs%7D(t_k)%7D%7BY_%7Bs%7D(t_k%20%5Cmbox%7B-%7D)%7D%20&amp;%20%5Ctext%7Bif%20%7D%20r%20=%20s%0A%5Cend%7Bcases%7D%0A"></p>
 <p>where <img src="https://latex.codecogs.com/png.latex?%5CDelta%20N_%7Br,s%7D(t_k)"> is the number of transitions from state <img src="https://latex.codecogs.com/png.latex?r"> to state <img src="https://latex.codecogs.com/png.latex?s"> at time <img src="https://latex.codecogs.com/png.latex?t_k">, <img src="https://latex.codecogs.com/png.latex?%5CDelta%20N_%7Bs%7D(t_k)"> is the number of transitions away from state <img src="https://latex.codecogs.com/png.latex?s"> at time <img src="https://latex.codecogs.com/png.latex?t_k">, and <img src="https://latex.codecogs.com/png.latex?Y_%7Br%7D(t_k%20%5Cmbox%7B-%7D)"> is the number of individuals in state <img src="https://latex.codecogs.com/png.latex?r"> just before time <img src="https://latex.codecogs.com/png.latex?t_k">.</p>
-<p>The Aalen-Johansen estimator requires the times of transitions between states to be observed exactly (together with the state occupied by each individual at all times). It is therefore not directly applicable to intermittently-observed data, where the times of transitions are interval-censored; this is the main motivation for the likelihood-based approach described below.</p>
+<p>The Aalen-Johansen estimator requires the times of transitions between states and the states themselves to be observed exactly. It is therefore not directly applicable to intermittently-observed data, where the times of transitions are interval-censored. This is the main motivation for the likelihood-based approach described below.</p>
 </section>
 <section id="multi-state-mixture-models" class="level2">
 <h2 class="anchored" data-anchor-id="multi-state-mixture-models">Multi-state mixture models</h2>
@@ -2037,7 +2039,7 @@ Figure&nbsp;2: Example of a three-state model with transitions between states ac
 </section>
 <section id="r-example-msm" class="level3">
 <h3 class="anchored" data-anchor-id="r-example-msm">R example</h3>
-<p>The <code>msm</code> package can be used to fit continuous-time Markov multi-state models. The <code>cav</code> dataset included in the package contains serial examinations of heart transplant recipients, with states <img src="https://latex.codecogs.com/png.latex?1"> = no coronary allograft vasculopathy (CAV), <img src="https://latex.codecogs.com/png.latex?2"> = mild/moderate CAV, <img src="https://latex.codecogs.com/png.latex?3"> = severe CAV, and <img src="https://latex.codecogs.com/png.latex?4"> = death. Patients were only examined at intermittent clinic visits, so the times of transitions between the first three states are interval-censored, whereas the time of death is known exactly (<code>deathexact = 4</code>). The code below fits a model with a constant intensity for each allowed transition, with non-zero entries of the initial matrix indicating which transitions are allowed.</p>
+<p>The <code>msm</code> package can be used to fit continuous-time Markov multi-state models. The <code>cav</code> dataset included in the package contains panel data relating to heart transplant recipients, with states <img src="https://latex.codecogs.com/png.latex?1"> = no coronary allograft vasculopathy (CAV), <img src="https://latex.codecogs.com/png.latex?2"> = mild/moderate CAV, <img src="https://latex.codecogs.com/png.latex?3"> = severe CAV, and <img src="https://latex.codecogs.com/png.latex?4"> = death. Patients were examined at intermittent clinic visits, so the times of transitions between the first three states are interval-censored, whereas the time of death is known exactly (<code>deathexact = 4</code>). The code below fits a model with a constant intensity for each allowed transition, with non-zero entries of the initial matrix indicating which transitions are allowed.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-lst-cap="Fitting a continuous-time multi-state model to the cav data using the msm package." style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2590,7 +2592,7 @@ font-style: inherit;">"Follow-up time"</span>)</span></code></pre></div></div>
 </div>
 </div>
 </div>
-<p>The Aalen-Johansen estimate is equivalent to the sum <img src="https://latex.codecogs.com/png.latex?%5Chat%7BF%7D_j(t)%20=%20%5Csum_%7Bt_k%20%5Cleq%20t%7D%20%5Chat%7BS%7D(t_%7Bk-1%7D)%5C,%20d_%7Bj%7D(t_k)/n(t_k%5Cmbox%7B-%7D)"> given above, where <img src="https://latex.codecogs.com/png.latex?%5Chat%7BS%7D"> is the Kaplan-Meier estimate of surviving all causes. Other packages, such as <code>cmprsk</code> and <code>tidycmprsk</code>, also provide cumulative incidence estimates and Fine-Gray regression.</p>
+<p>The Aalen-Johansen estimate is equivalent to the sum <img src="https://latex.codecogs.com/png.latex?%5Chat%7BF%7D_j(t)%20=%20%5Csum_%7Bt_k%20%5Cleq%20t%7D%20%5Chat%7BS%7D(t_%7Bk-1%7D)%5C,%20d_%7Bj%7D(t_k)/n(t_k%5Cmbox%7B-%7D)"> given above, where <img src="https://latex.codecogs.com/png.latex?%5Chat%7BS%7D"> is the Kaplan-Meier estimate of surviving all causes.</p>
 <p>The naive curve lies above the Aalen-Johansen estimate because discharge is handled as if it were non-informative censoring, even though it removes patients from ever experiencing the event of interest.</p>
 </section>
 </section>
@@ -2617,7 +2619,7 @@ font-style: inherit;">"Follow-up time"</span>)</span></code></pre></div></div>
 <section id="stratification" class="level2">
 <h2 class="anchored" data-anchor-id="stratification">Stratification</h2>
 <p>Whilst proportional hazards models are a common method for incorporating covariates in survival analyses, a more straightforward approach is through stratification. In a stratified model the population is subdivided according to covariate group (or strata), the survival is compared within each stratum, and the differences within stratum are combined to give an overall comparison.</p>
-<p>As stratification allows the baseline hazard to vary across strata it is sometimes used to accommodate non-proportional hazards in Cox and Fine-Gray proportional hazards. Note that the effect of the stratifying variable itself is not estimated, so stratification is most useful for variables which are not of direct interest.</p>
+<p>As stratification allows the baseline hazard to vary across strata it is sometimes used to accommodate non-proportional hazards in Cox and Fine-Gray proportional hazards. Since the effect of the stratifying variable itself is not estimated, stratification is most useful for variables which are not of direct interest.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2863,12 +2865,16 @@ font-style: inherit;">2</span>)</span>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">km_df <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(pammtools)</span>
+<span id="cb3-2"></span>
+<span id="cb3-3">km_df <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">data.frame</span>(</span>
-<span id="cb3-2">  <span class="at" style="color: #657422;
+<span id="cb3-4">  <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">time   =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2877,7 +2883,7 @@ background-color: null;
 font-style: inherit;">0</span>, km_fit<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">$</span>time),</span>
-<span id="cb3-3">  <span class="at" style="color: #657422;
+<span id="cb3-5">  <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">surv   =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2886,7 +2892,7 @@ background-color: null;
 font-style: inherit;">1</span>, km_fit<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">$</span>surv),</span>
-<span id="cb3-4">  <span class="at" style="color: #657422;
+<span id="cb3-6">  <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">lower  =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2895,7 +2901,7 @@ background-color: null;
 font-style: inherit;">1</span>, km_fit<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">$</span>lower),</span>
-<span id="cb3-5">  <span class="at" style="color: #657422;
+<span id="cb3-7">  <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">upper  =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2904,7 +2910,7 @@ background-color: null;
 font-style: inherit;">1</span>, km_fit<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">$</span>upper),</span>
-<span id="cb3-6">  <span class="at" style="color: #657422;
+<span id="cb3-8">  <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">censor =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2913,9 +2919,9 @@ background-color: null;
 font-style: inherit;">0</span>L, km_fit<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">$</span>n.censor)</span>
-<span id="cb3-7">)</span>
-<span id="cb3-8"></span>
-<span id="cb3-9"><span class="fu" style="color: #4758AB;
+<span id="cb3-9">)</span>
+<span id="cb3-10"></span>
+<span id="cb3-11"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ggplot</span>(km_df, <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2924,41 +2930,26 @@ background-color: null;
 font-style: inherit;">x =</span> time)) <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+</span></span>
-<span id="cb3-10">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_step</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> lower), <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">colour =</span> blog_cols[[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"red"</span>]], <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">linetype =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"dotted"</span>) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb3-11">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_step</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> upper), <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">colour =</span> blog_cols[[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"red"</span>]], <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">linetype =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"dotted"</span>) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
 <span id="cb3-12">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_stepribbon</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ymin =</span> lower, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ymax =</span> upper), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill =</span> blog_cols[[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"red"</span>]], <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">alpha =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-13">  <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">geom_step</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2975,10 +2966,10 @@ background-color: null;
 font-style: inherit;">1.1</span>) <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+</span></span>
-<span id="cb3-13">  <span class="fu" style="color: #4758AB;
+<span id="cb3-14">  <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">geom_point</span>(</span>
-<span id="cb3-14">    <span class="at" style="color: #657422;
+<span id="cb3-15">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">data =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2987,7 +2978,7 @@ background-color: null;
 font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>),</span>
-<span id="cb3-15">    <span class="fu" style="color: #4758AB;
+<span id="cb3-16">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
 background-color: null;
@@ -3004,10 +2995,10 @@ background-color: null;
 font-style: inherit;">stroke =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span></span>
-<span id="cb3-16">  ) <span class="sc" style="color: #5E5E5E;
+<span id="cb3-17">  ) <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+</span></span>
-<span id="cb3-17">  <span class="fu" style="color: #4758AB;
+<span id="cb3-18">  <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">scale_y_continuous</span>(<span class="at" style="color: #657422;
 background-color: null;
@@ -3024,7 +3015,7 @@ background-color: null;
 font-style: inherit;">"Estimated survival"</span>) <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+</span></span>
-<span id="cb3-18">  <span class="fu" style="color: #4758AB;
+<span id="cb3-19">  <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">scale_x_continuous</span>(<span class="at" style="color: #657422;
 background-color: null;
@@ -3032,13 +3023,13 @@ font-style: inherit;">name =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Follow-up time (days)"</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
-<div id="fig-km" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Step plot of estimated survival, falling from 1 at time 0 to about 0.22 at day 10, with crosses where observations are censored and dotted lines showing wide 95% confidence limits.">
+<div id="fig-km" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Step plot of estimated survival, falling from 1 at time 0 to about 0.22 at day 10, with crosses where observations are censored and a shaded area showing wide 95% confidence limits.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-km-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://www.pkirwan.com/blog/classical-survival-methods/index_files/figure-html/fig-km-1.png" class="img-fluid figure-img" alt="Step plot of estimated survival, falling from 1 at time 0 to about 0.22 at day 10, with crosses where observations are censored and dotted lines showing wide 95% confidence limits." width="672">
+<img src="https://www.pkirwan.com/blog/classical-survival-methods/index_files/figure-html/fig-km-1.png" class="img-fluid figure-img" alt="Step plot of estimated survival, falling from 1 at time 0 to about 0.22 at day 10, with crosses where observations are censored and a shaded area showing wide 95% confidence limits." width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-km-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Kaplan-Meier survival curve for the example data. Crosses mark censored observations and dotted lines show pointwise 95% confidence limits.
+Figure&nbsp;1: Kaplan-Meier survival curve for the example data. Crosses mark censored observations and shaded area shows pointwise 95% confidence limits.
 </figcaption>
 </figure>
 </div>
@@ -3434,7 +3425,7 @@ Figure&nbsp;3: Examples of left and right-truncation for patients in time-to-eve
 <section id="key-concepts" class="level2">
 <h2 class="anchored" data-anchor-id="key-concepts">When standard statistics aren’t enough</h2>
 <p>Why can’t we just use regular statistical methods like t-tests or linear regression for time-to-event data? The key challenge is that censoring and truncation create a form of missing data that’s not random. If we removed all censored observations or treated censoring times as event times, we’d introduce severe bias.</p>
-<p>Survival methods typically also assume that censoring is <em>independent</em> (or “non-informative”): an individual who is censored at time <img src="https://latex.codecogs.com/png.latex?t"> should be representative of the individuals who remain under observation at <img src="https://latex.codecogs.com/png.latex?t">. For example, if participants withdraw from a study because their health is deteriorating then censoring is informative, and the methods described in this series may give biased results unless this is accounted for.</p>
+<p>Survival methods typically also assume that censoring is <em>independent</em> (or “non-informative”), i.e.&nbsp;an individual who is censored at time <img src="https://latex.codecogs.com/png.latex?t"> should be representative of the individuals who remain under observation at <img src="https://latex.codecogs.com/png.latex?t">. If, instead, participants withdraw from a study because their health is deteriorating then censoring is informative, and the methods described in this series may give biased results unless this is accounted for.</p>
 <p>Survival analysis methods are specifically designed for valid statistical estimation of incomplete data while avoiding these biases. We’ll start off by defining several fundamental functions for survival analysis:</p>
 <section id="cumulative-incidence" class="level3">
 <h3 class="anchored" data-anchor-id="cumulative-incidence">The cumulative incidence function</h3>
