@@ -101,9 +101,11 @@ data.frame(
 
 ```{r}
 #| label: fig-km
-#| fig-cap: "Kaplan-Meier survival curve for the example data. Crosses mark censored observations and dotted lines show pointwise 95% confidence limits."
-#| fig-alt: "Step plot of estimated survival, falling from 1 at time 0 to about 0.22 at day 10, with crosses where observations are censored and dotted lines showing wide 95% confidence limits."
+#| fig-cap: "Kaplan-Meier survival curve for the example data. Crosses mark censored observations and shaded area shows pointwise 95% confidence limits."
+#| fig-alt: "Step plot of estimated survival, falling from 1 at time 0 to about 0.22 at day 10, with crosses where observations are censored and a shaded area showing wide 95% confidence limits."
 #| echo: true
+
+library(pammtools)
 
 km_df <- data.frame(
   time   = c(0, km_fit$time),
@@ -114,8 +116,7 @@ km_df <- data.frame(
 )
 
 ggplot(km_df, aes(x = time)) +
-  geom_step(aes(y = lower), colour = blog_cols[["red"]], linetype = "dotted") +
-  geom_step(aes(y = upper), colour = blog_cols[["red"]], linetype = "dotted") +
+  geom_stepribbon(aes(ymin = lower, ymax = upper), fill = blog_cols[["red"]], alpha = 0.2) +
   geom_step(aes(y = surv), colour = blog_cols[["red"]], linewidth = 1.1) +
   geom_point(
     data = subset(km_df, censor > 0),
