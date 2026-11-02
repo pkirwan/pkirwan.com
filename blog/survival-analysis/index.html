@@ -81,9 +81,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-17888a1159294d3eb470f19f6f52f5a5.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-bd48df2141e147b11c9159b9d423e67a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-46175f1f1f469a29c69dc839b14834d5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-bd48df2141e147b11c9159b9d423e67a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-a610e7e43b59df5956535113d98dc2bb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-80fcd0933e0f12dc062a2de955b28373.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-a610e7e43b59df5956535113d98dc2bb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -470,7 +470,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" alt="Four horizontal lines, one per patient. The first has an observed origin and outcome. The second is right-censored and ends at the right-censoring time without an outcome. The third is left-censored, with no observed origin before the left-censoring time. The fourth is administratively censored and ends at a 30 day cut-off." width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.svg" class="img-fluid figure-img" alt="Four horizontal lines, one per patient. The first has an observed origin and outcome. The second is right-censored and ends at the right-censoring time without an outcome. The third is left-censored, with no observed origin before the left-censoring time. The fourth is administratively censored and ends at a 30 day cut-off."></p>
 </figure>
 </div>
 </div>
@@ -492,7 +492,7 @@ Figure&nbsp;1: Examples of right, left, and administrative censoring for patient
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" alt="Step plot of an underlying process which moves from state 1 to state 2 at week 3 and back to state 1 at week 7. Dashed vertical lines mark observation times every two weeks from week 2 to week 12, so each change falls between two observations." width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.svg" class="img-fluid figure-img" alt="Step plot of an underlying process which moves from state 1 to state 2 at week 3 and back to state 1 at week 7. Dashed vertical lines mark observation times every two weeks from week 2 to week 12, so each change falls between two observations."></p>
 </figure>
 </div>
 </div>
@@ -520,7 +520,7 @@ Figure&nbsp;2: Example of interval censoring with intermittently-observed data f
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" alt="Three horizontal lines between two dashed vertical lines marking the left and right truncation times. The first line, with an event between the two times, is observed. The second, with an event after the right truncation time, and the third, with an event before the left truncation time, are drawn in grey and are not in the dataset." width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.svg" class="img-fluid figure-img" alt="Three horizontal lines between two dashed vertical lines marking the left and right truncation times. The first line, with an event between the two times, is observed. The second, with an event after the right truncation time, and the third, with an event before the left truncation time, are drawn in grey and are not in the dataset."></p>
 </figure>
 </div>
 </div>
@@ -623,7 +623,7 @@ h(t) &amp;= \lim_{\delta t \downarrow 0} \left\{\frac{\Pr(t \leq T &lt; t + \del
 <div id="fig-survival-functions" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two panels. On the left, the cumulative incidence function rises from 0 towards 1 and the survivor function falls from 1 towards 0, crossing at around 4.6 units of time. On the right, the hazard is a flat dashed line at 0.15.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-survival-functions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-survival-functions-1.png" class="img-fluid figure-img" alt="Two panels. On the left, the cumulative incidence function rises from 0 towards 1 and the survivor function falls from 1 towards 0, crossing at around 4.6 units of time. On the right, the hazard is a flat dashed line at 0.15." width="672">
+<img src="index_files/figure-html/fig-survival-functions-1.svg" class="img-fluid figure-img" alt="Two panels. On the left, the cumulative incidence function rises from 0 towards 1 and the survivor function falls from 1 towards 0, crossing at around 4.6 units of time. On the right, the hazard is a flat dashed line at 0.15.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-survival-functions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4: Cumulative incidence and survivor functions (left), and the constant hazard (right), for an exponential model with a rate of 0.15 events per unit time.
