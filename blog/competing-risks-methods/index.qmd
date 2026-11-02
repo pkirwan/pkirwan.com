@@ -27,7 +27,7 @@ Note that not every event is a competing risk. An intermediate event, such as ad
 #| fig-alt: "Diagram with a box labelled Hospital and arrows leading to two boxes, Discharged and Died."
 #| fig-width: 5
 #| fig-height: 2.5
-ggplot() +
+competing_risks_banner <- ggplot() +
   state_box(0, 0, "Hospital") +
   state_box(4, 0.9, "Discharged") +
   state_box(4, -0.9, "Died") +
@@ -36,6 +36,10 @@ ggplot() +
   scale_x_continuous(limits = c(-1, 5)) +
   scale_y_continuous(limits = c(-1.5, 1.5)) +
   theme_diagram()
+
+competing_risks_banner
+ggsave("competing-risks-banner.svg", plot = competing_risks_banner,
+       width = 5, height = 2.5, units = "in", bg = "white")
 ```
 
 To correctly address competing risks, "competing risks survival models" are available. In these models an individual is observed over time, with several possible events 'competing' until one takes place and the individual transitions to the corresponding state. Importantly, these methods do not require an assumption of independence between the times to the competing events, and censoring can still be appropriately accounted for (provided it is independent of the event process).

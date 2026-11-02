@@ -35,6 +35,7 @@ website:
 
 format:
   html:
+    fig-format: svg
     theme: 
       light: [cosmo, common/light_style.scss]
       dark: [cosmo, common/dark_style.scss]

@@ -56,7 +56,7 @@ Whilst causal DAGs are useful to describe relationships between discrete-time pr
 #| fig-alt: "Local independence graph with three nodes. C has an arrow to A, and A has an arrow to Y. There is no arrow from C to Y."
 edges <- data.frame(
   from = c("C", "A"), to = c("A", "Y"),
-  curvature = 0.2, pad = 0.15
+  curvature = 0.2, pad = 0.2
 )
 
 dag_plot(nodes, edges)

@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='360.00pt' height='252.00pt' viewBox='0 0 360.00 252.00'>
+<g class='svglite'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+    .svglite g.glyphgroup path {
+      fill: inherit;
+      stroke: none;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
+<defs>
+  <clipPath id='cpMC4wMHwzNjAuMDB8MC4wMHwyNTIuMDA='>
+    <rect x='0.00' y='0.00' width='360.00' height='252.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHwzNjAuMDB8MC4wMHwyNTIuMDA=)'>
+<rect x='0.00' y='0.00' width='360.00' height='252.00' style='stroke-width: 0.00; stroke: none; fill: #FFFFFF;' />
+</g>
+<defs>
+  <clipPath id='cpOS45NnwzNTAuMDR8OS45NnwyNDIuMDQ='>
+    <rect x='9.96' y='9.96' width='340.07' height='232.07' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpOS45NnwzNTAuMDR8OS45NnwyNDIuMDQ=)'>
+<polygon points='29.77,231.49 291.04,231.49 277.97,196.33 42.84,196.33 ' style='stroke-width: 1.71; stroke: #FFFFFF; stroke-linecap: butt; fill: #2C3E50;' />
+<polygon points='42.84,196.33 277.97,196.33 264.91,161.16 55.90,161.16 ' style='stroke-width: 1.71; stroke: #FFFFFF; stroke-linecap: butt; fill: #4A6075;' />
+<polygon points='55.90,161.16 264.91,161.16 251.85,126.00 68.96,126.00 ' style='stroke-width: 1.71; stroke: #FFFFFF; stroke-linecap: butt; fill: #7B8FA3;' />
+<polygon points='68.96,126.00 251.85,126.00 238.78,90.84 82.03,90.84 ' style='stroke-width: 1.71; stroke: #FFFFFF; stroke-linecap: butt; fill: #AEBBC8;' />
+<polygon points='82.03,90.84 238.78,90.84 225.72,55.67 95.09,55.67 ' style='stroke-width: 1.71; stroke: #FFFFFF; stroke-linecap: butt; fill: #D5DCE3;' />
+<polygon points='95.09,55.67 225.72,55.67 212.66,20.51 108.15,20.51 ' style='stroke-width: 1.71; stroke: #FFFFFF; stroke-linecap: butt; fill: #EEF1F4;' />
+<text x='160.41' y='217.57' text-anchor='middle' style='font-size: 10.24px; font-weight: bold;fill: #FFFFFF; font-family: "Arial";' textLength='130.20px' lengthAdjust='spacingAndGlyphs'>Case series/expert opinion</text>
+<text x='160.41' y='182.41' text-anchor='middle' style='font-size: 10.24px; font-weight: bold;fill: #FFFFFF; font-family: "Arial";' textLength='115.41px' lengthAdjust='spacingAndGlyphs'>Cross-sectional studies</text>
+<text x='160.41' y='147.24' text-anchor='middle' style='font-size: 10.24px; font-weight: bold;fill: #FFFFFF; font-family: "Arial";' textLength='101.19px' lengthAdjust='spacingAndGlyphs'>Case-control studies</text>
+<text x='160.41' y='112.08' text-anchor='middle' style='font-size: 10.24px; font-weight: bold; font-family: "Arial";' textLength='72.19px' lengthAdjust='spacingAndGlyphs'>Cohort studies</text>
+<text x='160.41' y='76.92' text-anchor='middle' style='font-size: 10.24px; font-weight: bold; font-family: "Arial";' textLength='26.73px' lengthAdjust='spacingAndGlyphs'>Trials</text>
+<text x='160.41' y='36.22' text-anchor='middle' style='font-size: 10.24px; font-weight: bold; font-family: "Arial";' textLength='88.70px' lengthAdjust='spacingAndGlyphs'>Systematic review</text>
+<text x='160.41' y='47.29' text-anchor='middle' style='font-size: 10.24px; font-weight: bold; font-family: "Arial";' textLength='77.89px' lengthAdjust='spacingAndGlyphs'>&amp; meta-analysis</text>
+<line x1='312.81' y1='224.46' x2='312.81' y2='27.54' style='stroke-width: 1.07; stroke-linecap: butt;' />
+<polygon points='316.41,33.78 312.81,27.54 309.21,33.78 ' style='stroke-width: 1.07; stroke-linecap: butt; fill: #000000;' />
+<text transform='translate(329.43,126.00) rotate(-90)' text-anchor='middle' style='font-size: 9.96px; font-family: "Arial";' textLength='100.70px' lengthAdjust='spacingAndGlyphs'>Better quality evidence</text>
+</g>
+<g clip-path='url(#cpMC4wMHwzNjAuMDB8MC4wMHwyNTIuMDA=)'>
+</g>
+</g>
+</svg>

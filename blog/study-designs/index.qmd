@@ -52,7 +52,7 @@ polys <- do.call(rbind, lapply(0:5, function(i) {
   )
 }))
 
-ggplot() +
+study_designs_banner <- ggplot() +
   geom_polygon(
     data = polys, aes(x = x, y = y, group = tier, fill = fill),
     colour = "white", linewidth = 0.8
@@ -69,6 +69,10 @@ ggplot() +
            angle = 90, size = 3.5) +
   coord_cartesian(xlim = c(-3.1, 4)) +
   theme_diagram()
+
+study_designs_banner
+ggsave("study-designs-banner.svg", plot = study_designs_banner,
+       width = 5, height = 3.5, units = "in", bg = "white")
 ```
 
 @tbl-two-by-two shows a $2 \times 2$ table which may be used to group participants in observational studies and to inform the calculation of standard statistical measures.
